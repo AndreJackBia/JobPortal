@@ -15,8 +15,46 @@ services:
     ports:
       - "8761:8761"
     networks:
-      - progetto-tasd
+      - progetto-labProg
+
+  seekers:
+    build:
+      context: ../seekers
+      dockerfile: seekers.Dockerfile
+    image: seekers
+    container_name: seekers
+    expose:
+      - 8300
+    networks:
+      - progetto-labProg
+    depends_on:
+      seekersdb:
+        condition:
+          service_healthy
+      eurekaregistry:
+        condition:
+          service_started
+    restart: on-failure
+    mem_limit: 500M
+
+  seekersdb:
+    image: postgres
+    container_name: seekersdb
+    environment:
+      - POSTGRES_PASSWORD=1234
+    expose:
+      - 5432
+    volumes:
+      - seekersdbdata:/var/lib/postgresql/data
+    networks:
+      - progetto-labProg
+    healthcheck:
+      test: "exit 0"
+    mem_limit: 200M
 
 networks:
-  progetto-tasd:
+  progetto-labProg:
     driver: bridge
+
+volumes:
+  seekersdbdata:
