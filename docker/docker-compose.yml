@@ -1,0 +1,22 @@
+version: "2.1"
+
+services:
+  eurekaregistry:
+    build:
+      context: ../eurekaregistry
+      dockerfile: eurekaregistry.Dockerfile
+    image: eurekaregistry
+    container_name: eurekaregistry
+    environment:
+      - SPRING_PROFILES_ACTIVE=peer1
+      - LOGGING_LEVEL_COM_NETFLIX_DISCOVERY=DEBUG
+    expose:
+      - 8761
+    ports:
+      - "8761:8761"
+    networks:
+      - progetto-tasd
+
+networks:
+  progetto-tasd:
+    driver: bridge
