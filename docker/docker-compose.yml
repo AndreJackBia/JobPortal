@@ -37,6 +37,27 @@ services:
     restart: on-failure
     mem_limit: 500M
 
+  jobcenters:
+    build:
+      context: ../jobcenters
+      dockerfile: jobcenters.Dockerfile
+    image: jobcenters
+    container_name: jobcenters
+    expose:
+      - 8200
+    networks:
+      - progetto-labProg
+    depends_on:
+      centersdb:
+        condition:
+          service_healthy
+      eurekaregistry:
+        condition:
+          service_started
+    restart: on-failure
+    mem_limit: 500M
+
+
   seekersdb:
     image: postgres
     container_name: seekersdb
@@ -52,9 +73,25 @@ services:
       test: "exit 0"
     mem_limit: 200M
 
+  centersdb:
+    image: postgres
+    container_name: centersdb
+    environment:
+      - POSTGRES_PASSWORD=1234
+    expose:
+      - 5432
+    volumes:
+      - centersdbdata:/var/lib/postgresql/data
+    networks:
+      - progetto-labProg
+    healthcheck:
+      test: "exit 0"
+    mem_limit: 200M
+
 networks:
   progetto-labProg:
     driver: bridge
 
 volumes:
   seekersdbdata:
+  centersdbdata:
