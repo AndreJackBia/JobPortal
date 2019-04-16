@@ -37,6 +37,76 @@ services:
     restart: on-failure
     mem_limit: 500M
 
+  advisor:
+    build:
+      context: ../advisor
+      dockerfile: advisor.Dockerfile
+    image: advisor
+    container_name: advisor
+    expose:
+      - 8700
+    networks:
+      - progetto-labProg
+    depends_on:
+      eurekaregistry:
+        condition:
+          service_started
+      jobsdb:
+        condition:
+          service_healthy
+    restart: on-failure
+    mem_limit: 500M
+
+  applications:
+    build:
+      context: ../applications
+      dockerfile: applications.Dockerfile
+    image: applications
+    container_name: applications
+    expose:
+      - 8600
+    networks:
+      - progetto-labProg
+    depends_on:
+      applicationsdb:
+        condition:
+          service_healthy
+      eurekaregistry:
+        condition:
+          service_started
+    restart: on-failure
+    mem_limit: 500M
+
+  applicationsdb:
+    image: postgres
+    container_name: applicationsdb
+    environment:
+      - POSTGRES_PASSWORD=1234
+    expose:
+      - 5432
+    volumes:
+      - applicationsdbdata:/var/lib/postgresql/data
+    networks:
+      - progetto-labProg
+    healthcheck:
+      test: "exit 0"
+    mem_limit: 200M
+
+  jobsdb:
+    image: postgres
+    container_name: jobsdb
+    environment:
+      - POSTGRES_PASSWORD=1234
+    expose:
+      - 5432
+    volumes:
+      - jobsdbdata:/var/lib/postgresql/data
+    networks:
+      - progetto-labProg
+    healthcheck:
+      test: "exit 0"
+    mem_limit: 200M
+
   jobcenters:
     build:
       context: ../jobcenters
@@ -95,3 +165,5 @@ networks:
 volumes:
   seekersdbdata:
   centersdbdata:
+  jobsdbdata:
+  applicationsdbdata:
