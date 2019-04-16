@@ -127,6 +127,60 @@ services:
     restart: on-failure
     mem_limit: 500M
 
+  jobsdb:
+    image: postgres
+    container_name: jobsdb
+    environment:
+      - POSTGRES_PASSWORD=1234
+    expose:
+      - 5432
+    volumes:
+      - jobsdbdata:/var/lib/postgresql/data
+    networks:
+      - progetto-labProg
+    healthcheck:
+      test: "exit 0"
+    mem_limit: 200M
+
+  jobs:
+    build:
+      context: ../jobs
+      dockerfile: jobs.Dockerfile
+    image: jobs
+    container_name: jobs
+    expose:
+      - 8400
+    networks:
+      - progetto-labProg
+    depends_on:
+      jobsdb:
+        condition:
+          service_healthy
+      eurekaregistry:
+        condition:
+          service_started
+    restart: on-failure
+    mem_limit: 500M
+
+  search:
+    build:
+      context: ../search
+      dockerfile: search.Dockerfile
+    image: search
+    container_name: search
+    expose:
+      - 8500
+    networks:
+      - progetto-labProg
+    depends_on:
+      jobsdb:
+        condition:
+          service_healthy
+      eurekaregistry:
+        condition:
+          service_started
+    restart: on-failure
+    mem_limit: 500M
 
   seekersdb:
     image: postgres
@@ -158,11 +212,30 @@ services:
       test: "exit 0"
     mem_limit: 200M
 
+  notification:
+    build:
+      context: ../notification
+      dockerfile: notification.Dockerfile
+    image: notification
+    container_name: notification
+    expose:
+      - 8900
+      - 8888
+    networks:
+      - progetto-labProg
+    depends_on:
+      eurekaregistry:
+        condition:
+          service_started
+    restart: on-failure
+    mem_limit: 500M
+
 networks:
   progetto-labProg:
     driver: bridge
 
 volumes:
+  jobsdbdata:
   seekersdbdata:
   centersdbdata:
   jobsdbdata:
