@@ -88,6 +88,24 @@ services:
       test: "exit 0"
     mem_limit: 200M
 
+  notification:
+    build:
+      context: ../notification
+      dockerfile: notification.Dockerfile
+    image: notification
+    container_name: notification
+    expose:
+      - 8900
+      - 8888
+    networks:
+      - progetto-labProg
+    depends_on:
+      eurekaregistry:
+        condition:
+          service_started
+    restart: on-failure
+    mem_limit: 500M
+
 networks:
   progetto-labProg:
     driver: bridge
