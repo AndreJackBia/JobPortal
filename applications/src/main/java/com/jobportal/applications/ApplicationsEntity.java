@@ -2,12 +2,23 @@ package com.jobportal.applications;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class ApplicationsEntity {
+	
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 	private String username;
 	private Date dateCreation;
 	private long jobId;
 	private String centerUsername;
+	
+	
 	public ApplicationsEntity() {
 		
 	}
