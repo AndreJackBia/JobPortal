@@ -221,8 +221,11 @@ services:
     expose:
       - 8900
       - 8888
+      - 8203
     networks:
       - progetto-labProg
+    ports:
+      - "8203:8203"
     depends_on:
       eurekaregistry:
         condition:

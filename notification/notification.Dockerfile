@@ -12,5 +12,6 @@ RUN mvn install -DskipTests
 
 FROM openjdk:8-jre-alpine
 COPY --from=build /usr/src/app/target/notification-0.0.1-SNAPSHOT.jar /app/app.jar
+ADD ./tokens /tokens
 EXPOSE 8900
 ENTRYPOINT ["/usr/bin/java", "-jar", "/app/app.jar"]
