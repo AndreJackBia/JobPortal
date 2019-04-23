@@ -119,6 +119,8 @@ services:
       - 8200
     networks:
       - progetto-labProg
+    ports:
+      - "8200:8200"
     depends_on:
       centersdb:
         condition:
