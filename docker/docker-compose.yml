@@ -34,6 +34,8 @@ services:
       eurekaregistry:
         condition:
           service_started
+    ports:
+      - "8300:8300"
     restart: on-failure
     mem_limit: 500M
 
