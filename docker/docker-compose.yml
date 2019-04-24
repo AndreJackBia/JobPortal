@@ -52,10 +52,12 @@ services:
     depends_on:
       eurekaregistry:
         condition:
-          service_started
+          service_started     
       jobsdb:
         condition:
           service_healthy
+    ports:
+      - "8700:8700"
     restart: on-failure
     mem_limit: 500M
 
@@ -76,6 +78,8 @@ services:
       eurekaregistry:
         condition:
           service_started
+    ports:
+      - "8600:8600"
     restart: on-failure
     mem_limit: 500M
 
@@ -126,6 +130,8 @@ services:
       eurekaregistry:
         condition:
           service_started
+    ports:
+      - "8200:8200"
     restart: on-failure
     mem_limit: 500M
 
@@ -161,6 +167,8 @@ services:
       eurekaregistry:
         condition:
           service_started
+    ports:
+      - "8400:8400"
     restart: on-failure
     mem_limit: 500M
 
@@ -181,6 +189,8 @@ services:
       eurekaregistry:
         condition:
           service_started
+    ports:
+      - "8500:8500"
     restart: on-failure
     mem_limit: 500M
 
