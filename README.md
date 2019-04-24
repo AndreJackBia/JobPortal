@@ -5,6 +5,24 @@
 To run the whole application, a docker machine with at least 6500 MB of RAM is needed.
 It is also recommended to set at least 4 GB of RAM to the docker deamon.
 
+### Installing
+
+To run the application, first clone git repository and `cd` into the docker folder inside the project and finally run `docker-compose`:
+
+```
+git clone https://gitlab.com/bcdl/jobportal.git
+
+cd jobportal/docker
+
+docker-compose build
+
+docker-compose up
+
+```
+
+### Executing
+In order to test the application you need to use a rest client to manually call the API provided in this version. Further information about the API and the ports can be found in the code.
+
 ## Built With
 
 * [Spring Boot](https://spring.io/projects/spring-boot)
@@ -12,7 +30,6 @@ It is also recommended to set at least 4 GB of RAM to the docker deamon.
 * [Docker](https://www.docker.com/) 
 * [Flask](https://flask.pocoo.org/)
 * [Postgres](https://www.postgresql.org/)
-* [CouchDB](http://couchdb.apache.org/)
 
 ## Authors
 
