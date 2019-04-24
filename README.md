@@ -11,9 +11,13 @@ To run the application, first clone git repository and `cd` into the docker fold
 
 >>>
 git clone https://gitlab.com/bcdl/jobportal.git
+
 cd jobportal/docker
+
 docker-compose build
+
 docker-compose up
+
 >>>
 
 ## Built With
