@@ -9,7 +9,7 @@ It is also recommended to set at least 4 GB of RAM to the docker deamon.
 
 To run the application, first clone git repository and `cd` into the docker folder inside the project and finally run `docker-compose`:
 
->>>
+```
 git clone https://gitlab.com/bcdl/jobportal.git
 
 cd jobportal/docker
@@ -18,7 +18,7 @@ docker-compose build
 
 docker-compose up
 
->>>
+```
 
 ## Built With
 
