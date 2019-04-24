@@ -20,6 +20,9 @@ docker-compose up
 
 ```
 
+### Executing
+In order to test the application you need to use a rest client to manually call the API provided in this version. Further information about the API and the ports can be found in the code.
+
 ## Built With
 
 * [Spring Boot](https://spring.io/projects/spring-boot)
