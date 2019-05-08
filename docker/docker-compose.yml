@@ -17,6 +17,28 @@ services:
     networks:
       - progetto-labProg
 
+  gateway:
+    build:
+      context: ../gateway
+      dockerfile: gateway.Dockerfile
+    image: gateway
+    container_name: gateway
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    networks:
+      - progetto-labProg
+    depends_on:
+      eurekaregistry:
+        condition:
+          service_started
+      auth:
+        condition:
+          service_started
+    restart: on-failure
+    mem_limit: 500M
+
   seekers:
     build:
       context: ../seekers
