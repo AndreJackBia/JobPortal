@@ -17,6 +17,28 @@ services:
     networks:
       - progetto-labProg
 
+  gateway:
+    build:
+      context: ../gateway
+      dockerfile: gateway.Dockerfile
+    image: gateway
+    container_name: gateway
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    networks:
+      - progetto-labProg
+    depends_on:
+      eurekaregistry:
+        condition:
+          service_started
+      auth:
+        condition:
+          service_started
+    restart: on-failure
+    mem_limit: 500M
+
   seekers:
     build:
       context: ../seekers
@@ -34,28 +56,69 @@ services:
       eurekaregistry:
         condition:
           service_started
+    ports:
+      - "8300:8300"
     restart: on-failure
     mem_limit: 500M
 
-  jobcenters:
+  advisor:
     build:
-      context: ../jobcenters
-      dockerfile: jobcenters.Dockerfile
-    image: jobcenters
-    container_name: jobcenters
+      context: ../advisor
+      dockerfile: advisor.Dockerfile
+    image: advisor
+    container_name: advisor
     expose:
-      - 8200
+      - 8700
     networks:
       - progetto-labProg
     depends_on:
-      centersdb:
+      eurekaregistry:
+        condition:
+          service_started     
+      jobsdb:
+        condition:
+          service_healthy
+    ports:
+      - "8700:8700"
+    restart: on-failure
+    mem_limit: 500M
+
+  applications:
+    build:
+      context: ../applications
+      dockerfile: applications.Dockerfile
+    image: applications
+    container_name: applications
+    expose:
+      - 8600
+    networks:
+      - progetto-labProg
+    depends_on:
+      applicationsdb:
         condition:
           service_healthy
       eurekaregistry:
         condition:
           service_started
+    ports:
+      - "8600:8600"
     restart: on-failure
     mem_limit: 500M
+
+  applicationsdb:
+    image: postgres
+    container_name: applicationsdb
+    environment:
+      - POSTGRES_PASSWORD=1234
+    expose:
+      - 5432
+    volumes:
+      - applicationsdbdata:/var/lib/postgresql/data
+    networks:
+      - progetto-labProg
+    healthcheck:
+      test: "exit 0"
+    mem_limit: 200M
 
   jobsdb:
     image: postgres
@@ -71,6 +134,30 @@ services:
     healthcheck:
       test: "exit 0"
     mem_limit: 200M
+
+  jobcenters:
+    build:
+      context: ../jobcenters
+      dockerfile: jobcenters.Dockerfile
+    image: jobcenters
+    container_name: jobcenters
+    expose:
+      - 8200
+    networks:
+      - progetto-labProg
+    ports:
+      - "8200:8200"
+    depends_on:
+      centersdb:
+        condition:
+          service_healthy
+      eurekaregistry:
+        condition:
+          service_started
+    ports:
+      - "8200:8200"
+    restart: on-failure
+    mem_limit: 500M
 
   jobs:
     build:
@@ -89,6 +176,8 @@ services:
       eurekaregistry:
         condition:
           service_started
+    ports:
+      - "8400:8400"
     restart: on-failure
     mem_limit: 500M
 
@@ -109,6 +198,8 @@ services:
       eurekaregistry:
         condition:
           service_started
+    ports:
+      - "8500:8500"
     restart: on-failure
     mem_limit: 500M
 
@@ -142,6 +233,49 @@ services:
       test: "exit 0"
     mem_limit: 200M
 
+  auth:
+    build:
+      context: ../auth
+      dockerfile: auth.Dockerfile
+    image: auth
+    container_name: auth
+    expose:
+      - 9100
+    networks:
+      - progetto-labProg
+    ports:
+      - "9100:9100"
+    depends_on:
+      authdb:
+        condition:
+          service_healthy
+      eurekaregistry:
+        condition:
+          service_started
+      jobcenters:
+        condition:
+          service_started
+      seekers:
+        condition:
+          service_started
+    restart: on-failure
+    mem_limit: 500M
+
+  authdb:
+    image: postgres
+    container_name: authdb
+    environment:
+      - POSTGRES_PASSWORD=1234
+    expose:
+      - 5432
+    volumes:
+      - authdbdata:/var/lib/postgresql/data
+    networks:
+      - progetto-labProg
+    healthcheck:
+      test: "exit 0"
+    mem_limit: 200M
+
   notification:
     build:
       context: ../notification
@@ -151,8 +285,11 @@ services:
     expose:
       - 8900
       - 8888
+      - 8203
     networks:
       - progetto-labProg
+    ports:
+      - "8203:8203"
     depends_on:
       eurekaregistry:
         condition:
@@ -168,3 +305,6 @@ volumes:
   jobsdbdata:
   seekersdbdata:
   centersdbdata:
+  jobsdbdata:
+  applicationsdbdata:
+  authdbdata:
