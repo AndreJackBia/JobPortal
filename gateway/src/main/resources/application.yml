@@ -1,0 +1,74 @@
+zuul:
+  routes:
+    auth:
+      path: /token/**
+      stripPrefix: false
+      sensitiveHeaders: Cookie,Set-Cookie
+    users:
+      path: /users/**
+      stripPrefix: false
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: auth
+    signup:
+      path: /signup
+      stripPrefix: false
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: auth
+    advisor:
+      path: /api/seekers/*/suggestions
+      stripPrefix: false
+      serviceId: advisor
+    jobcenters:
+      path: /api/centers/*
+      stripPrefix: false
+    jobs:
+      path: /api/centers/*/jobs/*
+      stripPrefix: false
+    search:
+      path: /api/jobs/search
+      stripPrefix: false
+    seekers:
+      path: /api/seekers/*
+      stripPrefix: false
+      serviceId: seekers
+    upload:
+      path: /api/seekers/*/cv
+      stripPrefix: false
+      serviceId: seekers
+    skills:
+      path: /api/seekers/*/skills/**
+      stripPrefix: false
+      serviceId: seekers
+    applications:
+      path: /api/seekers/*/applications/**
+      stripPrefix: false
+      serviceId: applications
+    applicationsCenters:
+      path: /api/centers/*/applications/*
+      stripPrefix: false
+      serviceId: applications
+    applicationsJob:
+      path: /api/centers/*/jobs/*/applications
+      stripPrefix: false
+      serviceId: applications
+    notification:
+      path: /api/send-notification
+      stripPrefix: false
+      serviceId: notification
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 20000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 50000
+
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 10000
+  eager-load:
+    enabled: true

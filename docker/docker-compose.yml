@@ -17,6 +17,28 @@ services:
     networks:
       - progetto-labProg
 
+  gateway:
+    build:
+      context: ../gateway
+      dockerfile: gateway.Dockerfile
+    image: gateway
+    container_name: gateway
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    networks:
+      - progetto-labProg
+    depends_on:
+      eurekaregistry:
+        condition:
+          service_started
+      auth:
+        condition:
+          service_started
+    restart: on-failure
+    mem_limit: 500M
+
   seekers:
     build:
       context: ../seekers
@@ -137,21 +159,6 @@ services:
     restart: on-failure
     mem_limit: 500M
 
-  jobsdb:
-    image: postgres
-    container_name: jobsdb
-    environment:
-      - POSTGRES_PASSWORD=1234
-    expose:
-      - 5432
-    volumes:
-      - jobsdbdata:/var/lib/postgresql/data
-    networks:
-      - progetto-labProg
-    healthcheck:
-      test: "exit 0"
-    mem_limit: 200M
-
   jobs:
     build:
       context: ../jobs
@@ -226,6 +233,49 @@ services:
       test: "exit 0"
     mem_limit: 200M
 
+  auth:
+    build:
+      context: ../auth
+      dockerfile: auth.Dockerfile
+    image: auth
+    container_name: auth
+    expose:
+      - 9100
+    networks:
+      - progetto-labProg
+    ports:
+      - "9100:9100"
+    depends_on:
+      authdb:
+        condition:
+          service_healthy
+      eurekaregistry:
+        condition:
+          service_started
+      jobcenters:
+        condition:
+          service_started
+      seekers:
+        condition:
+          service_started
+    restart: on-failure
+    mem_limit: 500M
+
+  authdb:
+    image: postgres
+    container_name: authdb
+    environment:
+      - POSTGRES_PASSWORD=1234
+    expose:
+      - 5432
+    volumes:
+      - authdbdata:/var/lib/postgresql/data
+    networks:
+      - progetto-labProg
+    healthcheck:
+      test: "exit 0"
+    mem_limit: 200M
+
   notification:
     build:
       context: ../notification
@@ -257,3 +307,4 @@ volumes:
   centersdbdata:
   jobsdbdata:
   applicationsdbdata:
+  authdbdata:
