@@ -1,5 +1,6 @@
 package com.jobportal.seekers;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class SeekerController {
@@ -139,6 +142,22 @@ public class SeekerController {
 		seekerRepository.delete(seeker);
 		return ResponseEntity.ok().build();
 	}
+	/**
+	 * This method is used to upload the curriculum to the dedicated database.
+	 * 
+	 * @param username
+	 * @param file
+	 * @return 200 if the curriculum is uploaded successfully, 400 otherwise
+	 */
+	@RequestMapping(value = "/api/seekers/{username}/cv", method = RequestMethod.POST)
+	public ResponseEntity saveCurriculum(@PathVariable String username, @RequestParam("file") MultipartFile file) {
+		try {
+			CouchDBHelper.saveDocument(username, file.getInputStream());
+		} catch (IOException e) {
+			return ResponseEntity.badRequest().build();
+		}
+		return ResponseEntity.ok().build();
+}
 
 	/**
 	 *
