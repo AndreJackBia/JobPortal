@@ -276,6 +276,20 @@ services:
       test: "exit 0"
     mem_limit: 200M
 
+  pdfdb:
+    image: couchdb
+    container_name: pdfdb
+    environment:
+        - COUCHDB_USER=couchdb
+        - COUCHDB_PASSWORD=1234
+    volumes:
+        - pdfdbdata:/opt/couchdb/data
+    networks:
+        - progetto-labProg
+    healthcheck:
+       test: "exit 0"
+    mem_limit: 200M
+
   notification:
     build:
       context: ../notification
@@ -308,3 +322,4 @@ volumes:
   jobsdbdata:
   applicationsdbdata:
   authdbdata:
+  pdfdbdata:
