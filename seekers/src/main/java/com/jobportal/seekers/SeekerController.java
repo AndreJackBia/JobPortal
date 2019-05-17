@@ -22,6 +22,9 @@ public class SeekerController {
 
 	@Autowired
 	private SeekerRepository seekerRepository;
+	
+	@Autowired
+	private ApplicationsProxy applicationsProxy;
 
 	@RequestMapping(value = "/api/seekers", method = RequestMethod.GET)
 	public ResponseEntity<List<SeekerEntity>> getAllSeekers() {
@@ -118,8 +121,6 @@ public class SeekerController {
 		}
 		return true;
 	}
-	
-	//TODO /api/seekers/{username}/cv to upload cv
 
 	/**
 	 * This method is used to delete personal information of the registered seeker.
@@ -138,7 +139,8 @@ public class SeekerController {
 		if (seeker == null)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-		// TODO delete applications and curriculum
+		applicationsProxy.deleteAllByUsername(loggedUser, seeker.getUsername());
+		CouchDBHelper.deleteDocument(username);
 		seekerRepository.delete(seeker);
 		return ResponseEntity.ok().build();
 	}
