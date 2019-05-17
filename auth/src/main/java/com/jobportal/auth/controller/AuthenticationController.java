@@ -29,7 +29,7 @@ public class AuthenticationController {
     @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
     public ApiResponse<AuthToken> register(@RequestBody LoginUser loginUser) throws AuthenticationException {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
-        final User user = userService.findOne(loginUser.getUsername());
+        final Account user = userService.findOne(loginUser.getUsername());
         final String token = jwtTokenUtil.generateToken(user);
         return new ApiResponse<>(200, "success",new AuthToken(token, user.getUsername()));
     }

@@ -1,6 +1,6 @@
 package com.jobportal.auth.config;
 
-import com.jobportal.auth.model.User;
+import com.jobportal.auth.model.Account;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -47,11 +47,11 @@ public class JwtTokenUtil implements Serializable {
         return expiration.before(new Date());
     }
 
-    public String generateToken(User user) {
+    public String generateToken(Account user) {
         return doGenerateToken(user);
     }
 
-    private String doGenerateToken(User user) {
+    private String doGenerateToken(Account user) {
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("authorities", new ArrayList<String>() {{add(user.getRole().name());}});

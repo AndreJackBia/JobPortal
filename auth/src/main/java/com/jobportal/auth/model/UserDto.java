@@ -1,6 +1,6 @@
 package com.jobportal.auth.model;
 
-import com.jobportal.auth.model.User.Role;
+import com.jobportal.auth.model.Account.Role;
 
 public class UserDto {
 

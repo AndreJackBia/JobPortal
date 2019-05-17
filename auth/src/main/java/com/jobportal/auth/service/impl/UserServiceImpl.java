@@ -17,8 +17,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.jobportal.auth.dao.UserRepo;
-import com.jobportal.auth.model.User;
+import com.jobportal.auth.model.Account;
+import com.jobportal.auth.model.Account.Role;
+import com.jobportal.auth.model.UserCenter;
 import com.jobportal.auth.model.UserGeneral;
+import com.jobportal.auth.model.UserSeeker;
 import com.jobportal.auth.proxy.CenterEntityProxy;
 import com.jobportal.auth.proxy.JobCenterEntity;
 import com.jobportal.auth.proxy.SeekerEntity;
@@ -43,7 +46,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	private BCryptPasswordEncoder bcryptEncoder;
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepo.findByUsername(username);
+		Account user = userRepo.findByUsername(username);
 		if(user == null){
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
@@ -54,75 +57,90 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
 	}
 
-	public List<User> findAll() {
-		List<User> list = new ArrayList<>();
+	public List<Account> findAll() {
+		List<Account> list = new ArrayList<>();
 		userRepo.findAll().iterator().forEachRemaining(list::add);
 		return list;
 	}
 
 	@Override
 	public ResponseEntity delete(String username) {
-		User user = userRepo.findByUsername(username);
+		Account user = userRepo.findByUsername(username);
 		userRepo.delete(user);
-		if (User.Role.SEEKER.equals(user.getRole()))
+		if (Account.Role.SEEKER.equals(user.getRole()))
 			seekerEntityProxy.deleteSeeker(username, user.getUsername());
-		else if (User.Role.JOB_CENTER.equals(user.getRole()))
+		else if (Account.Role.JOB_CENTER.equals(user.getRole()))
 			centerEntityProxy.deleteCenter(username, user.getUsername());
 		return ResponseEntity.ok().build();
 	}
 
 	@Override
-	public User findOne(String username) {
+	public Account findOne(String username) {
 		return userRepo.findByUsername(username);
 	}
 
 	@Override
-	public User findById(long id) {
-		Optional<User> optionalUser = userRepo.findById(id);
+	public Account findById(long id) {
+		Optional<Account> optionalUser = userRepo.findById(id);
 		return optionalUser.isPresent() ? optionalUser.get() : null;
 	}
 
     @Override
     public ResponseEntity update(String loggedUser, UserGeneral newUser) {
         String username = newUser.getUsername();
-    	User user = findByUsername(username);
+    	Account user = findByUsername(username);
         user.setUsername(newUser.getUsername());
         if(newUser.getPassword() != null) {
         	user.setPassword(bcryptEncoder.encode(newUser.getPassword()));
         }
-        user.setRole(newUser.getRole());
-        user.setEmail(newUser.getEmail());
-        if(!(user.getRole().equals(newUser.getRole()))) {
-        	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        if (User.Role.SEEKER.equals(newUser.getRole())) {
-        	seekerEntityProxy.changeSeeker(loggedUser, username,
-        			new SeekerEntity(newUser.getUsername(), newUser.getFirstName(), newUser.getLastName(), newUser.getEmail(), newUser.getCity(), newUser.getBirth(), newUser.getSkills()));
-        }
 
-        if (User.Role.JOB_CENTER.equals(newUser.getRole())) {
-        	centerEntityProxy.changeCenter(loggedUser, username,
-        			new JobCenterEntity(newUser.getCenterName(), newUser.getUsername(), newUser.getEmail()));
+        user.setEmail(newUser.getEmail());
+        
+        if(newUser instanceof UserSeeker)
+        {
+        	user.setRole(Role.SEEKER);
+        	if(user.getRole() != Role.SEEKER)
+        		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        	UserSeeker newUs = (UserSeeker)newUser;
+        	seekerEntityProxy.changeSeeker(loggedUser, username,
+        			new SeekerEntity(newUs.getUsername(), newUs.getFirstName(), 
+        					newUs.getLastName(), newUs.getEmail(), newUs.getCity(), 
+        					newUs.getBirth(), newUs.getSkills()));
         }
+	    else if(newUser instanceof UserCenter)
+	    {
+	    	user.setRole(Role.JOB_CENTER);
+	    	if(user.getRole() != Role.JOB_CENTER)
+        		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	    	UserCenter newUc = (UserCenter)newUser;
+        	centerEntityProxy.changeCenter(loggedUser, username,
+        			new JobCenterEntity(newUc.getCenterName(), newUc.getUsername(), 
+        					newUc.getEmail()));
+
+	    }
+
         userRepo.save(user);
         return ResponseEntity.ok().build();
     }
 
     @Override
-    public User findByUsername(String username) {
+    public Account findByUsername(String username) {
     	return userRepo.findByUsername(username);
     }
 
     @Override
-    public ResponseEntity<User> save(UserGeneral user) {
-	    User newUser = new User();
+    public ResponseEntity<Account> save(UserGeneral user) {
+	    Account newUser = new Account();
 	    newUser.setUsername(user.getUsername());
 	    newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-		newUser.setRole(user.getRole());
+	    if(user instanceof UserSeeker)
+	    	newUser.setRole(Role.SEEKER);
+	    else if(user instanceof UserCenter)
+	    	newUser.setRole(Role.JOB_CENTER);
 		newUser.setEmail(user.getEmail());
 		if (!userRepo.existsByUsername(user.getUsername())) {
 			dispatchUser(user);
-			User newUserSave = userRepo.save(newUser);
+			Account newUserSave = userRepo.save(newUser);
 			return ResponseEntity.ok().body(newUserSave);
 		} else {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -130,18 +148,20 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     public void dispatchUser(UserGeneral user) {
-    	if(user.getRole().equals(User.Role.JOB_CENTER)) {
-    		centerEntityProxy.createCenter(new JobCenterEntity(user.getCenterName(), user.getUsername(), user.getEmail()));
-    		//TODO SEND MAIL 
-    	}
-    	else if(user.getRole().equals(User.Role.SEEKER)) {
-    		SeekerEntity newSeeker = new SeekerEntity(user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getCity(), user.getBirth(), user.getSkills());
+    	if(user instanceof UserSeeker){
+    		UserSeeker us = (UserSeeker)user;
+    		SeekerEntity newSeeker = new SeekerEntity(us.getUsername(), us.getFirstName(), us.getLastName(), us.getEmail(), us.getCity(), us.getBirth(), us.getSkills());
     		seekerEntityProxy.createSeeker(newSeeker);
     		//TODO SEND MAIL
-    	}
-    	else if(user.getRole().equals(User.Role.ADMIN)) {
-
-    	}
+    	} else if(user instanceof UserCenter)
+    	{
+    		UserCenter uc = (UserCenter)user;
+    		centerEntityProxy.createCenter(new JobCenterEntity(uc.getCenterName(), uc.getUsername(), uc.getEmail()));
+    		//TODO SEND MAIL 
+    	}/* else if(user instanceof UserAdmin)
+    	{
+    		//TODO IN FUTURE RELEASES
+    	}*/
     }
 
  
