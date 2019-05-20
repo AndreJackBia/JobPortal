@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.*;
 
 @JsonTypeInfo(use = Id.NAME, include = As.PROPERTY, property = "type")
 @JsonSubTypes({
-	@JsonSubTypes.Type(value = UserSeeker.class, name = "Seeker"),
-	@JsonSubTypes.Type(value = UserCenter.class, name = "Center")
+	@JsonSubTypes.Type(value = UserSeeker.class, name = "SEEKER"),
+	@JsonSubTypes.Type(value = UserCenter.class, name = "JOB_CENTER")
 })
 public abstract class UserGeneral {
 	private long id;

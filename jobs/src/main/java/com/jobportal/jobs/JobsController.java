@@ -16,8 +16,8 @@ public class JobsController {
 
 	@Autowired
     JobsRepository jobRepository;
-
-    //NEED APPLICATION PROXY THAT IS ABLE TO DELETE ALL THE APPLICATIONS RELATED TO A JOB ID
+    @Autowired
+    ApplicationsProxy applicationsProxy;
 
     @RequestMapping(value = "/api/centers/{username}/jobs/", method = RequestMethod.GET)
     public ResponseEntity<List<JobEntity>> getJobs(@PathVariable String username) {
@@ -91,8 +91,7 @@ public class JobsController {
         if (!username.equals(job.getUsername())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
-        //TODO THE APPLICATION PROXY SHOULD STAY HERE
+        applicationsProxy.deleteAllApplicationsByJobId(loggedUser, username, jobId);
         jobRepository.deleteById(jobId);
         return ResponseEntity.ok().build();
     }
@@ -117,5 +116,4 @@ public class JobsController {
         jobRepository.save(job);
         return ResponseEntity.ok(job);
     }
-
 }
