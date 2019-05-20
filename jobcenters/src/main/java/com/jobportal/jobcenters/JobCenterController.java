@@ -20,7 +20,8 @@ public class JobCenterController {
 	@Autowired
 	private JobCenterRepository jobCenterRepository;
 	
-	//TODO MISSING PROXY THAT CALL JOBS
+	@Autowired
+	private JobsProxy jobsProxy;
 
 	@RequestMapping(value = "/api/centers", method = RequestMethod.GET)
 	public List<JobCenterEntity> getJobCenters() {
@@ -51,7 +52,7 @@ public class JobCenterController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 		JobCenterEntity jobCenter = jobCenterRepository.findByUsername(username);
-		//TODO DELETE BY ALL USERNAME
+		jobsProxy.deleteAllByUsername(loggedUser, username);
 		jobCenterRepository.delete(jobCenter);
 		return ResponseEntity.ok().build();
 	}
