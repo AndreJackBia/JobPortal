@@ -1,11 +1,7 @@
 package com.notification.notification;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
+import java.io.InputStream;
 
-import javax.mail.MessagingException;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,32 +12,41 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class NotificationController {
 
-		@Autowired
-		private GmailSender gmailSender;
-
-		@RequestMapping(value = "api/send-notification", method = RequestMethod.POST)
-		public ResponseEntity sendNotification(@RequestBody NotificationEntity destinationMail) throws MessagingException, IOException, GeneralSecurityException {
-			if(checkFieldMail(destinationMail)) {
-				gmailSender.sendMessage(destinationMail.getDestination(), destinationMail.getSubject(), destinationMail.getBody());	
+	
+	@RequestMapping(value = "api/send-notification", method = RequestMethod.POST)
+	public ResponseEntity sendNotification(@RequestBody NotificationEntity notification) {
+		if(checkFieldMail(notification)) {
+			try {
+				if (notification.getUsername() == null)
+					GmailSender.sendMessage(notification.getDestination(), notification.getSubject(), notification.getBody());
+				else {
+					InputStream in = CouchDBHelper.getDocument(notification.getUsername());
+					if (in != null)
+						GmailSender.sendMessage(notification.getDestination(), notification.getSubject(), notification.getBody(), in);
+					else
+						return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).build();
+				}
 				return ResponseEntity.status(HttpStatus.OK).build();
+			} catch (Exception e) {
+				e.printStackTrace();
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 			}
-			else {
-				return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).build();
-			}
-
+		} else {
+			return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).build();
 		}
-
-
-		public boolean checkFieldMail(NotificationEntity destinationMail) {
-			if (destinationMail.getDestination().equals(null)) {
-				return false;
-			}
-			if (destinationMail.getSubject().equals(null)) {
-				return false;
-			}
-			if (destinationMail.getBody().equals(null)) {
-				return false;
-			}
-			return true;
+	}
+	
+	
+	public boolean checkFieldMail(NotificationEntity destinationMail) {
+		if (destinationMail.getDestination().equals(null)) {
+			return false;
 		}
+		if (destinationMail.getSubject().equals(null)) {
+			return false;
+		}
+		if (destinationMail.getBody().equals(null)) {
+			return false;
+		}
+		return true;
+	}
 }

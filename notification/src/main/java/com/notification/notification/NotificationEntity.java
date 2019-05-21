@@ -6,7 +6,12 @@ public class NotificationEntity {
 	private String subject;
 	private String body;
 	
-	// First implementation of notification
+	/**
+	 * 
+	 * This field refers to the username of the seeker that is applying to this job.
+	 * If this is not null, then we have to attach the curriculum.
+	 * 
+	 */
 	private String username;
 	
 	public NotificationEntity(String destination, String subject, String body, String username) {
