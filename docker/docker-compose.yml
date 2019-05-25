@@ -311,6 +311,28 @@ services:
     restart: on-failure
     mem_limit: 500M
 
+  webapp:
+     build:
+       context: ../webapp
+       dockerfile: webapp.Dockerfile
+     image: webapp
+     container_name: webapp
+     expose:
+       - 80
+     ports:
+       - 80:80
+     networks:
+       - progetto-labProg
+     depends_on:
+       gateway:
+         condition:
+           service_started
+       eurekaregistry:
+         condition:
+           service_started
+     restart: on-failure
+     mem_limit: 500M
+
 networks:
   progetto-labProg:
     driver: bridge
