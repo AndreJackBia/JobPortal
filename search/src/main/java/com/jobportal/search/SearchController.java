@@ -14,19 +14,19 @@ public class SearchController {
 
     /** Get all the jobs that correspond to the query and location parameters. */
     @RequestMapping(value = "/api/jobs/search", method = RequestMethod.GET)
-    public ResponseEntity<List<JobEntity>> newJobs(@RequestParam("q") Optional<String> q,
-                                                   @RequestParam("location") Optional<String> locationOpt) {
-        String query = "";
-        String location = "";
+    public ResponseEntity<List<JobEntity>> getJobs(@RequestParam("q") Optional<String> query,
+                                                   @RequestParam("location") Optional<String> location) {
+        String q = "";
+        String locationOpt = "";
 
-        if (q.isPresent()) {
-            query = q.get();
+        if (query.isPresent()) {
+            q = query.get();
         }
-        if (locationOpt.isPresent()) {
-            location = locationOpt.get();
+        if (location.isPresent()) {
+            locationOpt = location.get();
         }
 
-        List<JobEntity> result = jobsRepository.findJobByQuery(query, location);
+        List<JobEntity> result = jobsRepository.findJobByQuery(q, locationOpt);
         return ResponseEntity.ok(result);
     }
 
