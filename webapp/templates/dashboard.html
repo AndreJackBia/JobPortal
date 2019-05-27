@@ -1,0 +1,156 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'sidebar_nav.html' %}
+
+{% if user.role == "JOB_CENTER" %}
+<div class="mdl-sheet__container" style="position: fixed; right: 32px; bottom: 32px; transform: rotate(0deg); height: auto; z-index: 900;">
+   <a href="{{ url_for('newJobs')}}">
+      <button id="show-dialog" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored  mdl-button--raised mdl-color-text--white">
+         <i class="material-icons">add</i>
+      </button>
+   </a>
+</div>
+<div class="mdl-grid">
+  <div class="mdl-layout-spacer"></div>
+  <div class="mdl-cell mdl-cell--10-col mdl-cell--12-col-tablet">
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title mdl-card--border">
+        <h2 class="mdl-card__title-text" style="padding-left: 7px;">
+          Your Jobs
+        </h2>
+      </div>
+      <div style="overflow: auto;display: block;">
+        {% if user.jobs %}
+          <table class="mdl-data-table mdl-js-data-table" style="white-space: normal !important;">
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric">Position</th>
+                <th class="mdl-data-table__cell--non-numeric">Job Description</th>
+                <th class="mdl-data-table__cell--non-numeric">Location</th>
+                <th class="mdl-data-table__cell--non-numeric">Company Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for job in user.jobs %}
+                <tr onclick="document.location = '{{url_for('job_detail', j_username=user.username, job_id=job.id)}}';">
+                  <td class="mdl-data-table__cell--non-numeric">{{job.position}}</td>
+                  <td class="mdl-data-table__cell--non-numeric">{{job.jobDescription}}</td>
+                  <td class="mdl-data-table__cell--non-numeric">{{job.location}}</td>
+                  <td class="mdl-data-table__cell--non-numeric">{{job.companyName}}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <div id="error-parent" class="pres_atl-error">
+            <div id="error-child">
+              <h1 class="mdl-card__title-text">There aren't jobs yet</h1>
+            </div>
+          </div>
+          {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="mdl-layout-spacer"></div>
+</div>
+{% endif %}
+
+{% if user.role == "SEEKER" %}
+<div class="mdl-grid">
+  <div class="mdl-layout-spacer"></div>
+  <div class="mdl-cell mdl-cell--10-col mdl-cell--12-col-tablet">
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title mdl-card--border">
+        <h2 class="mdl-card__title-text" style="padding-left: 7px;">
+        Applications
+        </h2>
+      </div>
+      <div style="overflow: auto;display: block;">
+        {% if user.applications %}
+          <table class="mdl-data-table mdl-js-data-table" style="white-space: normal !important;">
+            <thead>
+              <tr>
+                <th class="myth mdl-data-table__cell--non-numeric">Position</th>
+                <th class="myth mdl-data-table__cell--non-numeric">Job Description</th>
+                <th class="myth mdl-data-table__cell--non-numeric">Location</th>
+                <th class="myth mdl-data-table__cell--non-numeric">Company Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for app in user.applications %}
+                <tr onclick="document.location = '{{url_for('job_detail', j_username=app.username, job_id=app.id)}}';">
+                  <td class="mdl-data-table__cell--non-numeric">{{app.position}}</td>
+                  <td class="mdl-data-table__cell--non-numeric">{{app.jobDescription}}</td>
+                  <td class="mdl-data-table__cell--non-numeric">{{app.location}}</td>
+                  <td class="mdl-data-table__cell--non-numeric">{{app.companyName}}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <div id="error-parent" class="pres_atl-error">
+                <div id="error-child">
+                  <h1 class="mdl-card__title-text">There aren't applications yet</h1>
+                </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="mdl-layout-spacer"></div>
+</div>
+
+
+
+<div class="mdl-grid">
+  <div class="mdl-layout-spacer"></div>
+  <div class="mdl-cell mdl-cell--10-col mdl-cell--12-col-tablet">
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title mdl-card--border">
+        <h2 class="mdl-card__title-text" style="padding-left: 7px;">
+        Suggestions
+        </h2>
+      </div>
+      <div style="overflow: auto;display: block;">
+        {% if user.suggestions %}
+          <table class="mdl-data-table mdl-js-data-table" style="white-space: normal !important;">
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric">Position</th>
+                <th class="mdl-data-table__cell--non-numeric">Job Description</th>
+                <th class="mdl-data-table__cell--non-numeric">Location</th>
+                <th class="mdl-data-table__cell--non-numeric">Company Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for sugg in user.suggestions %}
+                <tr onclick="document.location = '{{url_for('job_detail', j_username=sugg.username, job_id=sugg.id)}}';">
+                  <td class="mdl-data-table__cell--non-numeric">{{sugg.position}}</td>
+                  <td class="mdl-data-table__cell--non-numeric">{{sugg.jobDescription}}</td>
+                  <td class="mdl-data-table__cell--non-numeric">{{sugg.location}}</td>
+                  <td class="mdl-data-table__cell--non-numeric">{{sugg.companyName}}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <div id="error-parent" class="pres_atl-error">
+                <div id="error-child">
+                  <h1 class="mdl-card__title-text">There aren't suggestions yet</h1>
+                </div>
+          </div>
+          {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="mdl-layout-spacer"></div>
+</div>
+
+{% endif %}
+
+{% include 'footer.html' %}
+
+{% endblock %}

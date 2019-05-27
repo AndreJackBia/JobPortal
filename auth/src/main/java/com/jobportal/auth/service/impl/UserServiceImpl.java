@@ -24,10 +24,11 @@ import com.jobportal.auth.model.UserGeneral;
 import com.jobportal.auth.model.UserSeeker;
 import com.jobportal.auth.proxy.CenterEntityProxy;
 import com.jobportal.auth.proxy.JobCenterEntity;
+import com.jobportal.auth.proxy.NotificationEntity;
+import com.jobportal.auth.proxy.NotificationProxy;
 import com.jobportal.auth.proxy.SeekerEntity;
 import com.jobportal.auth.proxy.SeekerEntityProxy;
 import com.jobportal.auth.service.UserService;
-
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
@@ -41,16 +42,19 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	@Autowired
 	private UserRepo userRepo;
 
-
 	@Autowired
 	private BCryptPasswordEncoder bcryptEncoder;
+	
+	@Autowired
+	private NotificationProxy notificationProxy;
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Account user = userRepo.findByUsername(username);
-		if(user == null){
+		if (user == null) {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority());
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+				getAuthority());
 	}
 
 	private List<SimpleGrantedAuthority> getAuthority() {
@@ -85,58 +89,53 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		return optionalUser.isPresent() ? optionalUser.get() : null;
 	}
 
-    @Override
-    public ResponseEntity update(String loggedUser, UserGeneral newUser) {
-        String username = newUser.getUsername();
-    	Account user = findByUsername(username);
-        user.setUsername(newUser.getUsername());
-        if(newUser.getPassword() != null) {
-        	user.setPassword(bcryptEncoder.encode(newUser.getPassword()));
-        }
+	@Override
+	public ResponseEntity update(String loggedUser, UserGeneral newUser) {
+		String username = newUser.getUsername();
+		Account user = findByUsername(username);
+		user.setUsername(newUser.getUsername());
+		if (newUser.getPassword() != null) {
+			user.setPassword(bcryptEncoder.encode(newUser.getPassword()));
+		}
 
-        user.setEmail(newUser.getEmail());
-        
-        if(newUser instanceof UserSeeker)
-        {
-        	user.setRole(Role.SEEKER);
-        	if(user.getRole() != Role.SEEKER)
-        		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        	UserSeeker newUs = (UserSeeker)newUser;
-        	seekerEntityProxy.changeSeeker(loggedUser, username,
-        			new SeekerEntity(newUs.getUsername(), newUs.getFirstName(), 
-        					newUs.getLastName(), newUs.getEmail(), newUs.getCity(), 
-        					newUs.getBirth(), newUs.getSkills()));
-        }
-	    else if(newUser instanceof UserCenter)
-	    {
-	    	user.setRole(Role.JOB_CENTER);
-	    	if(user.getRole() != Role.JOB_CENTER)
-        		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-	    	UserCenter newUc = (UserCenter)newUser;
-        	centerEntityProxy.changeCenter(loggedUser, username,
-        			new JobCenterEntity(newUc.getCenterName(), newUc.getUsername(), 
-        					newUc.getEmail()));
+		user.setEmail(newUser.getEmail());
 
-	    }
+		if (newUser instanceof UserSeeker) {
+			user.setRole(Role.SEEKER);
+			if (user.getRole() != Role.SEEKER)
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			UserSeeker newUs = (UserSeeker) newUser;
+			seekerEntityProxy.changeSeeker(loggedUser, username,
+					new SeekerEntity(newUs.getUsername(), newUs.getFirstName(), newUs.getLastName(), newUs.getEmail(),
+							newUs.getCity(), newUs.getBirth(), newUs.getSkills()));
+		} else if (newUser instanceof UserCenter) {
+			user.setRole(Role.JOB_CENTER);
+			if (user.getRole() != Role.JOB_CENTER)
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			UserCenter newUc = (UserCenter) newUser;
+			centerEntityProxy.changeCenter(loggedUser, username,
+					new JobCenterEntity(newUc.getCenterName(), newUc.getUsername(), newUc.getEmail()));
 
-        userRepo.save(user);
-        return ResponseEntity.ok().build();
-    }
+		}
 
-    @Override
-    public Account findByUsername(String username) {
-    	return userRepo.findByUsername(username);
-    }
+		userRepo.save(user);
+		return ResponseEntity.ok().build();
+	}
 
-    @Override
-    public ResponseEntity<Account> save(UserGeneral user) {
-	    Account newUser = new Account();
-	    newUser.setUsername(user.getUsername());
-	    newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-	    if(user instanceof UserSeeker)
-	    	newUser.setRole(Role.SEEKER);
-	    else if(user instanceof UserCenter)
-	    	newUser.setRole(Role.JOB_CENTER);
+	@Override
+	public Account findByUsername(String username) {
+		return userRepo.findByUsername(username);
+	}
+
+	@Override
+	public ResponseEntity<Account> save(UserGeneral user) {
+		Account newUser = new Account();
+		newUser.setUsername(user.getUsername());
+		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+		if (user instanceof UserSeeker)
+			newUser.setRole(Role.SEEKER);
+		else if (user instanceof UserCenter)
+			newUser.setRole(Role.JOB_CENTER);
 		newUser.setEmail(user.getEmail());
 		if (!userRepo.existsByUsername(user.getUsername())) {
 			dispatchUser(user);
@@ -145,25 +144,29 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		} else {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
-    }
+	}
 
-    public void dispatchUser(UserGeneral user) {
-    	if(user instanceof UserSeeker){
-    		UserSeeker us = (UserSeeker)user;
-    		SeekerEntity newSeeker = new SeekerEntity(us.getUsername(), us.getFirstName(), us.getLastName(), us.getEmail(), us.getCity(), us.getBirth(), us.getSkills());
-    		seekerEntityProxy.createSeeker(newSeeker);
-    		//TODO SEND MAIL
-    	} else if(user instanceof UserCenter)
-    	{
-    		UserCenter uc = (UserCenter)user;
-    		centerEntityProxy.createCenter(new JobCenterEntity(uc.getCenterName(), uc.getUsername(), uc.getEmail()));
-    		//TODO SEND MAIL 
-    	}/* else if(user instanceof UserAdmin)
-    	{
-    		//TODO IN FUTURE RELEASES
-    	}*/
-    }
+	public void dispatchUser(UserGeneral user) {
+		if (user instanceof UserSeeker) {
+			UserSeeker us = (UserSeeker) user;
+			SeekerEntity newSeeker = new SeekerEntity(us.getUsername(), us.getFirstName(), us.getLastName(),
+					us.getEmail(), us.getCity(), us.getBirth(), us.getSkills());
+			seekerEntityProxy.createSeeker(newSeeker);
+			sendEmail(new NotificationEntity(us.getEmail(), "Benvenuto nel portale di lavoro più famoso al mondo!",
+					"Benvenuto caro Seeker " + us.getFirstName(), null));
+		} else if (user instanceof UserCenter) {
+			UserCenter uc = (UserCenter) user;
+			centerEntityProxy.createCenter(new JobCenterEntity(uc.getCenterName(), uc.getUsername(), uc.getEmail()));
+			sendEmail(new NotificationEntity(uc.getEmail(), "Benvenuto nel portale di lavoro più famoso al mondo!",
+					"Benvenuto caro Center " + uc.getCenterName(), null));
+		}
+		/*
+		 * else if(user instanceof UserAdmin) { //TODO IN FUTURE RELEASES
+		 */
+	}
 
- 
+	public void sendEmail(NotificationEntity notificationEntity) {
+		notificationProxy.sendNotification(notificationEntity);
+	}
 
 }
