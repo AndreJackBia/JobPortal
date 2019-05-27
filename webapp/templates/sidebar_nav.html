@@ -1,0 +1,51 @@
+<body class="with-sidebar">
+  <div class="mdl-layout__container">
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header mdl-layout--fixed-tabs">
+      <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title">
+              {{name_page}}
+            </span>
+          <div class="mdl-layout-spacer"></div>
+        </div>
+          {% block tabs %}{% endblock %}
+      </header>
+      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+        <header class="demo-drawer-header header">
+          <img src="{{ url_for('static', filename='images/user.jpg') }}" class="logoclub">
+          <div class="demo-avatar-dropdown user-name">
+            <span>{{user.username}}</span>
+          </div>
+        </header>
+        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+          <a class="mdl-navigation__link" href="{{url_for('dashboard')}}">
+            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>
+            Dashboard
+          </a>
+
+          <a class="mdl-navigation__link" href="{{url_for('all_jobs')}}">
+            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">work</i>
+            All Jobs
+          </a>
+          
+          {% if user.role == "SEEKER" %}
+          <a class="mdl-navigation__link" href="{{url_for('jobcenter_list')}}">
+            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">group</i>
+            Job Centers
+          </a>
+          {% endif %}
+
+          <a class="mdl-navigation__link" href="{% if user.role == "SEEKER" %} {{url_for('seeker_detail', s_username=user.username)}} {% else %} {{url_for('jobcenter_detail', j_username=user.username)}} {% endif %}">
+            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">person</i>
+            Personal Data
+          </a>
+          <a class="mdl-navigation__link" href="{{url_for('logout')}}">
+            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">exit_to_app</i>
+            Logout
+          </a>
+        </nav>
+
+      </div>
+
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div class='main-div'>
