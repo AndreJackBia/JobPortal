@@ -67,31 +67,48 @@ def dashboard():
 
 @app.route('/alljobs', methods = ['GET'])
 def all_jobs():
-	return 0
+	return "0"
 
 @app.route('/jobcenters', methods = ['GET', 'POST'])
 def jobcenter_list():
-	return 0
+    j = validate(request)
+
+    if not j:
+        abort(401)
+
+    user = {'username' : j['sub'], 'role' : j['authorities'][0]}
+
+    header = { "authorization" : "Bearer " + j['token']}
+
+    jobcenters = requests.get(
+        BASE_URL + "/api/centers/",
+        headers=header
+    ).json()
+
+    print(jobcenters)
+
+    return render_template('jobcenter_list.html', user=user, jobcenters=jobcenters)
+
 
 @app.route('/seekers/<s_username>', methods = ['GET', 'POST'])
 def seeker_detail(s_username):
-	return 0
+    return "0"
 
 @app.route('/jobcenter/<j_username>', methods = ['GET', 'POST'])
 def jobcenter_detail(j_username):
-	return 0
+	return "0"
 
 @app.route("/logout", methods=['GET'])
 def logout():
-	return 0
+	return "0"
 
 @app.route('/jobs/new', methods = ['GET', 'POST'])
 def newJobs():
-	return 0
+	return "0"
 
 @app.route('/jobcenters/<j_username>/job/<job_id>', methods = ['GET', 'POST'])
 def job_detail(j_username, job_id):
-	return 0
+	return "0"
 
 def validate(request):
 
