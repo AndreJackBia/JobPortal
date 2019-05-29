@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+
+{% block javascript %}
+<script>
+
+  $( document ).ready(function() {
+    $('#id_pass, #id_conf_pass').on('keyup', function () {
+
+      if ($('#id_pass').val() == $('#id_conf_pass').val()){
+        $('#id_conf_pass_err').attr("hidden",true);
+      } else {
+        $('#id_conf_pass_err').removeAttr("hidden");
+      }
+    });
+
+    $('.add-skill').on('click', function (){
+      addSkillRow();
+    });
+
+    $('.remove-skill').on('click', function (){
+      removeSkillRow($(this));
+    });
+
+  });
+
+  function addSkillRow(){
+    var node = '<div class="col s12 m10"><div class="row"><div class="input-field col s12 skill_container required" id="skill_container"><textarea class="materialize-textarea" cols="40" id="skill" name="skill" rows="10" style="height: 44px;"></textarea><span class="add-skill"><i style="cursor: pointer;" class="material-icons prefix">add_circle</i></span><label class="active" for="skill"></label></div></div></div>';
+
+    var remove_skill = $.parseHTML("<span class=\"remove-skill\"><i style=\"cursor: pointer;\" class=\"material-icons prefix\">remove_circle</i></span>");
+
+    $('.skills').append(node);
+
+    var skills = $('.add-skill');
+
+    {% if user.name == seeker.name %}
+      skills.last().on('click', function (){
+        addSkillRow();
+      });
+    {% endif %}
+
+    skills[skills.length-2].remove();
+
+    var skill_containers = $('.skill_container');
+    skill_containers.eq(-2).find("textarea").after(remove_skill[0]);
+
+    $('.remove-skill').on('click', function (){
+      removeSkillRow($(this));
+    });
+
+  }
+
+  function removeSkillRow(t){
+    $(t).parents().eq(2).remove();
+  }
+
+
+  function checkForm() {
+    var errors_text = "";
+    $('div.required > input').each(function (){
+      if ($(this).attr('id') !== "id_conf_pass" && $(this).attr('id') !== "id_pass"){
+        if ($(this).val().length === 0){
+          var label = $("label[for='" + $(this).attr('id') + "']");
+          errors_text += label.text() + " is required, ";
+          console.log(errors_text);
+        }
+      }
+    });
+
+    if (errors_text.length > 0){
+      console.log("ciaoooooooooo");
+      $("#general_error").removeAttr("hidden");
+      $("div#general_error > small.error").html(errors_text);
+    } else {
+      $(".sign-up-form").submit();
+    }
+
+  }
+
+
+</script>
+{% endblock %}
+
+{% block content %}
+
+{% include 'sidebar_nav.html' %}
+
+<div class="mdl-grid">
+  <div class="mdl-layout-spacer"></div>
+  <div class="card mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--10-col">
+    <div class="card-content">
+      <form class="sign-up-form" method="post">
+        <div class="card-content">
+          <span class="card-title grey-text text-darken-2">
+            Seeker {{seeker.name}} details
+          </span>
+          <div class="section row">
+            <div class="col s12">
+              <h5>User information</h5>
+
+              <div class="layout-row row">
+                <div class="col s12 m12">
+                  <div class="row">
+                    <div class="input-field col s12 required" id="username_container">
+                      <input id="username" name="username" type="text" value="{{seeker.username}}" {% if user.username != seeker.username %} disabled="true" {% endif %}>
+                      <label class="active" for="username">Username</label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              {% if user.username == seeker.username %}
+              <div class="layout-row row">
+                <div class="col s12 m6">
+                  <div class="row">
+                    <div class="input-field col s12 required" id="id_new_pass_container">
+                      <input id="id_pass" name="password" type="password">
+                      <label for="id_pass" class="">New Password</label>
+                      <div class="help-block">Minimum length 8 characters</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col s12 m6">
+                  <div class="row">
+                    <div class="input-field col s12 required" id="id_conf_pass_container">
+                      <input id="id_conf_pass" type="password">
+                      <label for="id_conf_pass">Repeat Password</label>
+                      <div id="id_conf_pass_err"class="errors" hidden>
+                          <small class="error">Password doesn't match</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+
+            </div>
+          </div>
+          <div class="section row">
+            <div class="col s12">
+              <h5>Seeker information</h5>
+
+              <div class="layout-row row">
+                <div class="col s12 m6">
+                  <div class="row">
+                    <div class="input-field col s12 required" id="firstName_container" >
+                      <input id="firstName" name="firstName" value="{{seeker.firstName}}" type="text" {% if user.username != seeker.username %} disabled="true" {% endif %}>
+                      <label class="active" for="firstName">First Name</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col s12 m6">
+                  <div class="row">
+                    <div class="input-field col s12 required" id="lastName_container">
+                      <input id="lastName" name="lastName" type="text" value="{{seeker.lastName}}" {% if user.username != seeker.username %} disabled="true" {% endif %}>
+                      <label class="active" for="lastName">Last Name</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="layout-row row">
+                <div class="col s12 m12">
+                  <div class="row">
+                    <div class="input-field col s12" id="email_container">
+                      <i class="material-icons prefix">email</i><input id="email" maxlength="254" name="email" type="email" value="{{seeker.email}}" {% if user.username != seeker.username %} disabled="true" {% endif %}>
+                      <label for="email">Email Adress</label>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="layout-row row">
+                <div class="col s12 m6">
+                  <div class="row">
+                    <div class="input-field col s12 required" id="city_container">
+                      <i class="material-icons prefix">home</i>
+                      <input id="city" name="city" type="text" value="{{seeker.city}}">
+                      <label class="active" for="city">City</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col s12 m6">
+                  <div class="row">
+                    <div class="input-field col s12 required" id="birth_container">
+                      <i class="material-icons prefix">event_note</i>
+                      <input data-date-format="Y-m-d" data-form-control="date" data-lang="it" id="birth" name="birth" type="text" value="{{seeker.birth}}" {% if user.username != seeker.username %} disabled="true" {% endif %}>
+                      <label class="active" for="birth">Date of Birth</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="section row">
+            <div class="col s12">
+              <h5>Skills</h5>
+
+              <div class="layout-row row skills">
+                {% if seeker.skills %}
+                {% for skill in seeker.skills %}
+                  {% if loop.last %}
+                    <div class="col s12 m10">
+                      <div class="row">
+                        <div class="input-field col s12 skill_container required"  id="skill_container">
+                          <textarea class="materialize-textarea" cols="40" id="skill" name="skill" rows="10" style="height: 44px;">{{skill}}</textarea>
+                          <span class="add-skill"><i style="cursor: pointer;" class="material-icons prefix">add_circle</i></span>
+                          <label class="active" for="skill"></label>
+                        </div>
+                      </div>
+                    </div>
+                  {% else %}
+                    <div class="col s12 m10">
+                      <div class="row">
+                        <div class="input-field col s12 skill_container required"  id="skill_container">
+                          <textarea class="materialize-textarea" cols="40" id="skill" name="skill" rows="10" style="height: 44px;">{{skill}}</textarea>
+                          <span class="remove-skill"><i style="cursor: pointer;" class="material-icons prefix">remove_circle</i></span>
+                          <label class="active" for="skill"></label>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+                {% else %}
+                    <div class="col s12 m10">
+                      <div class="row">
+                        <div class="input-field col s12 skill_container required"  id="skill_container">
+                          <textarea class="materialize-textarea" cols="40" id="skill" name="skill" rows="10" style="height: 44px;"></textarea>
+                          <span class="add-skill"><i style="cursor: pointer;" class="material-icons prefix">add_circle</i></span>
+                          <label class="active" for="skill"></label>
+                        </div>
+                      </div>
+                    </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div id="general_error" class="errors" hidden>
+            <small class="error"></small>
+          </div>
+        </div>
+
+        <div class="card-action left-align" style="/*display: flex;width: 100%;flex-wrap: wrap;*/">
+          <input type="button" class="btn edit-att-btn" value="Save" onclick="checkForm()">
+          <input type="submit" name="delete" class="btn edit-att-btn delete-att" value="Delete" style="background: rgb(244,67,54);">
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="mdl-layout-spacer"></div>
+</div>
+
+{% include 'footer.html' %}
+
+{% endblock %}
