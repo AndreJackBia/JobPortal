@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @Repository
 @FeignClient(name = "jobs")
 @RibbonClient(name = "jobs")
-public interface JobEntityProxy {
+public interface JobsProxy {
 	
 	@RequestMapping(value = "/api/centers/{username}/jobs/{jobId}", method = RequestMethod.GET)
-	JobEntityBean getJob(@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username, @PathVariable long jobId);
+	JobEntity getJob(@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username, @PathVariable long jobId);
 
 }

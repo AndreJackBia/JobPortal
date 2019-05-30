@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,24 +18,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jobportal.applications.UserEntity.Role;
-
 import feign.FeignException;
 
 @RestController
 public class ApplicationsController {
 
 	@Autowired
-	private JobEntityProxy jobEntityProxy;
+	private JobsProxy jobEntityProxy;
 
 	@Autowired
 	private ApplicationsRepository applicationsRepository;
 
 	@Autowired
-	private UserEntityProxy userEntityProxy;
+	private JobCenterProxy jobCenterProxy;
 
 	@Autowired
-	private NotificationEntityProxy notificationEntityProxy;
+	private SeekerProxy seekerProxy;
+
+	@Autowired
+	private NotificationProxy notificationProxy;
+	
+	@Value("${pass}")
+	private String pass;
 
 	@RequestMapping(value = "/api/centers/{username}/applications/", method = RequestMethod.GET)
 	public ResponseEntity<List<ApplicationsEntity>> getCentersApplications(
@@ -42,9 +47,9 @@ public class ApplicationsController {
 		if (!username.equals(loggedUser)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
-
-		UserEntity user = userEntityProxy.getUser(username);
-		if (!Role.JOB_CENTER.equals(user.getRole())) {
+		// MUST BE CENTER
+		ResponseEntity<JobCenterEntity> response = jobCenterProxy.getJobCenter(pass, username);
+		if (!(response.getStatusCodeValue() == 200)) {
 			ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
@@ -52,19 +57,20 @@ public class ApplicationsController {
 	}
 
 	@RequestMapping(value = "/api/centers/{username}/jobs/{jobId}/applications", method = RequestMethod.GET)
-	public ResponseEntity<List<ApplicationsEntity>> getCentersApplications(@RequestHeader("X-User-Header") String loggedUser,
-	                                                                       @PathVariable String username,
-	                                                                       @PathVariable long jobId) {
-	    if (!username.equals(loggedUser)) {
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-	    }
+	public ResponseEntity<List<ApplicationsEntity>> getCentersApplications(
+			@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username,
+			@PathVariable long jobId) {
+		if (!username.equals(loggedUser)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
 
-	    UserEntity user = userEntityProxy.getUser(username);
-	    if (!Role.JOB_CENTER.equals(user.getRole())) {
-	        ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-	    }
+		// MUST BE CENTER
+		ResponseEntity<JobCenterEntity> response = jobCenterProxy.getJobCenter(pass, username);
+		if (!(response.getStatusCodeValue() == 200)) {
+			ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
 
-	    return ResponseEntity.ok().body(applicationsRepository.findAllByJobId(jobId));
+		return ResponseEntity.ok().body(applicationsRepository.findAllByJobId(jobId));
 	}
 
 	@RequestMapping(value = "/api/seekers/{username}/applications/", method = RequestMethod.GET)
@@ -73,9 +79,10 @@ public class ApplicationsController {
 		if (!username.equals(loggedUser)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
-
-		UserEntity user = userEntityProxy.getUser(username);
-		if (!Role.SEEKER.equals(user.getRole())) {
+		
+		//MUST BE SEEKER
+		ResponseEntity<SeekerEntity> response = seekerProxy.getJobSeeker(pass, username);
+		if (!(response.getStatusCodeValue() == 200)) {
 			ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
@@ -89,7 +96,7 @@ public class ApplicationsController {
 		if (!username.equals(loggedUser)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
-		JobEntityBean relatedJob;
+		JobEntity relatedJob;
 		if (!"SEEKER".equals(role)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
@@ -103,8 +110,11 @@ public class ApplicationsController {
 		application.setJobId(application.getJobId());
 		application.setCenterUsername(relatedJob.getUsername());
 		ApplicationsEntity a = applicationsRepository.save(application);
-		String receiveremail = userEntityProxy.getEmail(relatedJob.getUsername());
-		notificationEntityProxy.sendNotification(new NotificationEntity(receiveremail, "Seeker applied to your job ",
+		ResponseEntity<JobCenterEntity> response = jobCenterProxy.getJobCenter(pass, relatedJob.getUsername());
+		String receiverEmail = "";
+		if (response.getStatusCodeValue() == 200)
+			receiverEmail = response.getBody().getEmail();
+		notificationProxy.sendNotification(new NotificationEntity(receiverEmail, "Seeker applied to your job ",
 				"Seeker " + username + " Applied to your job " + relatedJob.getJobDescription(), username));
 		return ResponseEntity.created(new URI("/api/seekers/" + username + "/applications/" + a.getId())).body(a);
 	}
@@ -131,24 +141,26 @@ public class ApplicationsController {
 
 	@RequestMapping(value = "/api/seekers/{username}/applications", method = RequestMethod.DELETE)
 	@Transactional
-	public ResponseEntity deleteAllApplicationsByUsername(@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username) {
+	public ResponseEntity deleteAllApplicationsByUsername(@RequestHeader("X-User-Header") String loggedUser,
+			@PathVariable String username) {
 		if (!username.equals(loggedUser))
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		
+
 		applicationsRepository.deleteAllByUsername(username);
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@RequestMapping(value = "/api/centers/{username}/jobs/{jobId}/applications", method = RequestMethod.DELETE)
 	@Transactional
-	public ResponseEntity deleteAllApplicationsByJobId(@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username, @PathVariable long jobId) {
+	public ResponseEntity deleteAllApplicationsByJobId(@RequestHeader("X-User-Header") String loggedUser,
+			@PathVariable String username, @PathVariable long jobId) {
 		if (!username.equals(loggedUser))
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		
+
 		applicationsRepository.deleteAllByJobId(jobId);
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@RequestMapping(value = "/api/seekers/{username}/applications/{applicationId}", method = RequestMethod.DELETE)
 	public ResponseEntity<ApplicationsEntity> deleteApplication(@RequestHeader("X-User-Header") String loggedUser,
 			@PathVariable String username, @PathVariable long applicationId) {
@@ -184,7 +196,7 @@ public class ApplicationsController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 
-		JobEntityBean relatedJob = jobEntityProxy.getJob(loggedUser, application.getUsername(), application.getJobId());
+		JobEntity relatedJob = jobEntityProxy.getJob(loggedUser, application.getUsername(), application.getJobId());
 		Date dateCreation = applicationsRepository.findById(applicationId).get().getDateCreation();
 		application.setDateCreation(dateCreation);
 		applicationsRepository.save(application);

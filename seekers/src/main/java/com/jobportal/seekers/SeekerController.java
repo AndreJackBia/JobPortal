@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,9 @@ public class SeekerController {
 	
 	@Autowired
 	private ApplicationsProxy applicationsProxy;
+	
+	@Value("${pass}")
+	private String pass;
 
 	@RequestMapping(value = "/api/seekers", method = RequestMethod.GET)
 	public ResponseEntity<List<SeekerEntity>> getAllSeekers() {
@@ -59,7 +63,10 @@ public class SeekerController {
 	@RequestMapping(value = "/api/seekers/{username}", method = RequestMethod.GET)
 	public ResponseEntity<SeekerEntity> getJobSeeker(@RequestHeader("X-User-Header") String loggedUser,
 			@PathVariable String username) {
-
+		
+		if(!username.equals(loggedUser) && !pass.equals(loggedUser))
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); 
+		
 		SeekerEntity seekerEntity = seekerRepository.findByUsername(username);
 		if (seekerEntity == null)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

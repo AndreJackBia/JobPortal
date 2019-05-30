@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,9 @@ public class JobCenterController {
 	
 	@Autowired
 	private JobsProxy jobsProxy;
+	
+	@Value("${pass}")
+	private String pass;
 
 	@RequestMapping(value = "/api/centers", method = RequestMethod.GET)
 	public List<JobCenterEntity> getJobCenters() {
@@ -35,9 +39,12 @@ public class JobCenterController {
 		return ResponseEntity.created(new URI("/api/centers" + jobCenterEntity.getId())).body(jobCenterEntity);
 	}
 
-
 	@RequestMapping(value = "/api/centers/{username}", method = RequestMethod.GET)
-	public ResponseEntity<JobCenterEntity> getJobCenter(@PathVariable String username) {
+	public ResponseEntity<JobCenterEntity> getJobCenter(@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username) {
+		
+		if(!username.equals(loggedUser) && !pass.equals(loggedUser))
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); 
+		
 		JobCenterEntity jobCenterEntity = jobCenterRepository.findByUsername(username);
 		if (jobCenterEntity != null) {
 			return ResponseEntity.ok().body(jobCenterEntity);

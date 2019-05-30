@@ -3,7 +3,7 @@ package com.jobportal.applications;
 
 import java.util.Date;
 
-public class JobEntityBean {
+public class JobEntity {
 	
 	private long id;
 	private String username;
@@ -13,7 +13,7 @@ public class JobEntityBean {
 	private Date dateCreation;
 	private String companyName;
 
-	public JobEntityBean(long id, String username, String position, String jobDescription, String location,
+	public JobEntity(long id, String username, String position, String jobDescription, String location,
 			Date dateCreation, String companyName) {
 		super();
 		this.id = id;
@@ -25,7 +25,7 @@ public class JobEntityBean {
 		this.companyName = companyName;
 	}
 	
-	public JobEntityBean() {
+	public JobEntity() {
 		
 	}	
 	
