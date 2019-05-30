@@ -6,7 +6,7 @@ from base64 import b64decode
 
 app = Flask(__name__, static_url_path='')
 
-BASE_URL = "http://gateway:8080"
+BASE_URL = "http://localhost:8080"
 
 
 @app.route('/', methods=['GET'])
@@ -67,7 +67,29 @@ def dashboard():
 
 @app.route('/alljobs', methods = ['GET'])
 def all_jobs():
-	return "0"
+    j = validate(request)
+
+    if not j:
+        abort(401)
+
+    user = {'username' : j['sub'], 'role' : j['authorities'][0]}
+
+    header = { "authorization" : "Bearer " + j['token']}
+
+    if 'q' not in request.args:
+        params = dict()
+    else:
+        params = request.args.to_dict(flat=True)
+
+    jobs = requests.get(
+        BASE_URL + "/api/jobs/search",
+        headers=header,
+        params=params
+    ).json()
+
+    print(jobs)
+
+    return render_template('all_jobs.html', user=user, jobs=jobs, name_page='All Jobs')
 
 @app.route('/jobcenters', methods = ['GET', 'POST'])
 def jobcenter_list():
@@ -133,7 +155,7 @@ def seeker_detail(s_username):
         BASE_URL + "/api/seekers/" + s_username,
         headers=header,
         )
-    
+
     seeker = seeker.json()
     print(seeker)
     if request.method == 'POST' and 'delete' in request.form:
@@ -151,6 +173,31 @@ def seeker_detail(s_username):
 def jobcenter_detail(j_username):
 	return "0"
 
+@app.route('/jobs/new', methods = ['GET', 'POST'])
+def newJobs():
+    j = validate(request)
+
+    if not j:
+        abort(401)
+
+    user = {'username' : j['sub'], 'role' : j['authorities'][0]}
+    header = { "authorization" : "Bearer " + j['token']}
+
+    if request.method == 'POST':
+        r_json = request.form.to_dict(flat=True)
+        r_json["username"] = user["username"]
+        r = requests.post(
+            BASE_URL + "/api/centers/" + user["username"] + "/jobs/",
+            headers=header,
+            json=r_json
+        )
+        print(r)
+
+        if r.status_code != 201:
+            abort(r.status_code)
+
+    return render_template("new_job.html", user=user, job={})
+
 
 @app.route("/logout", methods=['GET'])
 def logout():
@@ -158,9 +205,6 @@ def logout():
     resp.set_cookie('bearer', '', expires=0)
     return resp
 
-@app.route('/jobs/new', methods = ['GET', 'POST'])
-def newJobs():
-    return "0"
 
 @app.route('/jobcenters/<j_username>/job/<job_id>', methods = ['GET', 'POST'])
 def job_detail(j_username, job_id):

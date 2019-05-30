@@ -30,11 +30,6 @@ public class SeekerController {
 	@Value("${pass}")
 	private String pass;
 
-	@RequestMapping(value = "/api/seekers", method = RequestMethod.GET)
-	public ResponseEntity<List<SeekerEntity>> getAllSeekers() {
-		return ResponseEntity.ok().body(seekerRepository.findAll());
-	}
-
 	/**
 	 * This method is used to get personal information of the registered seeker
 	 *

@@ -1,0 +1,99 @@
+
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+{% include 'sidebar_nav.html' %}
+<div class="mdl-grid">
+  <div class="mdl-layout-spacer"></div>
+  <div class="card mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--10-col">
+    <div class="card-content">
+      <form class="query-form" method="get">
+        <div class="section row">
+          <div class="col s12">
+
+            <div class="layout-row row">
+              <div class="col s12 m5">
+                <div class="row">
+                  <div class="input-field col s12 required" id=query_container">
+                    <input id="query" name="q" type="text" >
+                    <label class="active" for="query">Job name</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col s12 m5">
+                <div class="row">
+                  <div class="input-field col s12 required" id=query_container">
+                    <input id="query" name="location" type="text" >
+                    <label class="active" for="query">Job location</label>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col s12 m2">
+                <div class="row">
+                  <div class="input-field col s12 required" id="centerName_container">
+                    <input type="submit" class="btn edit-att-btn" value="Search">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id="general_error" class="errors" hidden>
+          <small class="error"></small>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="mdl-layout-spacer"></div>
+</div>
+
+<div class="mdl-grid">
+  <div class="mdl-layout-spacer"></div>
+  <div class="mdl-cell mdl-cell--10-col mdl-cell--12-col-tablet">
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+      <div style="overflow: auto;display: block;">
+        {% if jobs %}
+          <table class="mdl-data-table mdl-js-data-table" style="white-space: normal !important;">
+            <thead>
+              <tr>
+                <th class="myth mdl-data-table__cell--non-numeric">Position</th>
+                <th class="myth mdl-data-table__cell--non-numeric">Job Description</th>
+                <th class="myth mdl-data-table__cell--non-numeric">Location</th>
+                <th class="myth mdl-data-table__cell--non-numeric">Company Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for job in jobs %}
+                <tr onclick="document.location = '{{url_for('job_detail', j_username=job.username, job_id=job.id)}}';">
+                  <td class="mdl-data-table__cell--non-numeric">{{job.position}}</td>
+                  <td class="mdl-data-table__cell--non-numeric">{{job.jobDescription}}</td>
+                  <td class="mdl-data-table__cell--non-numeric">{{job.location}}</td>
+                  <td class="mdl-data-table__cell--non-numeric">{{job.companyName}}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <div id="error-parent" class="pres_atl-error">
+                <div id="error-child">
+                  <h1 class="mdl-card__title-text">There aren't jobs yet</h1>
+                </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="mdl-layout-spacer"></div>
+</div>
+
+
+{% include 'footer.html' %}
+
+{% endblock %}
