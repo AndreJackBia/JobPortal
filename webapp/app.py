@@ -113,7 +113,7 @@ def seeker_detail(s_username):
     # TODO: Controllo
     if request.method == 'POST' and s_username == user['username']:
         r_json = request.form.to_dict(flat=True)
-        r_json["role"] = "SEEKER"
+        r_json["type"] = "SEEKER"
         r_json["skills"] = request.form.getlist("skill")
         del r_json["skill"]
 
@@ -128,6 +128,12 @@ def seeker_detail(s_username):
             )
 
         print(r)
+
+    seeker = requests.get(
+        BASE_URL + "/api/seekers/" + s_username,
+        headers=header,
+        )
+    
     seeker = seeker.json()
     print(seeker)
     if request.method == 'POST' and 'delete' in request.form:
