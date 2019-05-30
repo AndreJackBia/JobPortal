@@ -166,9 +166,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	}
 
 	public void sendEmail(NotificationEntity notificationEntity) {
-		System.out.println("PRIMA DI INVIO");
 		notificationEntityProxy.sendNotification(notificationEntity);
-		System.out.println("DOPO DI INVIO");
 	}
 
 }
