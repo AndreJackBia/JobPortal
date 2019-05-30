@@ -1,0 +1,35 @@
+  {% extends 'base.html' %}
+
+  {% block content %}
+  <body>
+    <div class="container expand-on-small-only">
+      <div class="row valign change-form">
+        <div class="col s12 m8 offset-m2 l8 offset-l2">
+          <div class="card">
+            <div class="card-content">
+              <div style="text-align: center">
+                <img src="">
+              </div>
+                <div class="mdl-grid">
+                  <div class="mdl-layout-spacer"></div>
+                    <div class="mdl-cell mdl-cell--6-col mdl-typography--text-center" style="width: auto;">
+                      <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Job Portal</h2>
+                      </div>
+                    </div>
+                  <div class="mdl-layout-spacer"></div>
+                </div>
+              <form class="form-horizontal" method="post">
+                <label for="id_username" class="">Nome utente:</label>
+                <input type="text" name="username" autofocus="" maxlength="254" required="" id="id_username">
+                <label for="id_password" class="">Password:</label>
+                <input type="password" name="password" required="" id="id_password">
+                <input type="submit" class="btn" value="Login">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+  {% endblock %}
+

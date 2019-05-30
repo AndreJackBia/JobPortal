@@ -25,7 +25,7 @@ import com.jobportal.auth.model.UserSeeker;
 import com.jobportal.auth.proxy.CenterEntityProxy;
 import com.jobportal.auth.proxy.JobCenterEntity;
 import com.jobportal.auth.proxy.NotificationEntity;
-import com.jobportal.auth.proxy.NotificationProxy;
+import com.jobportal.auth.proxy.NotificationEntityProxy;
 import com.jobportal.auth.proxy.SeekerEntity;
 import com.jobportal.auth.proxy.SeekerEntityProxy;
 import com.jobportal.auth.service.UserService;
@@ -44,9 +44,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
 	@Autowired
 	private BCryptPasswordEncoder bcryptEncoder;
-	
+
 	@Autowired
-	private NotificationProxy notificationProxy;
+	private NotificationEntityProxy notificationEntityProxy;
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Account user = userRepo.findByUsername(username);
@@ -166,7 +166,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	}
 
 	public void sendEmail(NotificationEntity notificationEntity) {
-		notificationProxy.sendNotification(notificationEntity);
+		System.out.println("PRIMA DI INVIO");
+		notificationEntityProxy.sendNotification(notificationEntity);
+		System.out.println("DOPO DI INVIO");
 	}
 
 }

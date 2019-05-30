@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class NotificationController {
 
 	
-	@RequestMapping(value = "api/send-notification", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/send-notification", method = RequestMethod.POST)
 	public ResponseEntity sendNotification(@RequestBody NotificationEntity notification) {
 		if(checkFieldMail(notification)) {
 			try {

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container expand-on-small-only">         
+  <div class="row valign change-form">
+    <div class="col s12 m8 offset-m2 l8 offset-l2">
+      <div class="card">
+        <div style="text-align: center" class="card-content">
+        	<h2>Logged out</h2>
+		        <p style="margin-top: 32px;">Can you log in <a href="{{url_for('login')}}">here</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

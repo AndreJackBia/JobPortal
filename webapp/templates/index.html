@@ -14,13 +14,13 @@
               <div class="mdl-grid index-div">
 
                   <div class="mdl-cell mdl-cell--6-col mdl-typography--text-center index-div" style="">
-                    <a href="#">
+                    <a href="{{url_for('signup_seeker')}}">
                       <input type="button" class="btn index-div" value="Looking for a Job?" style="width: 100%; white-space: normal;word-wrap: break-word;font-size: 40px">
                     </a>
                   </div>
 
                   <div class="mdl-cell mdl-cell--6-col mdl-typography--text-center index-div" style="">
-                    <a href="#">
+                    <a href="{{url_for('signup_jobcenter')}}">
                       <input type="button" class="btn index-div" value="Offering a Job?" style="width: 100%; white-space: normal;word-wrap: break-word;font-size: 40px">
                     </a>
                   </div>
@@ -28,7 +28,7 @@
               </div>
               <div style="text-align: center">
 
-                <h2 style="font-weight: 300;">or <a href="#">login</a>?</h2>
+                <h2 style="font-weight: 300;">or <a href="{{url_for('login')}}">login</a>?</h2>
 
               </div>
           </div>

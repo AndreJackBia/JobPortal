@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block javascript %}
+<script>
+
+  $( document ).ready(function() {
+    $('#id_pass, #id_conf_pass').on('keyup', function () {
+
+      if ($('#id_pass').val() == $('#id_conf_pass').val()){
+        $('#id_conf_pass_err').attr("hidden",true);
+      } else {
+        $('#id_conf_pass_err').removeAttr("hidden");
+      }
+    });
+
+  });
+
+  function checkForm() {
+    var errors_text = "";
+    $('div.required > input').each(function (){
+      if ($(this).val().length === 0){
+        var label = $("label[for='" + $(this).attr('id') + "']");
+        errors_text += label.text() + " is required, ";
+        console.log(errors_text);
+      }
+    });
+
+    if (errors_text.length > 0){
+      $("#general_error").removeAttr("hidden");
+      $("div#general_error > small.error").html(errors_text);
+    } else {
+      $(".sign-up-form").submit();
+    }
+
+  }
+</script>
+{% endblock %}
+
+{% block content %}
+  <body>
+    <div class="container expand-on-small-only">
+      <div class="row valign change-form">
+        <div class="col s12 m8 offset-m2 l8 offset-l2">
+          <div class="card">
+            <div class="card-content">
+              <form class="sign-up-form" method="post">
+                <div class="card-content">
+                  <span class="card-title grey-text text-darken-2">
+                    Sign up as Job Center
+                  </span>
+                  <div class="section row">
+                    <div class="col s12">
+                      <h5>User information</h5>
+
+                      <div class="layout-row row">
+                        <div class="col s12 m12">
+                          <div class="row">
+                            <div class="input-field col s12 required" id="username_container">
+                              <input id="username" name="username" type="text" >
+                              <label class="active" for="username">Username</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="layout-row row">
+                        <div class="col s12 m6">
+                          <div class="row">
+                            <div class="input-field col s12 required" id="email_container">
+                              <input id="email" name="email" type="email" >
+                              <label class="active" for="email">Email</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col s12 m6">
+                          <div class="row">
+                            <div class="input-field col s12 required" id="centerName_container">
+                              <input id="centerName" name="centerName" type="text" >
+                              <label class="active" for="centerName">Center Name</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="layout-row row">
+                        <div class="col s12 m6">
+                          <div class="row">
+                            <div class="input-field col s12 required" id="id_new_pass_container">
+                              <input id="id_pass" name="password" type="password">
+                              <label for="id_pass" class="">Password</label>
+                              <div class="help-block">Minimum length 8 characters</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col s12 m6">
+                          <div class="row">
+                            <div class="input-field col s12 required" id="id_conf_pass_container">
+                              <input id="id_conf_pass" type="password">
+                              <label for="id_conf_pass">Repeat Password</label>
+                              <div id="id_conf_pass_err"class="errors" hidden>
+                                  <small class="error">Password doesn't match</small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                </div>
+
+                <div id="general_error" class="errors" hidden>
+                  <small class="error"></small>
+                </div>
+              </div>
+
+              <div class="card-action left-align" style="/*display: flex;width: 100%;flex-wrap: wrap;*/">
+                <input type="button" class="btn edit-att-btn" value="Sign up" onclick="checkForm()">
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock %}

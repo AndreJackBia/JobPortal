@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Repository
 @FeignClient(name="notification")
 @RibbonClient(name="notification")
-public interface NotificationProxy {
+public interface NotificationEntityProxy {
 
 	@RequestMapping(value = "/api/send-notification", method = RequestMethod.POST)
 	public void sendNotification(NotificationEntity notificationEntity);
