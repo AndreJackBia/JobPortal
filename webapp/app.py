@@ -98,7 +98,7 @@ def jobcenter_list():
     if not j:
         abort(401)
 
-    user = {'username' : j['sub'], '¯' : j['authorities'][0]}
+    user = {'username' : j['sub'], 'role' : j['authorities'][0]}
 
     header = { "authorization" : "Bearer " + j['token']}
 
@@ -208,7 +208,80 @@ def logout():
 
 @app.route('/jobcenters/<j_username>/job/<job_id>', methods = ['GET', 'POST'])
 def job_detail(j_username, job_id):
-    return "0"
+    # Validazione
+    j = validate(request)
+
+    if not j:
+        abort(401)
+
+    user = {'username' : j['sub'], 'role' : j['authorities'][0]}
+
+    header = { "authorization" : "Bearer " + j['token']}
+
+    # Sono seeker e mi sto applicando
+    if request.method == 'POST' and 'apply' in request.form:
+
+        r = requests.post(
+            BASE_URL + "/api/seekers/" + user["username"] + "/applications/",
+            headers=header,
+            json={"username" : user["username"], "jobId" : job_id}
+            )
+
+        if r.status_code != 201:
+            abort(r.status_code)
+
+    elif request.method == 'POST' and 'position' in request.form:
+        data = request.form.to_dict(flat=True)
+        data["id"] = job_id
+        data["username"] = user["username"]
+
+        r = requests.put(
+            BASE_URL + "/api/centers/" + user["username"] + "/jobs/" + job_id,
+            headers=header,
+            json=data
+            )
+
+        print(r)
+
+        print(data)
+
+
+    job = requests.get(
+        BASE_URL + "/api/centers/" + j_username + "/jobs/" + job_id,
+        headers=header
+    )
+
+    job = job.json()
+
+    if user["role"] == "JOB_CENTER" and user["username"] == j_username:
+        applications = requests.get(
+            BASE_URL + "/api/centers/" + j_username + "/jobs/" + job_id + "/applications",
+            headers=header
+        )
+
+        applications = applications.json()
+
+        job["applications"] = []
+
+        for a in applications:
+            s_username = a["username"]
+
+            seeker = requests.get(
+                BASE_URL + "/api/seekers/" + s_username,
+                headers=header
+            ).json()
+            job["applications"] += [seeker]
+
+    print(job)
+    if request.method == 'POST' and 'delete' in request.form:
+        r = requests.delete(
+            BASE_URL + "/api/centers/" + j_username + "/jobs/" + job_id,
+            headers=header
+            )
+        resp = make_response(redirect(url_for('dashboard')))
+        return resp
+    return render_template('job_detail.html', user=user, job=job)
+
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
