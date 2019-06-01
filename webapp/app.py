@@ -6,7 +6,7 @@ from base64 import b64decode
 
 app = Flask(__name__, static_url_path='')
 
-BASE_URL = "http://localhost:8080"
+BASE_URL = "http://gateway:8080"
 
 
 @app.route('/', methods=['GET'])
@@ -171,7 +171,63 @@ def seeker_detail(s_username):
 
 @app.route('/jobcenter/<j_username>', methods = ['GET', 'POST'])
 def jobcenter_detail(j_username):
-	return "0"
+    # Validazione
+    j = validate(request)
+
+    if not j:
+        abort(401)
+
+    user = {'username' : j['sub'], 'role' : j['authorities'][0]}
+
+    header = { "authorization" : "Bearer " + j['token']}
+
+    # Esistenza jobcenter
+    jobcenter = requests.get(
+        BASE_URL + "/api/centers/" + j_username,
+        headers=header,
+        )
+
+    if jobcenter.status_code != 200:
+        abort(jobcenter.status_code)
+
+    # TODO: Controllo
+    if request.method == 'POST' and j_username == user['username']:
+        r_json = request.form.to_dict(flat=True)
+        r_json["role"] = "JOB_CENTER"
+
+        if r_json["password"] == '':
+            del r_json["password"]
+
+        r = requests.put(
+            BASE_URL + "/users/" + j_username,
+            headers=header,
+            json=r_json
+            )
+        print(r)
+
+
+    jobcenter = jobcenter.json()
+
+    jobs = requests.get(
+        BASE_URL + "/api/centers/" + j_username + "/jobs/",
+        headers=header
+    ).json()
+
+    jobcenter['jobs'] = jobs
+
+    print(jobcenter)
+
+    if request.method == 'POST' and 'delete' in request.form:
+        r = requests.delete(
+            BASE_URL + "/users/" + j_username,
+            headers=header
+            )
+        resp = make_response(redirect(url_for('index')))
+        resp.set_cookie('bearer', '', expires=0)
+        return resp
+
+    return render_template('jobcenter_detail.html', user=user, jobcenter=jobcenter)
+
 
 @app.route('/jobs/new', methods = ['GET', 'POST'])
 def newJobs():
