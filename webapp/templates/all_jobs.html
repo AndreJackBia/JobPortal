@@ -4,8 +4,28 @@
 
 
 {% block content %}
-
-{% include 'sidebar_nav.html' %}
+<body class="with-sidebar">
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-drawer-button">
+	  <header class="mdl-layout__header mdl-layout__header--transparent">
+      <div class="mdl-layout-icon"></div>
+	    <div class="mdl-layout__header-row mdl-color--grey-800 mdl-color-text--white">
+	      <!-- Title -->
+	      <span class="mdl-layout-title">{{name_page}}</span>
+	      <!-- Add spacer, to align navigation to the right -->
+	      <div class="mdl-layout-spacer"></div>
+	      <!-- Navigation. We hide it in small screens. -->
+        <nav style="background-color: transparent; box-shadow: none;display: contents;" class="mdl-navigation mdl-layout--large-screen-only">
+          <div style="display: contents;">
+            <div>
+            <i class="material-icons">person</i>
+          </div>
+            <a class="mdl-navigation__link mdl-color-text--white" href="{{url_for('dashboard')}}">{% if user %} Dashboard {% else %} Login {% endif %}</a>
+          </div>
+        </nav>
+	    </div>
+  	</header>
+  <main class="mdl-layout__content">
+    <div class="main-div">
 <div class="mdl-grid">
   <div class="mdl-layout-spacer"></div>
   <div class="card mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--10-col">
@@ -17,7 +37,7 @@
             <div class="layout-row row">
               <div class="col s12 m5">
                 <div class="row">
-                  <div class="input-field col s12 required" id=query_container">
+                  <div class="input-field col s12 required" id="query_container">
                     <input id="query" name="q" type="text" >
                     <label class="active" for="query">Job name</label>
                   </div>
@@ -25,7 +45,7 @@
               </div>
               <div class="col s12 m5">
                 <div class="row">
-                  <div class="input-field col s12 required" id=query_container">
+                  <div class="input-field col s12 required" id="query_container">
                     <input id="query" name="location" type="text" >
                     <label class="active" for="query">Job location</label>
                   </div>

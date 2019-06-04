@@ -11,7 +11,7 @@ BASE_URL = "http://gateway:8080"
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html')
+    return render_template('all_jobs.html', name_page='Job Portal')
 
 @app.route('/dashboard', methods = ['GET'])
 def dashboard():
@@ -19,7 +19,7 @@ def dashboard():
     j = validate(request)
 
     if not j:
-        abort(401)
+        return render_template('index.html')
 
     user = {'username' : j['sub'], 'role' : j['authorities'][0]}
 
@@ -89,7 +89,7 @@ def all_jobs():
 
     print(jobs)
 
-    return render_template('all_jobs.html', user=user, jobs=jobs, name_page='All Jobs')
+    return render_template('all_jobs.html', user=user, jobs=jobs, name_page='Job Portal')
 
 @app.route('/jobcenters', methods = ['GET', 'POST'])
 def jobcenter_list():
