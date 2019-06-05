@@ -11,7 +11,7 @@ BASE_URL = "http://gateway:8080"
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('all_jobs.html', name_page='Job Portal')
+    return make_response(redirect(url_for('all_jobs')))
 
 @app.route('/dashboard', methods = ['GET'])
 def dashboard():
@@ -65,16 +65,17 @@ def dashboard():
 
     return render_template('dashboard.html', user=user, name_page='Dashboard')
 
-@app.route('/alljobs', methods = ['GET'])
+@app.route('/browse', methods = ['GET'])
 def all_jobs():
     j = validate(request)
 
     if not j:
-        abort(401)
+        user = {}
+        header = {}
 
-    user = {'username' : j['sub'], 'role' : j['authorities'][0]}
-
-    header = { "authorization" : "Bearer " + j['token']}
+    else:
+        user = {'username' : j['sub'], 'role' : j['authorities'][0]}
+        header = { "authorization" : "Bearer " + j['token']}
 
     if 'q' not in request.args:
         params = dict()
@@ -86,8 +87,6 @@ def all_jobs():
         headers=header,
         params=params
     ).json()
-
-    print(jobs)
 
     return render_template('all_jobs.html', user=user, jobs=jobs, name_page='Job Portal')
 
@@ -175,11 +174,11 @@ def jobcenter_detail(j_username):
     j = validate(request)
 
     if not j:
-        abort(401)
-
-    user = {'username' : j['sub'], 'role' : j['authorities'][0]}
-
-    header = { "authorization" : "Bearer " + j['token']}
+        user = {}
+        header = {}
+    else:
+        user = {'username' : j['sub'], 'role' : j['authorities'][0]}
+        header = { "authorization" : "Bearer " + j['token']}
 
     # Esistenza jobcenter
     jobcenter = requests.get(
@@ -268,14 +267,18 @@ def job_detail(j_username, job_id):
     j = validate(request)
 
     if not j:
-        abort(401)
+        user = {}
+        header = {}
 
-    user = {'username' : j['sub'], 'role' : j['authorities'][0]}
-
-    header = { "authorization" : "Bearer " + j['token']}
+    else:
+        user = {'username' : j['sub'], 'role' : j['authorities'][0]}
+        header = { "authorization" : "Bearer " + j['token']}
 
     # Sono seeker e mi sto applicando
     if request.method == 'POST' and 'apply' in request.form:
+
+        if user == {}:
+            return render_template('login.html')
 
         r = requests.post(
             BASE_URL + "/api/seekers/" + user["username"] + "/applications/",
@@ -309,7 +312,7 @@ def job_detail(j_username, job_id):
 
     job = job.json()
 
-    if user["role"] == "JOB_CENTER" and user["username"] == j_username:
+    if user and user["role"] == "JOB_CENTER" and user["username"] == j_username:
         applications = requests.get(
             BASE_URL + "/api/centers/" + j_username + "/jobs/" + job_id + "/applications",
             headers=header
@@ -328,7 +331,6 @@ def job_detail(j_username, job_id):
             ).json()
             job["applications"] += [seeker]
 
-    print(job)
     if request.method == 'POST' and 'delete' in request.form:
         r = requests.delete(
             BASE_URL + "/api/centers/" + j_username + "/jobs/" + job_id,

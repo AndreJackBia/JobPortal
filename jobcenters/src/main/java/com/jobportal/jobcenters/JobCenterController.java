@@ -42,9 +42,6 @@ public class JobCenterController {
 	@RequestMapping(value = "/api/centers/{username}", method = RequestMethod.GET)
 	public ResponseEntity<JobCenterEntity> getJobCenter(@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username) {
 		
-		if(!username.equals(loggedUser) && !pass.equals(loggedUser))
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); 
-		
 		JobCenterEntity jobCenterEntity = jobCenterRepository.findByUsername(username);
 		if (jobCenterEntity != null) {
 			return ResponseEntity.ok().body(jobCenterEntity);

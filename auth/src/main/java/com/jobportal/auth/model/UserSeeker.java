@@ -1,4 +1,4 @@
-package com.jobportal.auth.model;
+ package com.jobportal.auth.model;
 
 import java.util.Date;
 import java.util.List;

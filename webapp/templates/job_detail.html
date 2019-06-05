@@ -31,7 +31,35 @@
 
 {% block content %}
 
+{% if user %}
 {% include 'sidebar_nav.html' %}
+{% else %}
+<body class="with-sidebar">
+  <div class="mdl-layout__container">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-drawer-button">
+    <header class="mdl-layout__header mdl-layout__header--transparent">
+      <div class="mdl-layout-icon"></div>
+      <div class="mdl-layout__header-row mdl-color--grey-800 mdl-color-text--white">
+        <!-- Title -->
+        <span class="mdl-layout-title">{{name_page}}</span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation. We hide it in small screens. -->
+        <nav style="background-color: transparent; box-shadow: none;display: contents;" class="mdl-navigation mdl-layout--large-screen-only">
+          <div style="display: contents;">
+            <div>
+            <i class="material-icons">person</i>
+          </div>
+            <a class="mdl-navigation__link mdl-color-text--white" href="{{url_for('dashboard')}}">{% if user %} Dashboard {% else %} Login {% endif %}</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div class='main-div'>
+{% endif %}
+
 <div class="mdl-grid">
   <div class="mdl-layout-spacer"></div>
   <div class="card mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--10-col">
@@ -138,6 +166,10 @@
         {% if user.role == "SEEKER" %}
         <div class="card-action left-align" style="/*display: flex;width: 100%;flex-wrap: wrap;*/">
             <input type="submit" name=apply class="btn edit-att-btn" value="Apply">
+        </div>
+        {% elif not user %}
+        <div class="card-action left-align" style="/*display: flex;width: 100%;flex-wrap: wrap;*/">
+            <p>Please login to apply</p>
         </div>
         {% endif %}
 

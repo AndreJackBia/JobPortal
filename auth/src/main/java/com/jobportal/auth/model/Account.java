@@ -3,6 +3,9 @@ package com.jobportal.auth.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "user_entity")
@@ -13,10 +16,15 @@ public class Account {
     private long id;
 
     @Column
+	@NotNull
+	@NotEmpty
+	@Email
     private String email;
     
 
 	@Column
+	@NotNull
+	@NotEmpty
     private String username;
 
     @Column

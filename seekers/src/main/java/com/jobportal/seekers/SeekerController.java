@@ -59,9 +59,6 @@ public class SeekerController {
 	public ResponseEntity<SeekerEntity> getJobSeeker(@RequestHeader("X-User-Header") String loggedUser,
 			@PathVariable String username) {
 		
-		if(!username.equals(loggedUser) && !pass.equals(loggedUser))
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); 
-		
 		SeekerEntity seekerEntity = seekerRepository.findByUsername(username);
 		if (seekerEntity == null)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

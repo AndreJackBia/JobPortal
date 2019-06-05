@@ -30,6 +30,8 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter{
 			 .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
 			 // authorization requests config
 			 .authorizeRequests()
+			 .antMatchers("/api/jobs/search").permitAll()
+			 .antMatchers("/api/centers/*/jobs/**").permitAll()
 			 // allow all who are accessing "auth" service
 			 .antMatchers(HttpMethod.POST, "/token/**", "/signup").permitAll()
 			 // Any other request must be authenticated

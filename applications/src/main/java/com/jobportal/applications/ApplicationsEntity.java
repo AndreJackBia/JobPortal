@@ -18,16 +18,18 @@ public class ApplicationsEntity {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
+	
 	@NotNull
 	@NotEmpty
 	private String username;
+	
 	@NotNull
-	@NotEmpty
 	@Temporal(TemporalType.DATE)
 	private Date dateCreation;
+	
 	@NotNull
-	@NotEmpty
 	private long jobId;
+	
 	@NotNull
 	@NotEmpty
 	private String centerUsername;

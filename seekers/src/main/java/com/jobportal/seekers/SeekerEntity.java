@@ -21,25 +21,32 @@ public class SeekerEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
 	@NotNull
 	@NotEmpty
 	private String username;
+	
 	@NotNull
 	@NotEmpty
 	@Email
 	private String email;
+	
 	@NotNull
 	@NotEmpty
 	private String firstName;
+	
 	@NotNull
 	@NotEmpty
 	private String lastName;
+	
 	@NotNull
 	@NotEmpty
 	private String city;
+	
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	private Date birth;
+	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@NotNull
 	private List<String> skills;
