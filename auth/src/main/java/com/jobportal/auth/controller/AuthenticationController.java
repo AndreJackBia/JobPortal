@@ -27,7 +27,7 @@ public class AuthenticationController {
     private UserService userService;
 
     @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
-    public ApiResponse<AuthToken> register(@RequestBody LoginUser loginUser) throws AuthenticationException {
+    public ApiResponse<AuthToken> authenticate(@RequestBody LoginUser loginUser) throws AuthenticationException {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
         final Account user = userService.findOne(loginUser.getUsername());
         final String token = jwtTokenUtil.generateToken(user);

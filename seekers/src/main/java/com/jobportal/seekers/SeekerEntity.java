@@ -9,8 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class SeekerEntity {
@@ -18,14 +21,27 @@ public class SeekerEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	@NotNull
+	@NotEmpty
 	private String username;
+	@NotNull
+	@NotEmpty
+	@Email
 	private String email;
+	@NotNull
+	@NotEmpty
 	private String firstName;
+	@NotNull
+	@NotEmpty
 	private String lastName;
+	@NotNull
+	@NotEmpty
 	private String city;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@NotNull
+	@Temporal(TemporalType.DATE)
 	private Date birth;
 	@ElementCollection(fetch = FetchType.EAGER)
+	@NotNull
 	private List<String> skills;
 
 	public SeekerEntity() {
