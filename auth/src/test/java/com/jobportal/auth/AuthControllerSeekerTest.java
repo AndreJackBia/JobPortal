@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.jobportal.auth.config.JwtAuthenticationEntryPoint;
 import com.jobportal.auth.config.JwtTokenUtil;
@@ -31,13 +32,14 @@ import com.jobportal.auth.proxy.SeekerEntityProxy;
 import com.jobportal.auth.service.UserService;
 import com.jobportal.auth.service.impl.UserServiceImpl;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.*;
 
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
 @EnableAutoConfiguration
-public class AuthControllerTest {
+public class AuthControllerSeekerTest {
 
 	@TestConfiguration
     static class UserServiceImplTestContextConfiguration {
@@ -103,5 +105,35 @@ public class AuthControllerTest {
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.content(user.toString()))
 				.andExpect(jsonPath("$.username").doesNotExist());
-	}	
+	}
+	
+	@Test
+	public void test67_saveUserSeeker() throws Exception {
+		
+		JSONObject user = new JSONObject()
+				.put("type", "SEEKER")
+                .put("username", "andrejackbia")
+                .put("password", "costa")
+				.put("email", "a.biaggi1@campus.unimib.it")
+				.put("firstName", "andrea")
+				.put("lastName", "biaggi")
+				.put("city", "Milano")
+				.put("birth", "1995-10-27")
+				.put("skills", new JSONArray().put("Java").put("OOP").put("SQL"));
+
+		Account sa = new Account();
+		sa.setId(0);
+		sa.setUsername(null);
+		sa.setPassword("costa");
+		sa.setEmail("a.biaggi1@campus.unimib.it");
+		
+		given(userRepo.save(any(Account.class))).willReturn(sa);
+		
+		mvc.perform(MockMvcRequestBuilders.post("/signup")
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.content(user.toString()))
+				//.andExpect(MockMvcResultMatchers.status().is5xxServerError())
+				.andExpect(jsonPath("$.username", is(user.get("username"))));	
+
+	}
 }
