@@ -16,16 +16,19 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jobportal.auth.config.JwtAuthenticationEntryPoint;
 import com.jobportal.auth.config.JwtTokenUtil;
 import com.jobportal.auth.controller.UserController;
 import com.jobportal.auth.dao.UserRepo;
 import com.jobportal.auth.model.Account;
+import com.jobportal.auth.model.UserGeneral;
 import com.jobportal.auth.proxy.CenterEntityProxy;
 import com.jobportal.auth.proxy.NotificationEntityProxy;
 import com.jobportal.auth.proxy.SeekerEntityProxy;
@@ -58,7 +61,7 @@ public class AuthControllerSeekerTest {
 	
 	@Autowired
     UserService userService;
-	
+
 	@MockBean
 	CenterEntityProxy centerProxy;
 	
@@ -77,21 +80,13 @@ public class AuthControllerSeekerTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
+
 	}
 
 	@Test
 	public void test58_saveUserSeeker() throws Exception {
 		
-		JSONObject user = new JSONObject()
-				.put("type", "SEEKER")
-                .put("username", null)
-                .put("password", "costa")
-				.put("email", "a.biaggi1@campus.unimib.it")
-				.put("firstName", "andrea")
-				.put("lastName", "biaggi")
-				.put("city", "Milano")
-				.put("birth", "1995-10-27")
-				.put("skills", new JSONArray().put("Java").put("OOP").put("SQL"));
+		String user = "{\"type\":\"SEEKER\",\"username\":\"andrejackbia\",\"email\":\"biaggi.jack@gmail.com\",\"firstName\":\"Andrea\",\"password\":\"costa\",\"lastName\":\"Biaggi\",\"city\":\"Milano\",\"birth\":\"1995-10-27\"}";
 
 		Account sa = new Account();
 		sa.setId(0);
@@ -100,30 +95,22 @@ public class AuthControllerSeekerTest {
 		sa.setEmail("a.biaggi1@campus.unimib.it");
 		
 		given(userRepo.save(any(Account.class))).willReturn(sa);
-		
+				
 		mvc.perform(MockMvcRequestBuilders.post("/signup")
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.content(user.toString()))
+				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
 				.andExpect(jsonPath("$.username").doesNotExist());
 	}
 	
 	@Test
 	public void test67_saveUserSeeker() throws Exception {
 		
-		JSONObject user = new JSONObject()
-				.put("type", "SEEKER")
-                .put("username", "andrejackbia")
-                .put("password", "costa")
-				.put("email", "a.biaggi1@campus.unimib.it")
-				.put("firstName", "andrea")
-				.put("lastName", "biaggi")
-				.put("city", "Milano")
-				.put("birth", "1995-10-27")
-				.put("skills", new JSONArray().put("Java").put("OOP").put("SQL"));
+		String user = "{\"type\":\"SEEKER\",\"username\":\"andrejackbia\",\"email\":\"biaggi.jack@gmail.com\",\"firstName\":\"Andrea\",\"password\":\"costa\",\"lastName\":\"Biaggi\",\"birth\":\"1995-10-27\"}";
 
 		Account sa = new Account();
 		sa.setId(0);
-		sa.setUsername(null);
+		sa.setUsername("andrejackbia");
 		sa.setPassword("costa");
 		sa.setEmail("a.biaggi1@campus.unimib.it");
 		
@@ -132,8 +119,30 @@ public class AuthControllerSeekerTest {
 		mvc.perform(MockMvcRequestBuilders.post("/signup")
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.content(user.toString()))
-				//.andExpect(MockMvcResultMatchers.status().is5xxServerError())
-				.andExpect(jsonPath("$.username", is(user.get("username"))));	
+				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+				.andExpect(jsonPath("$.username", is("andrejackbia")));	
+	}
+	
+	@Test
+	public void test75_saveUserSeeker() throws Exception {
+		
+		String user = "{\"type\":\"SEEKER\",\"username\":\"andrejackbia\",\"email\":\"biaggi.jack@gmail.com\",\"firstName\":\"Andrea\",\"password\":\"costa\",\"lastName\":\"Biaggi\",\"city\":\"Milano\",\"birth\":\"1995-10-27\", \"skills\": [\"Java\"]}";
+		
+		Account sa = new Account();
+		
+		sa.setId(0);
+		sa.setUsername("andrejackbia");
+		sa.setPassword("costa");
+		sa.setEmail("a.biaggi1@campus.unimib.it");
+
+		given(userRepo.save(any(Account.class))).willReturn(sa);
+
+		
+		mvc.perform(MockMvcRequestBuilders.post("/signup")
+				.content(user)
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+				.andExpect(jsonPath("$.username", is("andrejackbia")));
 
 	}
 }
