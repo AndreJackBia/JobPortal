@@ -4,7 +4,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-import org.hamcrest.Matchers;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -30,10 +31,11 @@ import com.jobportal.auth.model.Account;
 import com.jobportal.auth.model.LoginUser;
 import com.jobportal.auth.service.impl.UserServiceImpl;
 
+import org.mockito.AdditionalMatchers;
+import org.mockito.ArgumentMatcher;
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(AuthenticationController.class)
-//@AutoConfigureMockMvc(secure = false)
-//@ContextConfiguration(exclude=WebSecurityConfig.class)
 public class AuthControllerCenterTest {
 	@MockBean
 	UserServiceImpl userService;
@@ -61,36 +63,26 @@ public class AuthControllerCenterTest {
 		account.setEmail("a.biaggi1@campus.unimib.it");
 		account.setRole(Account.Role.JOB_CENTER);
 		
-		given(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(null, "costa")))
-		.willThrow(new BadCredentialsException("Bad credentials!"));
-		
-		given(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken("", "costa")))
-		.willThrow(new BadCredentialsException("Bad credentials!"));
-		
-		given(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken("Batman", "costa")))
-		.willThrow(new BadCredentialsException("Bad credentials!"));
-		
-		given(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken("Andrea", null)))
-		.willThrow(new BadCredentialsException("Bad credentials!"));
-		
-		given(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken("Andrea", "")))
-		.willThrow(new BadCredentialsException("Bad credentials!"));
-		
-		given(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken("Andrea", "wrongPassword")))
-		.willThrow(new BadCredentialsException("Bad credentials!"));
+		given(authenticationManager.authenticate(org.mockito.BDDMockito.argThat(new WrongUsernamePasswordAuthenticationTokenMatcher())))
+				.willThrow(new BadCredentialsException("Bad credentials!"));
 		
 		given(userService.findOne("Andrea"))
 		.willReturn(account);
 		
 		given(jwtTokenUtil.generateToken(account))
 		.willReturn("THIS IS A BEAUTIFUL TOKEN");
-
-		//given(authenticationManager.authenticate(org.mockito.BDDMockito.any()))
-		//.willThrow(new BadCredentialsException("Bad credentials!"));
+	}
+	
+	private class WrongUsernamePasswordAuthenticationTokenMatcher implements ArgumentMatcher<UsernamePasswordAuthenticationToken> {	 
+	    @Override
+	    public boolean matches(UsernamePasswordAuthenticationToken right) {
+	        return !(right.getPrincipal().equals("Andrea")
+	        		&& right.getCredentials().equals("costa"));
+	    }
 	}
 
 	@Test
-	public void whenInvalidUsername_thenExceptionShouldBeThrown() {
+	public void test39_whenInvalidUsername_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername(null);
 		loginUser.setPassword("costa");
@@ -115,7 +107,132 @@ public class AuthControllerCenterTest {
 	}
 	
 	@Test
-	public void whenValid_thenOk() {
+	public void test40_whenEmptyUsername_thenExceptionShouldBeThrown() {
+		LoginUser loginUser = new LoginUser();
+		loginUser.setUsername("");
+		loginUser.setPassword("costa");
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonLoginUser;
+		try {
+			jsonLoginUser = mapper.writeValueAsString(loginUser);
+
+			try {
+				mvc.perform(MockMvcRequestBuilders.post("/token/generate-token")
+						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+						.content(jsonLoginUser))
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.forwardedUrl(null));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void test41_whenNonExistingUsername_thenExceptionShouldBeThrown() {
+		LoginUser loginUser = new LoginUser();
+		loginUser.setUsername("Batman");
+		loginUser.setPassword("costa");
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonLoginUser;
+		try {
+			jsonLoginUser = mapper.writeValueAsString(loginUser);
+
+			try {
+				mvc.perform(MockMvcRequestBuilders.post("/token/generate-token")
+						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+						.content(jsonLoginUser))
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.forwardedUrl(null));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void test42_whenNullPassword_thenExceptionShouldBeThrown() {
+		LoginUser loginUser = new LoginUser();
+		loginUser.setUsername("Andrea");
+		loginUser.setPassword(null);
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonLoginUser;
+		try {
+			jsonLoginUser = mapper.writeValueAsString(loginUser);
+
+			try {
+				mvc.perform(MockMvcRequestBuilders.post("/token/generate-token")
+						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+						.content(jsonLoginUser))
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.forwardedUrl(null));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void test43_whenEmptyPassword_thenExceptionShouldBeThrown() {
+		LoginUser loginUser = new LoginUser();
+		loginUser.setUsername(null);
+		loginUser.setPassword("");
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonLoginUser;
+		try {
+			jsonLoginUser = mapper.writeValueAsString(loginUser);
+
+			try {
+				mvc.perform(MockMvcRequestBuilders.post("/token/generate-token")
+						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+						.content(jsonLoginUser))
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.forwardedUrl(null));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void test44_whenInvalidPassword_thenExceptionShouldBeThrown() {
+		LoginUser loginUser = new LoginUser();
+		loginUser.setUsername("Andrea");
+		loginUser.setPassword("wrongPassword");
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonLoginUser;
+		try {
+			jsonLoginUser = mapper.writeValueAsString(loginUser);
+
+			try {
+				mvc.perform(MockMvcRequestBuilders.post("/token/generate-token")
+						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+						.content(jsonLoginUser))
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.forwardedUrl(null));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void test45_whenValid_thenOk() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername("Andrea");
 		loginUser.setPassword("costa");
