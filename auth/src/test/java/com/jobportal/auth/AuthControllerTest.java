@@ -36,7 +36,7 @@ import org.mockito.ArgumentMatcher;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(AuthenticationController.class)
-public class AuthControllerCenterTest {
+public class AuthControllerTest {
 	@MockBean
 	UserServiceImpl userService;
 
