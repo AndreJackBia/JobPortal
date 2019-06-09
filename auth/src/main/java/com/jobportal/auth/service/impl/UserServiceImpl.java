@@ -137,9 +137,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		else if (user instanceof UserCenter)
 			newUser.setRole(Role.JOB_CENTER);
 		newUser.setEmail(user.getEmail());
+		System.out.println("prima " + newUser);
 		if (!userRepo.existsByUsername(user.getUsername())) {
 			dispatchUser(user);
 			Account newUserSave = userRepo.save(newUser);
+			System.out.println("dopo " + newUserSave);
 			return ResponseEntity.ok().body(newUserSave);
 		} else {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();

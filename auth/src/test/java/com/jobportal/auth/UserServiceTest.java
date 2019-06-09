@@ -1,5 +1,7 @@
 package com.jobportal.auth;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 import org.junit.Before;
@@ -9,14 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.jobportal.auth.dao.UserRepo;
 import com.jobportal.auth.model.Account;
+import com.jobportal.auth.model.Account.Role;
+import com.jobportal.auth.model.UserGeneral;
+import com.jobportal.auth.model.UserSeeker;
 import com.jobportal.auth.proxy.CenterEntityProxy;
 import com.jobportal.auth.proxy.NotificationEntityProxy;
+import com.jobportal.auth.proxy.SeekerEntity;
 import com.jobportal.auth.proxy.SeekerEntityProxy;
 import com.jobportal.auth.service.UserService;
 import com.jobportal.auth.service.impl.UserServiceImpl;
@@ -53,7 +60,22 @@ public class UserServiceTest {
 
 	@Before
 	public void setUp() {
+			
+		//[id=0, email=email@email.com, username=andrejackbia, password=costa, role=SEEKER]
+		
+		Account sa = new Account();
+		
+		sa.setId(0);
+		sa.setUsername("andrejackbia");
+		sa.setPassword("costa");
+		sa.setEmail("email@email.com");
+		sa.setRole(Role.SEEKER);
+		
+		given(seekerProxy.createSeeker(any(SeekerEntity.class))).willReturn(ResponseEntity.ok().build());
+		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);		
+		given(bcryptEncoder.encode("costa")).willReturn("costa");
 		given(userRepository.findByUsername(null)).willThrow(new BadCredentialsException("LOL"));
+		given(userRepository.save(sa)).willReturn(sa);
 	}
 
 	@Test(expected = BadCredentialsException.class)
@@ -62,5 +84,22 @@ public class UserServiceTest {
 		Account account = userService.findOne(username);
 
 		//assertThat(account.getUsername(), equalToIgnoringCase(username));
+	}
+	
+	@Test
+	public void test75_saveUserSeeker() throws Exception {
+		
+		UserGeneral ug = new UserSeeker();
+		
+		ug.setUsername("andrejackbia");
+		ug.setPassword("costa");
+		ug.setEmail("email@email.com");
+				
+		ResponseEntity<Account> r = userService.save(ug);
+		
+		System.out.println(r);
+		Account sug = r.getBody();
+		assertEquals(sug.getUsername(), "andrejackbia");
+
 	}
 }

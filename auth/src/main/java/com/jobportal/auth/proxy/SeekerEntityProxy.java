@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface SeekerEntityProxy {
 
 	@RequestMapping(value = "/api/seekers", method = RequestMethod.POST)
-	void createSeeker(SeekerEntity seekerEntity);
+	public ResponseEntity createSeeker(SeekerEntity seekerEntity);
 
 	@RequestMapping(value = "/api/seekers/{username}", method = RequestMethod.DELETE)
 	public ResponseEntity deleteSeeker(@RequestHeader("X-User-Header") String loggedUser,
