@@ -1,13 +1,17 @@
 package com.jobportal.jobcenters;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+<<<<<<< HEAD
 
 import java.util.HashSet;
 
 import javax.validation.ConstraintViolationException;
 
 import org.json.JSONException;
+=======
+>>>>>>> 8126586f86d7b22fb48566dec1638140526f58c2
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -242,5 +246,25 @@ public class JobCentersControllerTest {
 						.content(jsonObject.toString()))
 				.andExpect(MockMvcResultMatchers.status().is(201)).andDo(MockMvcResultHandlers.print()).andReturn();
 		System.out.println(result.getResponse().getContentAsString());
+	}
+	
+	@Test
+	public void test3_getExistingJobCenterByUsername() throws Exception {
+		JobCenterEntity jobCenter0 = new JobCenterEntity(0, "Adecco", "adec", "adecco.adec@gmail.com");
+		
+		given(jobCenterRepository.findByUsername("adec")).willReturn(jobCenter0);
+		
+		mvc.perform(MockMvcRequestBuilders.get("/api/centers/adec")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(jsonPath("username", is(jobCenter0.getUsername())));
+				
+	}
+	
+	@Test
+	public void test4_getNotExistingJobCenterByUsername() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/api/centers/adec")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 }

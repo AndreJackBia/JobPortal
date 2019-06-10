@@ -55,4 +55,5 @@ public class JobsControllerTest {
 				.andExpect(jsonPath("$", Matchers.hasSize(2)))
 				.andExpect(jsonPath("$[0].location", is(job0.getLocation())));
 	}
+	
 }
