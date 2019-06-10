@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface CenterEntityProxy {
 
 	@RequestMapping(value = "/api/centers", method = RequestMethod.POST)
-	public void createCenter(@RequestBody JobCenterEntity jobCenterEntity);
+	public ResponseEntity createCenter(@RequestBody JobCenterEntity jobCenterEntity);
 
 	@RequestMapping(value="/api/centers/{centerName}", method = RequestMethod.GET)
 	public boolean existsCenter(@PathVariable("centerName") String centerName);
 
 	@RequestMapping(value = "/api/centers/{username}", method = RequestMethod.DELETE)
-	public void deleteCenter(@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username);
+	public ResponseEntity deleteCenter(@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username);
 
 	@RequestMapping(value = "/api/centers/{username}", method = RequestMethod.PUT)
 	public ResponseEntity<JobCenterEntity> changeCenter(@RequestHeader("X-User-Header") String loggedUser,

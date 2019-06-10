@@ -25,8 +25,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.jobportal.auth.dao.UserRepo;
 import com.jobportal.auth.model.Account;
 import com.jobportal.auth.model.Account.Role;
+import com.jobportal.auth.model.UserCenter;
 import com.jobportal.auth.model.UserSeeker;
 import com.jobportal.auth.proxy.CenterEntityProxy;
+import com.jobportal.auth.proxy.JobCenterEntity;
 import com.jobportal.auth.proxy.NotificationEntityProxy;
 import com.jobportal.auth.proxy.SeekerEntity;
 import com.jobportal.auth.proxy.SeekerEntityProxy;
@@ -63,18 +65,21 @@ public class UserServiceTest {
 	@MockBean
 	BCryptPasswordEncoder bcryptEncoder;
 
-	private Account account;
+	private Account accountSeeker;
 	private UserSeeker seeker;
+	
+	private Account accountCenter;
+	private UserCenter center;
 	
 	@Before
 	public void setUp() {
 			
-		account = new Account();
-		account.setId(0);
-		account.setUsername("andrejackbia");
-		account.setPassword("costa");
-		account.setEmail("a.biaggi1@campus.unimib.it");
-		account.setRole(Role.SEEKER);
+		accountSeeker = new Account();
+		accountSeeker.setId(0);
+		accountSeeker.setUsername("andrejackbia");
+		accountSeeker.setPassword("costa");
+		accountSeeker.setEmail("a.biaggi1@campus.unimib.it");
+		accountSeeker.setRole(Role.SEEKER);
 		
 		seeker = new UserSeeker();
 		seeker.setUsername("andrejackbia");
@@ -86,17 +91,286 @@ public class UserServiceTest {
 		seeker.setBirth(new Date());
 		seeker.setSkills(Arrays.asList("Java", "OOP", "SQL"));
 		
+		accountCenter = new Account();
+		accountCenter.setId(0);
+		accountCenter.setUsername("matteo94");
+		accountCenter.setPassword("campana");
+		accountCenter.setEmail("mc94@gmail.it");
+		accountCenter.setRole(Role.JOB_CENTER);
+		
+		center = new UserCenter();
+		center.setUsername("matteo94");
+		center.setPassword("campana");
+		center.setEmail("mc94@gmail.it");
+		center.setCenterName("Incredible Center");
+		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);		
-		given(bcryptEncoder.encode(account.getPassword())).willReturn(account.getPassword());
-		given(userRepository.findByUsername(null)).willThrow(new BadCredentialsException("LOL"));
+		given(bcryptEncoder.encode(accountSeeker.getPassword())).willReturn(accountSeeker.getPassword());
+		given(bcryptEncoder.encode(accountCenter.getPassword())).willReturn(accountCenter.getPassword());
+		given(userRepository.findByUsername(null)).willThrow(new BadCredentialsException("Bad Credentials!"));
 	}
 
-	@Test(expected = BadCredentialsException.class)
+	/*@Test(expected = BadCredentialsException.class)
 	public void whenInvalidUsername_thenExceptionShouldBeThrown() {
 		String username = null;
 		Account account = userService.findOne(username);
 
 		//assertThat(account.getUsername(), equalToIgnoringCase(username));
+	}*/
+	
+	/**
+	 * TEST 47
+	 * 
+	 * Sign up with username null
+	 * 
+	 */
+	@Test(expected = ConstraintViolationException.class)
+	public void test47_saveUserCenter() throws Exception {
+		
+		Account sa = accountCenter;
+		sa.setUsername(null);
+		
+		given(userRepository.existsByUsername("matteo94")).willReturn(false);	
+		given(centerProxy.createCenter(any(JobCenterEntity.class))).willThrow(ConstraintViolationException.class);
+		given(userRepository.save(sa)).willThrow(ConstraintViolationException.class);
+		
+		UserCenter uc = center;
+		uc.setUsername(null);
+		
+		userService.save(uc);
+		
+		assertEquals(null, uc.getUsername());
+	}
+	
+	/**
+	 * TEST 48
+	 * 
+	 * Sign up with username empty
+	 * 
+	 */
+	@Test(expected = ConstraintViolationException.class)
+	public void test48_saveUserCenter() throws Exception {
+		
+		Account sa = accountCenter;
+		sa.setUsername("");
+		
+		given(userRepository.existsByUsername("matteo94")).willReturn(false);	
+		given(centerProxy.createCenter(any(JobCenterEntity.class))).willThrow(ConstraintViolationException.class);
+		given(userRepository.save(sa)).willThrow(ConstraintViolationException.class);
+		
+		UserCenter uc = center;
+		uc.setUsername("");
+		
+		userService.save(uc);
+		
+		assertEquals(null, uc.getUsername());
+	}
+	
+	/**
+	 * TEST 49
+	 * 
+	 * Sign up with an existing username
+	 * 
+	 */
+	@Test
+	public void test49_saveUserCenter() throws Exception {
+		
+		Account sa = accountCenter;
+		
+		given(userRepository.existsByUsername("matteo94")).willReturn(true);
+		given(userRepository.save(sa)).willReturn(sa);
+		
+		UserCenter uc = center;
+		
+		ResponseEntity<Account> r = userService.save(uc);
+		
+		assertEquals(409, r.getStatusCodeValue());
+
+	}
+	
+	/**
+	 * TEST 50
+	 * 
+	 * Sign up with password null
+	 * 
+	 */
+	@Test(expected = ConstraintViolationException.class)
+	public void test50_saveUserCenter() throws Exception {
+		
+		Account sa = accountCenter;
+		sa.setPassword(null);
+		
+		given(userRepository.existsByUsername("matteo94")).willReturn(false);	
+		given(centerProxy.createCenter(any(JobCenterEntity.class))).willThrow(ConstraintViolationException.class);
+		given(userRepository.save(sa)).willThrow(ConstraintViolationException.class);
+		
+		UserCenter uc = center;
+		uc.setPassword(null);
+		
+		userService.save(uc);
+		
+		assertEquals(null, uc.getPassword());
+
+	}
+	
+	/**
+	 * TEST 51
+	 * 
+	 * Sign up with password empty
+	 * 
+	 */
+	@Test(expected = ConstraintViolationException.class)
+	public void test51_saveUserCenter() throws Exception {
+		
+		Account sa = accountCenter;
+		sa.setPassword("");
+		
+		given(userRepository.existsByUsername("matteo94")).willReturn(false);	
+		given(centerProxy.createCenter(any(JobCenterEntity.class))).willThrow(ConstraintViolationException.class);
+		given(userRepository.save(sa)).willThrow(ConstraintViolationException.class);
+		
+		UserCenter uc = center;
+		uc.setPassword("");
+		
+		userService.save(uc);
+		
+		assertEquals("", uc.getPassword());
+	}
+	
+	/**
+	 * TEST 52
+	 * 
+	 * Sign up with email null
+	 * 
+	 */
+	@Test(expected = ConstraintViolationException.class)
+	public void test52_saveUserCenter() throws Exception {
+		
+		Account sa = accountCenter;
+		sa.setEmail(null);
+		
+		given(userRepository.existsByUsername("matteo94")).willReturn(false);	
+		given(centerProxy.createCenter(any(JobCenterEntity.class))).willThrow(ConstraintViolationException.class);
+		given(userRepository.save(sa)).willThrow(ConstraintViolationException.class);
+		
+		UserCenter uc = center;
+		uc.setEmail(null);
+		
+		userService.save(uc);
+		
+		assertEquals(null, uc.getEmail());
+	}
+	
+	/**
+	 * TEST 53
+	 * 
+	 * Sign up with email empty
+	 * 
+	 */
+	@Test(expected = ConstraintViolationException.class)
+	public void test53_saveUserCenter() throws Exception {
+		
+		Account sa = accountCenter;
+		sa.setEmail("");
+		
+		given(userRepository.existsByUsername("matteo94")).willReturn(false);	
+		given(centerProxy.createCenter(any(JobCenterEntity.class))).willThrow(ConstraintViolationException.class);
+		given(userRepository.save(sa)).willThrow(ConstraintViolationException.class);
+		
+		UserCenter uc = center;
+		uc.setEmail("");
+		
+		userService.save(uc);
+		
+		assertEquals("", uc.getEmail());
+	}
+	
+	/**
+	 * TEST 54
+	 * 
+	 * Sign up with email invalid
+	 * 
+	 */
+	@Test(expected = ConstraintViolationException.class)
+	public void test54_saveUserCenter() throws Exception {
+		
+		Account sa = accountCenter;
+		sa.setEmail("crke938");
+		
+		given(userRepository.existsByUsername("matteo94")).willReturn(false);	
+		given(centerProxy.createCenter(any(JobCenterEntity.class))).willThrow(ConstraintViolationException.class);
+		given(userRepository.save(sa)).willThrow(ConstraintViolationException.class);
+		
+		UserCenter uc = center;
+		uc.setEmail("crke938");
+		
+		userService.save(uc);
+	}
+	
+	/**
+	 * TEST 55
+	 * 
+	 * Sign up with name null
+	 * 
+	 */
+	@Test(expected = ConstraintViolationException.class)
+	public void test55_saveUserCenter() throws Exception {
+		
+		Account sa = accountCenter;
+		
+		given(userRepository.existsByUsername("matteo94")).willReturn(false);	
+		given(centerProxy.createCenter(any(JobCenterEntity.class))).willThrow(ConstraintViolationException.class);
+		given(userRepository.save(sa)).willThrow(ConstraintViolationException.class);
+		
+		UserCenter uc = center;
+		uc.setCenterName(null);
+		
+		userService.save(uc);
+	}
+	
+	/**
+	 * TEST 56
+	 * 
+	 * Sign up with name empty
+	 * 
+	 */
+	@Test(expected = ConstraintViolationException.class)
+	public void test56_saveUserCenter() throws Exception {
+		
+		Account sa = accountCenter;
+		
+		given(userRepository.existsByUsername("matteo94")).willReturn(false);	
+		given(centerProxy.createCenter(any(JobCenterEntity.class))).willThrow(ConstraintViolationException.class);
+		given(userRepository.save(sa)).willThrow(ConstraintViolationException.class);
+		
+		UserCenter uc = center;
+		uc.setCenterName("");
+		
+		userService.save(uc);
+	}
+	
+	/**
+	 * TEST 57
+	 * 
+	 * Sign up with a valid input
+	 * 
+	 */
+	@Test
+	public void test57_saveUserSeeker() throws Exception {
+		
+		Account sa = accountCenter;
+		
+		given(userRepository.existsByUsername("matteo94")).willReturn(false);
+		given(userRepository.save(sa)).willReturn(sa);
+		
+		UserCenter uc = center;
+		
+		ResponseEntity<Account> r = userService.save(uc);
+		
+		Account sus = r.getBody();
+
+		assertEquals(sa, sus);
+
 	}
 	
 	/**
@@ -108,7 +382,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test58_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		sa.setUsername(null);
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
@@ -133,7 +407,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test59_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		sa.setUsername("");
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
@@ -158,7 +432,7 @@ public class UserServiceTest {
 	@Test
 	public void test60_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(true);
 		given(userRepository.save(sa)).willReturn(sa);
@@ -180,7 +454,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test61_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		sa.setPassword(null);
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
@@ -205,7 +479,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test62_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		sa.setPassword("");
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
@@ -230,7 +504,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test63_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
 		given(seekerProxy.createSeeker(any(SeekerEntity.class))).willThrow(ConstraintViolationException.class);
@@ -255,7 +529,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test64_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
 		given(seekerProxy.createSeeker(any(SeekerEntity.class))).willThrow(ConstraintViolationException.class);
@@ -280,7 +554,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test65_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
 		given(seekerProxy.createSeeker(any(SeekerEntity.class))).willThrow(ConstraintViolationException.class);
@@ -305,7 +579,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test66_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
 		given(seekerProxy.createSeeker(any(SeekerEntity.class))).willThrow(ConstraintViolationException.class);
@@ -330,7 +604,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test67_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
 		given(seekerProxy.createSeeker(any(SeekerEntity.class))).willThrow(ConstraintViolationException.class);
@@ -355,7 +629,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test68_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
 		given(seekerProxy.createSeeker(any(SeekerEntity.class))).willThrow(ConstraintViolationException.class);
@@ -380,7 +654,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test69_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
 		given(seekerProxy.createSeeker(any(SeekerEntity.class))).willThrow(ConstraintViolationException.class);
@@ -405,10 +679,10 @@ public class UserServiceTest {
 	@Test
 	public void test70_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
-		given(seekerProxy.createSeeker(any(SeekerEntity.class))).willReturn(ResponseEntity.ok(account));
+		given(seekerProxy.createSeeker(any(SeekerEntity.class))).willReturn(ResponseEntity.ok(accountSeeker));
 		given(userRepository.save(sa)).willReturn(sa);
 		
 		UserSeeker us = seeker;
@@ -434,7 +708,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test71_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
 		given(seekerProxy.createSeeker(any(SeekerEntity.class))).willThrow(ConstraintViolationException.class);
@@ -458,7 +732,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test72_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		sa.setEmail(null);
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
@@ -483,7 +757,7 @@ public class UserServiceTest {
 	@Test(expected = ConstraintViolationException.class)
 	public void test73_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		sa.setEmail("");
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
@@ -508,7 +782,7 @@ public class UserServiceTest {
 	@Test
 	public void test74_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		sa.setEmail("a@a.com");
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);
@@ -533,7 +807,7 @@ public class UserServiceTest {
 	@Test
 	public void test75_saveUserSeeker() throws Exception {
 		
-		Account sa = account;
+		Account sa = accountSeeker;
 		
 		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);
 		given(userRepository.save(sa)).willReturn(sa);
