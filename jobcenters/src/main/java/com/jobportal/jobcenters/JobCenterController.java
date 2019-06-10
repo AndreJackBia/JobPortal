@@ -40,7 +40,7 @@ public class JobCenterController {
 	}
 
 	@RequestMapping(value = "/api/centers/{username}", method = RequestMethod.GET)
-	public ResponseEntity<JobCenterEntity> getJobCenter(@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username) {
+	public ResponseEntity<JobCenterEntity> getJobCenter(@PathVariable String username) {
 		
 		JobCenterEntity jobCenterEntity = jobCenterRepository.findByUsername(username);
 		if (jobCenterEntity != null) {
@@ -73,7 +73,7 @@ public class JobCenterController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		if(!checkField(jobCenter)) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).build();
 		}
 		JobCenterEntity jobCenterOld = jobCenterRepository.findByUsername(username);
 		jobCenterOld.setName(jobCenter.getName());

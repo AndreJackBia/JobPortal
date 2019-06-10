@@ -15,7 +15,7 @@ public class NotificationController {
 	
 	@RequestMapping(value = "/api/send-notification", method = RequestMethod.POST)
 	public ResponseEntity sendNotification(@RequestBody NotificationEntity notification) {
-		if(checkFieldMail(notification)) {
+		if(checkField(notification)) {
 			try {
 				if (notification.getUsername() == null)
 					GmailSender.sendMessage(notification.getDestination(), notification.getSubject(), notification.getBody());
@@ -36,17 +36,26 @@ public class NotificationController {
 		}
 	}
 	
+	public boolean checkFieldMail(String destinationEmail) {
+		String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+		  return destinationEmail.matches(regex);
+	}
 	
-	public boolean checkFieldMail(NotificationEntity destinationMail) {
-		if (destinationMail.getDestination().equals(null)) {
+	public boolean checkField(NotificationEntity notificationEntity) {
+		if ((notificationEntity.getDestination() == null) || 
+			(notificationEntity.getDestination().equals("")) || 
+			(!checkFieldMail(notificationEntity.getDestination()))) {
 			return false;
 		}
-		if (destinationMail.getSubject().equals(null)) {
+		if ((notificationEntity.getSubject() == null) || 
+			(notificationEntity.getSubject().equals(""))) {
 			return false;
 		}
-		if (destinationMail.getBody().equals(null)) {
+		if ((notificationEntity.getBody() == null) ||
+			(notificationEntity.getBody().equals(""))){
 			return false;
 		}
+		
 		return true;
 	}
 }

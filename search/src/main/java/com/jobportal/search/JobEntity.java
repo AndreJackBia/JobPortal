@@ -41,6 +41,22 @@ public class JobEntity {
 	@NotNull
 	@NotEmpty
 	private String companyName;
+	
+	public JobEntity() {
+		
+	}
+	
+	public JobEntity(long id, String username, String position, String jobDescription, String location,
+			Date dateCreation, String companyName) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.position = position;
+		this.jobDescription = jobDescription;
+		this.location = location;
+		this.dateCreation = dateCreation;
+		this.companyName = companyName;
+	}
 
     public long getId() {
         return id;
