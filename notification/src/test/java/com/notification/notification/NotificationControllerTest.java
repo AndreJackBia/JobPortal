@@ -31,7 +31,7 @@ public class NotificationControllerTest {
 	}
 
 	@Test
-	public void test23_sendNotification_DestNull_SubNotEmpty_BodyNotEmpty() throws Exception {
+	public void test22_sendNotification_DestNull_SubNotEmpty_BodyNotEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
 				.put("subject", "sub")
 				.put("body", "bod");
@@ -43,7 +43,7 @@ public class NotificationControllerTest {
 	}
 	
 	@Test
-	public void test24_sendNotification_DestEmpty_SubNotEmpty_BodyNotEmpty() throws Exception {
+	public void test23_sendNotification_DestEmpty_SubNotEmpty_BodyNotEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
 				.put("destination", "")
 				.put("subject", "sub")
@@ -56,7 +56,7 @@ public class NotificationControllerTest {
 	}
 	
 	@Test
-	public void test25_sendNotification_DestNotValid_SubNotEmpty_BodyNotEmpty() throws Exception {
+	public void test24_sendNotification_DestNotValid_SubNotEmpty_BodyNotEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
 				.put("destination", "loren.s")
 				.put("subject", "sub")
@@ -69,7 +69,7 @@ public class NotificationControllerTest {
 	}
 	
 	@Test
-	public void test26_sendNotification_DestValid_SubNull_BodyNotEmpty() throws Exception {
+	public void test25_sendNotification_DestValid_SubNull_BodyNotEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
 				.put("destination", "l.vito@hotmail.com")
 				.put("body", "bod");
@@ -81,7 +81,7 @@ public class NotificationControllerTest {
 	}
 	
 	@Test
-	public void test27_sendNotification_DestValid_SubEmpty_BodyNotEmpty() throws Exception {
+	public void test26_sendNotification_DestValid_SubEmpty_BodyNotEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
 				.put("destination", "l.vito@hotmail.com")
 				.put("subject", "")
@@ -94,7 +94,7 @@ public class NotificationControllerTest {
 	}
 	
 	@Test
-	public void test28_sendNotification_DestValid_SubNotEmpty_BodyNull() throws Exception {
+	public void test27_sendNotification_DestValid_SubNotEmpty_BodyNull() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
 				.put("destination", "l.vito@hotmail.com")
 				.put("subject", "sub");
@@ -106,7 +106,7 @@ public class NotificationControllerTest {
 	}
 	
 	@Test
-	public void test29_sendNotification_DestValid_SubNotEmpty_BodyEmpty() throws Exception {
+	public void test28_sendNotification_DestValid_SubNotEmpty_BodyEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
 				.put("destination", "l.vito@hotmail.com")
 				.put("body", "")
@@ -119,7 +119,7 @@ public class NotificationControllerTest {
 	}
 	
 	@Test
-	public void test30_sendNotification_DestValid_SubNotEmpty_BodyNotEmpty() throws Exception {
+	public void test29_sendNotification_DestValid_SubNotEmpty_BodyNotEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
 				.put("destination", "l.vito@hotmail.com")
 				.put("body", "bod")

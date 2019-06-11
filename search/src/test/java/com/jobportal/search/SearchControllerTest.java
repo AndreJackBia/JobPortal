@@ -38,7 +38,7 @@ public class SearchControllerTest {
 	}
 	
 	@Test
-	public void test5_getJobs_QueryNull_LocationEmpty() throws Exception {
+	public void test3_getJobs_QueryNull_LocationEmpty() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 		JobEntity job1 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Milano", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 
@@ -55,7 +55,7 @@ public class SearchControllerTest {
 	}
 	
 	@Test
-	public void test6_getJobs_QueryEmpty_LocationNotEmpty() throws Exception {
+	public void test4_getJobs_QueryEmpty_LocationNotEmpty() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 		JobEntity job1 = new JobEntity(0, "Albert2", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 		JobEntity job2 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Pavia", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
@@ -75,7 +75,7 @@ public class SearchControllerTest {
 	}
 	
 	@Test
-	public void test7_getJobs_QueryNotEmpty_LocationEmpty() throws Exception {
+	public void test5_getJobs_QueryNotEmpty_LocationEmpty() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 		JobEntity job1 = new JobEntity(0, "Luca2", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 		JobEntity job2 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Pavia", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
@@ -95,7 +95,7 @@ public class SearchControllerTest {
 	}
 	
 	@Test
-	public void test8_getJobs_QueryNotEmpty_LocationNull() throws Exception {
+	public void test6_getJobs_QueryNotEmpty_LocationNull() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 		JobEntity job1 = new JobEntity(0, "Luca2", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 		JobEntity job2 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Pavia", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
@@ -113,7 +113,7 @@ public class SearchControllerTest {
 	}
 	
 	@Test
-	public void test9_getJobs_QueryNotEmpty_LocationNull() throws Exception {
+	public void test7_getJobs_QueryNotEmpty_LocationNull() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 		JobEntity job1 = new JobEntity(0, "Luca2", "test position", "test description", "Pavia", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 		JobEntity job2 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Milano", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
