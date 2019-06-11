@@ -82,7 +82,7 @@ public class AuthControllerTest {
 	}
 
 	@Test
-	public void test39_whenInvalidUsername_thenExceptionShouldBeThrown() {
+	public void test47_whenInvalidUsername_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername(null);
 		loginUser.setPassword("costa");
@@ -107,7 +107,7 @@ public class AuthControllerTest {
 	}
 	
 	@Test
-	public void test40_whenEmptyUsername_thenExceptionShouldBeThrown() {
+	public void test48_whenEmptyUsername_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername("");
 		loginUser.setPassword("costa");
@@ -132,7 +132,7 @@ public class AuthControllerTest {
 	}
 	
 	@Test
-	public void test41_whenNonExistingUsername_thenExceptionShouldBeThrown() {
+	public void test49_whenNonExistingUsername_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername("Batman");
 		loginUser.setPassword("costa");
@@ -157,7 +157,7 @@ public class AuthControllerTest {
 	}
 	
 	@Test
-	public void test42_whenNullPassword_thenExceptionShouldBeThrown() {
+	public void test50_whenNullPassword_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername("Andrea");
 		loginUser.setPassword(null);
@@ -182,7 +182,7 @@ public class AuthControllerTest {
 	}
 	
 	@Test
-	public void test43_whenEmptyPassword_thenExceptionShouldBeThrown() {
+	public void test51_whenEmptyPassword_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername(null);
 		loginUser.setPassword("");
@@ -207,7 +207,7 @@ public class AuthControllerTest {
 	}
 	
 	@Test
-	public void test44_whenInvalidPassword_thenExceptionShouldBeThrown() {
+	public void test52_whenInvalidPassword_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername("Andrea");
 		loginUser.setPassword("wrongPassword");
@@ -232,7 +232,7 @@ public class AuthControllerTest {
 	}
 	
 	@Test
-	public void test45_whenValid_thenOk() {
+	public void test53_whenValid_thenOk() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername("Andrea");
 		loginUser.setPassword("costa");

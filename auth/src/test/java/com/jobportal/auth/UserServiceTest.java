@@ -119,13 +119,13 @@ public class UserServiceTest {
 	}*/
 	
 	/**
-	 * TEST 47
+	 * TEST 54
 	 * 
 	 * Sign up with username null
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test47_saveUserCenter() throws Exception {
+	public void test54_saveUserCenter() throws Exception {
 		
 		Account sa = accountCenter;
 		sa.setUsername(null);
@@ -143,13 +143,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 48
+	 * TEST 55
 	 * 
 	 * Sign up with username empty
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test48_saveUserCenter() throws Exception {
+	public void test55_saveUserCenter() throws Exception {
 		
 		Account sa = accountCenter;
 		sa.setUsername("");
@@ -167,13 +167,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 49
+	 * TEST 56
 	 * 
 	 * Sign up with an existing username
 	 * 
 	 */
 	@Test
-	public void test49_saveUserCenter() throws Exception {
+	public void test56_saveUserCenter() throws Exception {
 		
 		Account sa = accountCenter;
 		
@@ -189,13 +189,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 50
+	 * TEST 57
 	 * 
 	 * Sign up with password null
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test50_saveUserCenter() throws Exception {
+	public void test57_saveUserCenter() throws Exception {
 		
 		Account sa = accountCenter;
 		sa.setPassword(null);
@@ -214,13 +214,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 51
+	 * TEST 58
 	 * 
 	 * Sign up with password empty
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test51_saveUserCenter() throws Exception {
+	public void test58_saveUserCenter() throws Exception {
 		
 		Account sa = accountCenter;
 		sa.setPassword("");
@@ -238,13 +238,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 52
+	 * TEST 59
 	 * 
 	 * Sign up with email null
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test52_saveUserCenter() throws Exception {
+	public void test59_saveUserCenter() throws Exception {
 		
 		Account sa = accountCenter;
 		sa.setEmail(null);
@@ -262,13 +262,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 53
+	 * TEST 60
 	 * 
 	 * Sign up with email empty
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test53_saveUserCenter() throws Exception {
+	public void test60_saveUserCenter() throws Exception {
 		
 		Account sa = accountCenter;
 		sa.setEmail("");
@@ -286,13 +286,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 54
+	 * TEST 61
 	 * 
 	 * Sign up with email invalid
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test54_saveUserCenter() throws Exception {
+	public void test61_saveUserCenter() throws Exception {
 		
 		Account sa = accountCenter;
 		sa.setEmail("crke938");
@@ -308,13 +308,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 55
+	 * TEST 62
 	 * 
 	 * Sign up with name null
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test55_saveUserCenter() throws Exception {
+	public void test62_saveUserCenter() throws Exception {
 		
 		Account sa = accountCenter;
 		
@@ -329,13 +329,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 56
+	 * TEST 63
 	 * 
 	 * Sign up with name empty
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test56_saveUserCenter() throws Exception {
+	public void test63_saveUserCenter() throws Exception {
 		
 		Account sa = accountCenter;
 		
@@ -350,13 +350,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 57
+	 * TEST 64
 	 * 
 	 * Sign up with a valid input
 	 * 
 	 */
 	@Test
-	public void test57_saveUserSeeker() throws Exception {
+	public void test64_saveUserSeeker() throws Exception {
 		
 		Account sa = accountCenter;
 		
@@ -374,13 +374,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 58
+	 * TEST 65
 	 * 
 	 * Sign up with username null
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test58_saveUserSeeker() throws Exception {
+	public void test65_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		sa.setUsername(null);
@@ -399,13 +399,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 59
+	 * TEST 66
 	 * 
 	 * Sign up with username empty
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test59_saveUserSeeker() throws Exception {
+	public void test66_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		sa.setUsername("");
@@ -424,13 +424,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 60
+	 * TEST 67
 	 * 
 	 * Sign up with an existing username
 	 * 
 	 */
 	@Test
-	public void test60_saveUserSeeker() throws Exception {
+	public void test67_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		
@@ -446,13 +446,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 61
+	 * TEST 68
 	 * 
 	 * Sign up with password null
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test61_saveUserSeeker() throws Exception {
+	public void test68_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		sa.setPassword(null);
@@ -471,13 +471,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 62
+	 * TEST 69
 	 * 
 	 * Sign up with password empty
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test62_saveUserSeeker() throws Exception {
+	public void test69_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		sa.setPassword("");
@@ -496,13 +496,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 63
+	 * TEST 70
 	 * 
 	 * Sign up with first name null
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test63_saveUserSeeker() throws Exception {
+	public void test70_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		
@@ -521,13 +521,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 64
+	 * TEST 71
 	 * 
 	 * Sign up with first name empty
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test64_saveUserSeeker() throws Exception {
+	public void test71_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		
@@ -546,13 +546,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 65
+	 * TEST 72
 	 * 
 	 * Sign up with last name null
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test65_saveUserSeeker() throws Exception {
+	public void test72_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		
@@ -571,13 +571,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 66
+	 * TEST 73
 	 * 
 	 * Sign up with first name empty
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test66_saveUserSeeker() throws Exception {
+	public void test73_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		
@@ -596,13 +596,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 67
+	 * TEST 74
 	 * 
 	 * Sign up with city null
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test67_saveUserSeeker() throws Exception {
+	public void test74_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		
@@ -621,13 +621,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 68
+	 * TEST 75
 	 * 
 	 * Sign up with city empty
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test68_saveUserSeeker() throws Exception {
+	public void tes75_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		
@@ -646,13 +646,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 69
+	 * TEST 76
 	 * 
 	 * Sign up with skills null
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test69_saveUserSeeker() throws Exception {
+	public void test76_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		
@@ -671,13 +671,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 70
+	 * TEST 77
 	 * 
 	 * Sign up with skills empty
 	 * 
 	 */
 	@Test
-	public void test70_saveUserSeeker() throws Exception {
+	public void test77_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		
@@ -700,13 +700,13 @@ public class UserServiceTest {
 	
 	
 	/**
-	 * TEST 71
+	 * TEST 78
 	 * 
 	 * Sign up with birth null
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test71_saveUserSeeker() throws Exception {
+	public void test78_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		
@@ -724,13 +724,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 72
+	 * TEST 79
 	 * 
 	 * Sign up with email null
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test72_saveUserSeeker() throws Exception {
+	public void test79_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		sa.setEmail(null);
@@ -749,13 +749,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 73
+	 * TEST 80
 	 * 
 	 * Sign up with email empty
 	 * 
 	 */
 	@Test(expected = ConstraintViolationException.class)
-	public void test73_saveUserSeeker() throws Exception {
+	public void test80_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		sa.setEmail("");
@@ -774,13 +774,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 74
+	 * TEST 81
 	 * 
 	 * Sign up with non valid email
 	 * 
 	 */
 	@Test
-	public void test74_saveUserSeeker() throws Exception {
+	public void test81_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		sa.setEmail("a@a.com");
@@ -799,13 +799,13 @@ public class UserServiceTest {
 	}
 	
 	/**
-	 * TEST 75
+	 * TEST 82
 	 * 
 	 * Sign up with a valid input
 	 * 
 	 */
 	@Test
-	public void test75_saveUserSeeker() throws Exception {
+	public void test82_saveUserSeeker() throws Exception {
 		
 		Account sa = accountSeeker;
 		
