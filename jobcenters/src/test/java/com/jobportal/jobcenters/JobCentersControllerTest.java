@@ -49,6 +49,26 @@ public class JobCentersControllerTest {
 		jobEntity.setUsername("loluca");
 		jobEntity.setEmail("luca@luca.it");
 	}
+	
+	@Test
+	public void test3_getExistingJobCenterByUsername() throws Exception {
+		JobCenterEntity jobCenter0 = new JobCenterEntity(0, "Adecco", "adec", "adecco.adec@gmail.com");
+		
+		given(jobCenterRepository.findByUsername("adec")).willReturn(jobCenter0);
+		
+		mvc.perform(MockMvcRequestBuilders.get("/api/centers/adec")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(jsonPath("username", is(jobCenter0.getUsername())));
+				
+	}
+	
+	@Test
+	public void test4_getNotExistingJobCenterByUsername() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/api/centers/adec")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isNotFound());
+	}
 
 	/**
 	 * TEST 10
@@ -236,23 +256,44 @@ public class JobCentersControllerTest {
 		System.out.println(result.getResponse().getContentAsString());
 	}
 	
-	@Test
-	public void test3_getExistingJobCenterByUsername() throws Exception {
-		JobCenterEntity jobCenter0 = new JobCenterEntity(0, "Adecco", "adec", "adecco.adec@gmail.com");
-		
-		given(jobCenterRepository.findByUsername("adec")).willReturn(jobCenter0);
-		
-		mvc.perform(MockMvcRequestBuilders.get("/api/centers/adec")
-				.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(jsonPath("username", is(jobCenter0.getUsername())));
-				
-	}
+	/**
+	 * TEST 19
+	 * 
+	 * Delete center with null username
+	 * 
+	 */
 	
 	@Test
-	public void test4_getNotExistingJobCenterByUsername() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/api/centers/adec")
-				.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isNotFound());
+	public void test19_deleteJobCenter() throws Exception {
+		
+		JobCenterEntity jobCenter2 = new JobCenterEntity(0, "Gigroup", "gg", "gg@gmail.com");
+		
+		//jobCenter.setUsername(null);
+				
+		given(jobCenterRepository.findByUsername("gg")).willReturn(jobCenter2);
+		
+		mvc.perform(MockMvcRequestBuilders.delete("/api/centers/null")
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "gg")).andExpect(MockMvcResultMatchers.status().isUnauthorized());			
 	}
+	
+	/**
+	 * TEST 23
+	 * 
+	 * Unautorized permission
+	 * 
+	 */
+	
+	@Test
+	public void test23_deleteJobCenter() throws Exception {
+		JobCenterEntity jobCenter2 = new JobCenterEntity(0, "Gigroup", "gg", "gg@gmail.com");
+				
+		given(jobCenterRepository.findByUsername("gg")).willReturn(jobCenter2);
+		
+		mvc.perform(MockMvcRequestBuilders.delete("/api/centers/gg")
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "errore")).andExpect(MockMvcResultMatchers.status().isUnauthorized());			
+	}
+	
+	
 }
