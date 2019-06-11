@@ -53,7 +53,7 @@ public class JobCentersControllerTest {
 	}
 
 	@Test
-	public void test3_getExistingJobCenterByUsername() throws Exception {
+	public void test1_getExistingJobCenterByUsername() throws Exception {
 		JobCenterEntity jobCenter0 = new JobCenterEntity(0, "Adecco", "adec", "adecco.adec@gmail.com");
 
 		given(jobCenterRepository.findByUsername("adec")).willReturn(jobCenter0);
@@ -65,19 +65,19 @@ public class JobCentersControllerTest {
 	}
 
 	@Test
-	public void test4_getNotExistingJobCenterByUsername() throws Exception {
+	public void test2_getNotExistingJobCenterByUsername() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/api/centers/adec").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
 	/**
-	 * TEST 10
+	 * TEST 8
 	 * 
 	 * Sign up with username null
 	 * 
 	 */
 	@Test(expected = NestedServletException.class)
-	public void test10_CreateJobCenter() throws Exception {
+	public void test8_CreateJobCenter() throws Exception {
 
 		JobCenterEntity jobEntity = this.jobEntity;
 		jobEntity.setUsername(null);
@@ -92,13 +92,13 @@ public class JobCentersControllerTest {
 	}
 
 	/**
-	 * TEST 11
+	 * TEST 9
 	 * 
 	 * Sign up with username empty
 	 * 
 	 */
 	@Test(expected = NestedServletException.class)
-	public void test11_CreateJobCenter() throws Exception {
+	public void test9_CreateJobCenter() throws Exception {
 		JobCenterEntity jobEntity = this.jobEntity;
 		jobEntity.setUsername("");
 
@@ -113,13 +113,13 @@ public class JobCentersControllerTest {
 	}
 
 	/**
-	 * TEST 12
+	 * TEST 10
 	 * 
 	 * Sign up with invalid username
 	 * 
 	 */
 //	@Test(expected = NestedServletException.class)
-//	public void test12_CreateJobCenter() throws Exception {
+//	public void test10_CreateJobCenter() throws Exception {
 //		JSONObject jsonObject = new JSONObject().put("username", "").put("name", "luca").put("email", "luca@luca.it")
 //				.put("id", 1);
 //
@@ -131,13 +131,13 @@ public class JobCentersControllerTest {
 //	}
 
 	/**
-	 * TEST 13
+	 * TEST 11
 	 * 
 	 * Sign up with name null
 	 * 
 	 */
 	@Test(expected = NestedServletException.class)
-	public void test13_CreateJobCenter() throws Exception {
+	public void test11_CreateJobCenter() throws Exception {
 		JobCenterEntity jobEntity = this.jobEntity;
 		jobEntity.setName(null);
 
@@ -152,13 +152,13 @@ public class JobCentersControllerTest {
 	}
 
 	/**
-	 * TEST 14
+	 * TEST 12
 	 * 
 	 * Sign up with name empty
 	 * 
 	 */
 	@Test(expected = NestedServletException.class)
-	public void test14_CreateJobCenter() throws Exception {
+	public void test12_CreateJobCenter() throws Exception {
 		JobCenterEntity jobEntity = this.jobEntity;
 		jobEntity.setName("");
 
@@ -173,13 +173,13 @@ public class JobCentersControllerTest {
 	}
 
 	/**
-	 * TEST 15
+	 * TEST 13
 	 * 
 	 * Sign up with email null
 	 * 
 	 */
 	@Test(expected = NestedServletException.class)
-	public void test15_CreateJobCenter() throws Exception {
+	public void test13_CreateJobCenter() throws Exception {
 		JobCenterEntity jobEntity = this.jobEntity;
 		jobEntity.setEmail(null);
 
@@ -194,13 +194,13 @@ public class JobCentersControllerTest {
 	}
 
 	/**
-	 * TEST 16
+	 * TEST 14
 	 * 
 	 * Sign up with email empty
 	 * 
 	 */
 	@Test(expected = NestedServletException.class)
-	public void test16_CreateJobCenter() throws Exception {
+	public void test14_CreateJobCenter() throws Exception {
 		JobCenterEntity jobEntity = this.jobEntity;
 		jobEntity.setEmail("");
 
@@ -215,13 +215,13 @@ public class JobCentersControllerTest {
 	}
 
 	/**
-	 * TEST 17
+	 * TEST 15
 	 * 
 	 * Sign up with invalid email
 	 * 
 	 */
 	@Test(expected = NestedServletException.class)
-	public void test17_CreateJobCenter() throws Exception {
+	public void test15_CreateJobCenter() throws Exception {
 		JobCenterEntity jobEntity = this.jobEntity;
 		jobEntity.setEmail("invalid");
 
@@ -236,14 +236,14 @@ public class JobCentersControllerTest {
 	}
 
 	/**
-	 * TEST 18
+	 * TEST 16
 	 * 
 	 * Sign up with valid fields
 	 * 
 	 */
 
 	@Test
-	public void test18_CreateJobCenter() throws Exception {
+	public void test16_CreateJobCenter() throws Exception {
 		JobCenterEntity jobEntity = this.jobEntity;
 
 		JSONObject jsonObject = new JSONObject().put("username", "loluca").put("name", "luca")
@@ -259,7 +259,7 @@ public class JobCentersControllerTest {
 	}
 	
 	/**
-	 * TEST 19
+	 * TEST 17
 	 * 
 	 * unexisting header
 	 * 
