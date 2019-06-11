@@ -27,11 +27,25 @@ public class JobCenterController {
 	@Value("${pass}")
 	private String pass;
 
+	/**
+	 *
+	 * This method is used to get the list of all the job centers registered to the portal
+	 *
+	 * @return The list of all the job centers
+	 */
 	@RequestMapping(value = "/api/centers", method = RequestMethod.GET)
 	public List<JobCenterEntity> getJobCenters() {
 		return jobCenterRepository.findAll();
 	}
 
+	/**
+	 * 
+	 * This method is used to register a new job center to the portal
+	 * 
+	 * @param jobCenterEntity
+	 * @return 201 if successful, 500 otherwise
+	 * @throws URISyntaxException
+	 */
 	@RequestMapping(value = "/api/centers", method = RequestMethod.POST)
 	public ResponseEntity<JobCenterEntity> createJobCenter(@RequestBody JobCenterEntity jobCenterEntity)
 			throws URISyntaxException {
@@ -39,6 +53,12 @@ public class JobCenterController {
 		return ResponseEntity.created(new URI("/api/centers" + jobCenterEntity.getId())).body(jobCenterEntity);
 	}
 
+	/**
+	 * This method is used to get the details of a job center given its username
+	 * @param username
+	 * @return 404 if the username is not valid, 200 and the data otherwise
+	 * 
+	 */
 	@RequestMapping(value = "/api/centers/{username}", method = RequestMethod.GET)
 	public ResponseEntity<JobCenterEntity> getJobCenter(@PathVariable String username) {
 		
@@ -48,7 +68,16 @@ public class JobCenterController {
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
-
+	
+	/**
+	 * 
+	 * This method is used to delete a job center. This method propagates the deletion to
+	 * the jobs and the applications linked to this account
+	 * 
+	 * @param loggedUser
+	 * @param username
+	 * @return 401 if not authorized, 200 otherwise
+	 */
 	@RequestMapping(value = "/api/centers/{username}", method = RequestMethod.DELETE)
 	public ResponseEntity<JobCenterEntity> deleteJobCenter(@RequestHeader("X-User-Header") String loggedUser,
 														   @PathVariable String username) {
@@ -61,6 +90,14 @@ public class JobCenterController {
 		return ResponseEntity.ok().build();
 	}
 
+	/**
+	 * This method is used to edit the details of a job center given its username
+	 * 
+	 * @param loggedUser
+	 * @param username
+	 * @param jobCenter
+	 * @return 4xx if not authorized, 206 if some data are missing, 200 and the new data otherwise
+	 */
 	@RequestMapping(value = "/api/centers/{username}", method = RequestMethod.PUT)
 	public ResponseEntity<JobCenterEntity> updateJobCenter(@RequestHeader("X-User-Header") String loggedUser,
 														   @PathVariable String username,

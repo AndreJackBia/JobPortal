@@ -12,7 +12,14 @@ public class SearchController {
     @Autowired
     JobsRepository jobsRepository;
 
-    /** Get all the jobs that correspond to the query and location parameters. */
+    /**
+     * This method is used to browse jobs by keyword of location
+     * 
+     * @param query
+     * @param location
+     * @return 200 and the list of jobs
+     * 
+     */
     @RequestMapping(value = "/api/jobs/search", method = RequestMethod.GET)
     public ResponseEntity<List<JobEntity>> getJobs(@RequestParam("q") Optional<String> query,
                                                    @RequestParam("location") Optional<String> location) {

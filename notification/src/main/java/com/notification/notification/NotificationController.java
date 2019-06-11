@@ -12,7 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class NotificationController {
 
-	
+	/**
+	 * This method is used to send email notification using Gmail APIs
+	 * 
+	 * @param notification
+	 * @return 206 if data are missing, 500 if not successful, 200 otherwise
+	 */
 	@RequestMapping(value = "/api/send-notification", method = RequestMethod.POST)
 	public ResponseEntity sendNotification(@RequestBody NotificationEntity notification) {
 		if(checkField(notification)) {
