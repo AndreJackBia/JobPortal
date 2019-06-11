@@ -76,7 +76,7 @@ public class JobCenterController {
 	 * 
 	 * @param loggedUser
 	 * @param username
-	 * @return 401 if not authorized, 200 otherwise
+	 * @return 401 if not authorized, 404 if username doesn't exist, 200 otherwise
 	 */
 	@RequestMapping(value = "/api/centers/{username}", method = RequestMethod.DELETE)
 	public ResponseEntity<JobCenterEntity> deleteJobCenter(@RequestHeader("X-User-Header") String loggedUser,
@@ -85,6 +85,9 @@ public class JobCenterController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 		JobCenterEntity jobCenter = jobCenterRepository.findByUsername(username);
+		if (jobCenter == null) {
+			return ResponseEntity.notFound().build();
+		}
 		jobsProxy.deleteAllByUsername(loggedUser, username);
 		jobCenterRepository.delete(jobCenter);
 		return ResponseEntity.ok().build();
