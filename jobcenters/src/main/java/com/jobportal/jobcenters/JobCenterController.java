@@ -108,14 +108,18 @@ public class JobCenterController {
 		if (!username.equals(loggedUser)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
-
+		JobCenterEntity jobCenterOld = jobCenterRepository.findByUsername(username);
+		if (jobCenterOld == null) {
+			return ResponseEntity.notFound().build();
+		}
+		
 		if (!username.equals(jobCenter.getUsername())) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		if(!checkField(jobCenter)) {
 			return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).build();
 		}
-		JobCenterEntity jobCenterOld = jobCenterRepository.findByUsername(username);
+	
 		jobCenterOld.setName(jobCenter.getName());
 		jobCenterOld.setEmail(jobCenter.getEmail());
 		jobCenterRepository.save(jobCenterOld);

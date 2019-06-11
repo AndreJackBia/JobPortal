@@ -115,20 +115,25 @@ public class JobCentersControllerTest {
 	/**
 	 * TEST 10
 	 * 
-	 * Sign up with invalid username
+	 * Sign up with valid fields
 	 * 
 	 */
-//	@Test(expected = NestedServletException.class)
-//	public void test10_CreateJobCenter() throws Exception {
-//		JSONObject jsonObject = new JSONObject().put("username", "").put("name", "luca").put("email", "luca@luca.it")
-//				.put("id", 1);
-//
-//		given(jobCenterRepository.save(jobEntity)).willThrow(ConstraintViolationException.class);
-//
-//		mvc.perform(MockMvcRequestBuilders.post("/api/centers").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-//				.content(jsonObject.toString())).andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-//				.andExpect(MockMvcResultMatchers.forwardedUrl(null));
-//	}
+
+	@Test
+	public void test10_CreateJobCenter() throws Exception {
+		JobCenterEntity jobEntity = this.jobEntity;
+
+		JSONObject jsonObject = new JSONObject().put("username", "Gigroup").put("name", "gg")
+				.put("email", "gg@gmail.com").put("id", 1);
+
+		given(jobCenterRepository.save(jobEntity)).willReturn(jobEntity);
+
+		MvcResult result = mvc
+				.perform(MockMvcRequestBuilders.post("/api/centers").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+						.content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().is(201)).andDo(MockMvcResultHandlers.print()).andReturn();
+		System.out.println(result.getResponse().getContentAsString());
+	}
 
 	/**
 	 * TEST 11
@@ -257,7 +262,7 @@ public class JobCentersControllerTest {
 				.andExpect(MockMvcResultMatchers.status().is(201)).andDo(MockMvcResultHandlers.print()).andReturn();
 		System.out.println(result.getResponse().getContentAsString());
 	}
-	
+
 	/**
 	 * TEST 17
 	 * 
@@ -265,12 +270,12 @@ public class JobCentersControllerTest {
 	 * 
 	 */
 
-	@Test (expected = IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void test17_deleteJobCenter() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.delete("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.header("X-User-Header", null)).andExpect(MockMvcResultMatchers.status().isUnauthorized());
 	}
-	
+
 	/**
 	 * TEST 18
 	 * 
@@ -280,12 +285,9 @@ public class JobCentersControllerTest {
 	@Test
 	public void test18_deleteJobCenter() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.delete("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-				.header("X-User-Header", "")).andExpect( MockMvcResultMatchers.status().isUnauthorized());
+				.header("X-User-Header", "")).andExpect(MockMvcResultMatchers.status().isUnauthorized());
 	}
-	
 
-
-	
 	/**
 	 * TEST 19
 	 * 
@@ -295,9 +297,9 @@ public class JobCentersControllerTest {
 	@Test
 	public void test19_deleteJobCenter() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.delete("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-				.header("X-User-Header", "")).andExpect( MockMvcResultMatchers.status().isUnauthorized());
+				.header("X-User-Header", "")).andExpect(MockMvcResultMatchers.status().isUnauthorized());
 	}
-	
+
 	/**
 	 * TEST 20
 	 * 
@@ -324,10 +326,196 @@ public class JobCentersControllerTest {
 
 	@Test
 	public void test21_deleteJobCenter() throws Exception {
-		JobCenterEntity jobCenter2 = new JobCenterEntity(0, "Gigroup", "gg", "gg@gmail.com");
 		given(jobCenterRepository.findByUsername("gg")).willReturn(null);
-		
+
 		mvc.perform(MockMvcRequestBuilders.delete("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.header("X-User-Header", "gg")).andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
+
+	@Test
+	public void test30_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "Gigroup")
+				.put("email", "gg@gmail.com").put("id", 0);
+
+		given(jobCenterRepository.findByUsername("gg")).willReturn(null);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "gg").content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isNotFound());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test31_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "Gigroup")
+				.put("email", "gg@gmail.com").put("id", 0);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", null).content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isNotFound());
+	}
+
+	@Test
+	public void test32_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "Gigroup")
+				.put("email", "gg@gmail.com").put("id", 0);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "").content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isUnauthorized());
+	}
+
+	@Test
+	public void test33_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "Gigroup")
+				.put("email", "gg@gmail.com").put("id", 0);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "different").content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isUnauthorized());
+	}
+
+	@Test
+	public void test38_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", null).put("email", "gg@gmail.com")
+				.put("id", 0);
+
+		JobCenterEntity jobCenter2 = new JobCenterEntity(0, null, "gg", "gg@gmail.com");
+
+		given(jobCenterRepository.findByUsername("gg")).willReturn(jobCenter2);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "gg").content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isPartialContent());
+	}
+
+	@Test
+	public void test40_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "gigroup").put("email", null)
+				.put("id", 0);
+
+		JobCenterEntity jobCenter2 = new JobCenterEntity(0, "gigroup", "gg", null);
+
+		given(jobCenterRepository.findByUsername("gg")).willReturn(jobCenter2);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "gg").content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isPartialContent());
+	}
+
+	@Test
+	public void test34_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", null).put("name", "gigroup")
+				.put("email", "gg@gmail.com").put("id", 0);
+
+		JobCenterEntity jobCenter2 = new JobCenterEntity(0, null, "gg", "gg@gmail.com");
+
+		given(jobCenterRepository.findByUsername("gg")).willReturn(jobCenter2);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "gg").content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+
+	@Test
+	public void test35_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", "").put("name", "gigroup").put("email", "gg@gmail.com")
+				.put("id", 0);
+
+		JobCenterEntity jobCenter2 = new JobCenterEntity(0, "", "gg", "gg@gmail.com");
+
+		given(jobCenterRepository.findByUsername("gg")).willReturn(jobCenter2);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "gg").content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+
+	@Test
+	public void test36_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", "different").put("name", "gigroup")
+				.put("email", "gg@gmail.com").put("id", 0);
+
+		JobCenterEntity jobCenter2 = new JobCenterEntity(0, "different", "gg", "gg@gmail.com");
+
+		given(jobCenterRepository.findByUsername("gg")).willReturn(jobCenter2);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "gg").content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+
+	@Test
+	public void test37_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", "different2").put("name", "gigroup")
+				.put("email", "gg@gmail.com").put("id", 0);
+
+		JobCenterEntity jobCenter2 = new JobCenterEntity(0, "different2", "gg", "gg@gmail.com");
+
+		given(jobCenterRepository.findByUsername("gg")).willReturn(jobCenter2);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "gg").content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+
+	@Test(expected = NestedServletException.class)
+	public void test39_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "").put("email", "gg@gmail.com")
+				.put("id", 0);
+
+		JobCenterEntity jobCenter2 = new JobCenterEntity(0, "", "gg", "gg@gmail.com");
+
+		given(jobCenterRepository.findByUsername("gg")).willReturn(jobCenter2);
+		given(jobCenterRepository.save(jobCenter2)).willThrow(ConstraintViolationException.class);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "gg").content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isPartialContent());
+	}
+
+	@Test(expected = NestedServletException.class)
+	public void test41_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "Gigroup").put("email", "").put("id",
+				0);
+
+		JobCenterEntity jobCenter2 = new JobCenterEntity(0, "Gigroup", "gg", "");
+
+		given(jobCenterRepository.findByUsername("gg")).willReturn(jobCenter2);
+		given(jobCenterRepository.save(jobCenter2)).willThrow(ConstraintViolationException.class);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "gg").content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isPartialContent());
+	}
+
+	@Test(expected = NestedServletException.class)
+	public void test42_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "Gigroup").put("email", "aaa")
+				.put("id", 0);
+
+		JobCenterEntity jobCenter2 = new JobCenterEntity(0, "Gigroup", "gg", "aaa");
+
+		given(jobCenterRepository.findByUsername("gg")).willReturn(jobCenter2);
+		given(jobCenterRepository.save(jobCenter2)).willThrow(ConstraintViolationException.class);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "gg").content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isPartialContent());
+	}
+
+	@Test
+	public void test43_updateJobCenter() throws Exception {
+		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "Gigroup")
+				.put("email", "gg@gmail.com").put("id", 0);
+
+		JobCenterEntity jobCenter2 = new JobCenterEntity(0, "Gigroup", "gg", "aaa");
+
+		given(jobCenterRepository.findByUsername("gg")).willReturn(jobCenter2);
+		given(jobCenterRepository.save(jobCenter2)).willReturn(jobCenter2);
+
+		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.header("X-User-Header", "gg").content(jsonObject.toString()))
+				.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+
 }
