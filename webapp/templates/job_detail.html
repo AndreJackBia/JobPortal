@@ -4,7 +4,16 @@
 <script>
 
   $( document ).ready(function() {
-
+    var i
+    var skills = ["Dev-Ops","Java", "C++", "Javascript", "Web", "Back-End"]
+    var checkedSkills = {{ job.skills | safe }}
+    console.log(checkedSkills)
+    for (i = 0; i < skills.length; i++) {
+      if (checkedSkills.includes(skills[i]))
+        $('#skills-table').append('<tr><td><label class="mdl-checkbox mdl-js-checkbox" for="checkbox-' + skills[i] + '"> <input type="checkbox" name="skills" id="checkbox-' + skills[i] + '" value="' + skills[i] + '" class="mdl-checkbox__input" checked><span class="mdl-checkbox__label">'+ skills[i] + '</span> </label> </td></tr>')
+      else
+        $('#skills-table').append('<tr><td><label class="mdl-checkbox mdl-js-checkbox" for="checkbox-' + skills[i] + '"> <input type="checkbox" name="skills" id="checkbox-' + skills[i] + '" value="' + skills[i] + '" class="mdl-checkbox__input"><span class="mdl-checkbox__label">'+ skills[i] + '</span> </label> </td></tr>')
+    }
   });
 
   function checkForm() {
@@ -18,7 +27,6 @@
     });
 
     if (errors_text.length > 0){
-      console.log("ciaoooooooooo");
       $("#general_error").removeAttr("hidden");
       $("div#general_error > small.error").html(errors_text);
     } else {
@@ -111,8 +119,26 @@
                     </div>
                   </div>
               </div>
-              <input id="dataCreation" name="dataCreation" value="{{job.dateCreation}}" type="text" hidden>
+              <input id="dataCreation" name="dateCreation" value="{{job.dateCreation}}" type="text" hidden>
+              <div class="section row">
+                  <div class="col s12">
+                    <h5>Skills</h5>
 
+                    <div class="layout-row row skills">
+                      <div class="col s12 m10">
+                        <div class="row">
+                          <div style="height:150px;overflow-y:scroll;overflow-x:hidden" class="input-field col s12 skill_container"  id="skill_container">
+                            <table id="skills-table">
+                            </table>
+                            <!-- <textarea class="materialize-textarea" cols="40" id="skill" name="skill" rows="10" style="height: 44px;"></textarea>
+                            <span class="add-skill"><i style="cursor: pointer;" class="material-icons prefix">add_circle</i></span>
+                            <label class="active" for="skill"></label> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
 

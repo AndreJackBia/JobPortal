@@ -1,8 +1,11 @@
 package com.jobportal.jobs;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,12 +44,16 @@ public class JobEntity {
 	@NotNull
 	@NotEmpty
 	private String companyName;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@NotNull
+	private List<String> skills;
 
 	public JobEntity() {
 	}
 	
 	public JobEntity(long id, String username, String position, String jobDescription, String location,
-			Date dateCreation, String companyName) {
+			Date dateCreation, String companyName, List<String> skills) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -55,7 +62,9 @@ public class JobEntity {
 		this.location = location;
 		this.dateCreation = dateCreation;
 		this.companyName = companyName;
+		this.skills = skills;
 	}
+	
 	public long getId() {
 		return id;
 	}
@@ -97,6 +106,14 @@ public class JobEntity {
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	public List<String> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<String> skills) {
+		this.skills = skills;
 	}
 
 

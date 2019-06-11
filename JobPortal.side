@@ -2,16 +2,836 @@
   "id": "11b63284-d3a8-4205-ae80-8bb40e70c847",
   "version": "2.0",
   "name": "JobPortal",
-  "url": "",
-  "tests": [],
+  "url": "http://localhost",
+  "tests": [{
+    "id": "b7b86f54-8a56-4e89-9877-ea3bf6acf72c",
+    "name": "Sign up Center",
+    "commands": [{
+      "id": "d5d602fd-9ced-4a84-b73e-2de164afd4b3",
+      "comment": "",
+      "command": "open",
+      "target": "/browse",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3aa111fd-b4e0-45a8-8a1a-4f4cbf13270d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.mdl-navigation__link", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/dashboard')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "466407e8-9341-4627-b390-4b7ffb2b6303",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mdl-cell:nth-child(2) .btn",
+      "targets": [
+        ["css=.mdl-cell:nth-child(2) .btn", "css:finder"],
+        ["xpath=//input[@value='Offering a Job?']", "xpath:attributes"],
+        ["xpath=//div[2]/a/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "09ef901b-f548-4e38-aee5-379e7409923e",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div[@id='username_container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "29982a51-c986-4a23-a379-81b67ac397b2",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div[@id='username_container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "adecco"
+    }, {
+      "id": "b529af9d-db63-4e2a-a54c-d14a1bb72d8f",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[@id='email_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "adecco@adecco.it"
+    }, {
+      "id": "277c2948-75d3-4261-8157-997a4cf87a01",
+      "comment": "",
+      "command": "type",
+      "target": "id=centerName",
+      "targets": [
+        ["id=centerName", "id"],
+        ["name=centerName", "name"],
+        ["css=#centerName", "css:finder"],
+        ["xpath=//input[@id='centerName']", "xpath:attributes"],
+        ["xpath=//div[@id='centerName_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "Adecco"
+    }, {
+      "id": "627dfcc0-7cae-4144-be2b-13ce162e6f57",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_pass",
+      "targets": [
+        ["id=id_pass", "id"],
+        ["name=password", "name"],
+        ["css=#id_pass", "css:finder"],
+        ["xpath=//input[@id='id_pass']", "xpath:attributes"],
+        ["xpath=//div[@id='id_new_pass_container']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "adecco1994"
+    }, {
+      "id": "c93f5437-6797-4919-a75d-46b8f8057b65",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_conf_pass",
+      "targets": [
+        ["id=id_conf_pass", "id"],
+        ["css=#id_conf_pass", "css:finder"],
+        ["xpath=//input[@id='id_conf_pass']", "xpath:attributes"],
+        ["xpath=//div[@id='id_conf_pass_container']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "adecco1994"
+    }, {
+      "id": "43127061-2934-4d08-9e8f-85df4ba65662",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Sign up']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "4b0e6a0e-ce48-473b-a895-067a6bcdf049",
+    "name": "Sign up Seeker",
+    "commands": [{
+      "id": "f7d33f6d-ba90-4173-939f-4719348e2996",
+      "comment": "",
+      "command": "open",
+      "target": "/browse",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e752e106-192f-4786-913e-e2e58cca3b9f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.mdl-navigation__link", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/dashboard')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "598a4e78-7102-48f7-b745-c334f3a4f7e2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mdl-cell:nth-child(1) .btn",
+      "targets": [
+        ["css=.mdl-cell:nth-child(1) .btn", "css:finder"],
+        ["xpath=//input[@value='Looking for a Job?']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e3aaa7f2-7336-4e9e-a146-0848c310833d",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div[@id='username_container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f1830d38-39cb-478d-80d7-8fe03aeeb126",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div[@id='username_container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "thekeymaker"
+    }, {
+      "id": "f2a788f0-b2f7-427e-835c-53fdeeac9013",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_pass",
+      "targets": [
+        ["id=id_pass", "id"],
+        ["name=password", "name"],
+        ["css=#id_pass", "css:finder"],
+        ["xpath=//input[@id='id_pass']", "xpath:attributes"],
+        ["xpath=//div[@id='id_new_pass_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "thekeymaker"
+    }, {
+      "id": "aa0a33c3-901c-4db5-98a1-9fe32241f5ad",
+      "comment": "",
+      "command": "click",
+      "target": "css=#id_conf_pass_container > label",
+      "targets": [
+        ["css=#id_conf_pass_container > label", "css:finder"],
+        ["xpath=//div[@id='id_conf_pass_container']/label", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Repeat Password')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "87901e16-2dc2-432d-ad59-da6bf37fd8a1",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_conf_pass",
+      "targets": [
+        ["id=id_conf_pass", "id"],
+        ["css=#id_conf_pass", "css:finder"],
+        ["xpath=//input[@id='id_conf_pass']", "xpath:attributes"],
+        ["xpath=//div[@id='id_conf_pass_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "thekeymaker"
+    }, {
+      "id": "dbb7fdb1-f83e-48b9-a3ab-11e27c039543",
+      "comment": "",
+      "command": "click",
+      "target": "id=firstName",
+      "targets": [
+        ["id=firstName", "id"],
+        ["name=firstName", "name"],
+        ["css=#firstName", "css:finder"],
+        ["xpath=//input[@id='firstName']", "xpath:attributes"],
+        ["xpath=//div[@id='firstName_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2c035418-dab3-4531-a084-d24187acd5a3",
+      "comment": "",
+      "command": "type",
+      "target": "id=firstName",
+      "targets": [
+        ["id=firstName", "id"],
+        ["name=firstName", "name"],
+        ["css=#firstName", "css:finder"],
+        ["xpath=//input[@id='firstName']", "xpath:attributes"],
+        ["xpath=//div[@id='firstName_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "Andrea"
+    }, {
+      "id": "79903b40-fa2e-428c-a9fa-8e82e93cd336",
+      "comment": "",
+      "command": "type",
+      "target": "id=lastName",
+      "targets": [
+        ["id=lastName", "id"],
+        ["name=lastName", "name"],
+        ["css=#lastName", "css:finder"],
+        ["xpath=//input[@id='lastName']", "xpath:attributes"],
+        ["xpath=//div[@id='lastName_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "Biaggi"
+    }, {
+      "id": "e8fcfb97-5bd6-47dd-826b-c06f46d69c2d",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[@id='email_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "biaggi.jack@gmail.com"
+    }, {
+      "id": "e5236227-3750-4f64-bd71-0e6b8e40232d",
+      "comment": "",
+      "command": "type",
+      "target": "id=city",
+      "targets": [
+        ["id=city", "id"],
+        ["name=city", "name"],
+        ["css=#city", "css:finder"],
+        ["xpath=//input[@id='city']", "xpath:attributes"],
+        ["xpath=//div[@id='city_container']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "Milano"
+    }, {
+      "id": "0c0ce3b5-7cc1-488f-b443-6452946f8f83",
+      "comment": "",
+      "command": "type",
+      "target": "id=birth",
+      "targets": [
+        ["id=birth", "id"],
+        ["name=birth", "name"],
+        ["css=#birth", "css:finder"],
+        ["xpath=//input[@id='birth']", "xpath:attributes"],
+        ["xpath=//div[@id='birth_container']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "1995-10-27"
+    }, {
+      "id": "da138fc5-8be4-4af2-911b-26d4d80ee00c",
+      "comment": "",
+      "command": "click",
+      "target": "id=cv",
+      "targets": [
+        ["id=cv", "id"],
+        ["name=cv", "name"],
+        ["css=#cv", "css:finder"],
+        ["xpath=//input[@id='cv']", "xpath:attributes"],
+        ["xpath=//div[@id='id_image_container']/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "39f40ac9-f899-482e-acb9-2b879ca31e6d",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_image",
+      "targets": [
+        ["id=id_image", "id"],
+        ["css=#id_image", "css:finder"],
+        ["xpath=//input[@id='id_image']", "xpath:attributes"],
+        ["xpath=//div[@id='id_image_container']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Curriculum.pdf"
+    }, {
+      "id": "14ed3d5c-d37c-4365-9ede-e8e93e8ec69a",
+      "comment": "",
+      "command": "type",
+      "target": "id=cv",
+      "targets": [
+        ["id=cv", "id"],
+        ["name=cv", "name"],
+        ["css=#cv", "css:finder"],
+        ["xpath=//input[@id='cv']", "xpath:attributes"],
+        ["xpath=//div[@id='id_image_container']/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "C:\\Users\\thekeymaker\\Downloads\\Curriculum.pdf"
+    }, {
+      "id": "026f3de7-aa2a-431a-9596-7535244b92e8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.add-skill > .material-icons",
+      "targets": [
+        ["css=.add-skill > .material-icons", "css:finder"],
+        ["xpath=//div[@id='skill_container']/span/i", "xpath:idRelative"],
+        ["xpath=//span/i", "xpath:position"],
+        ["xpath=//i[contains(.,'add_circle')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ca32dce7-fb32-4f7d-93f3-af3fb3067cdf",
+      "comment": "",
+      "command": "click",
+      "target": "id=skill",
+      "targets": [
+        ["id=skill", "id"],
+        ["name=skill", "name"],
+        ["css=.col:nth-child(1) > .row > #skill_container > #skill", "css:finder"],
+        ["xpath=//textarea[@id='skill']", "xpath:attributes"],
+        ["xpath=//div[@id='skill_container']/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c730204a-c1a7-4823-ace1-f263d4be1a21",
+      "comment": "",
+      "command": "type",
+      "target": "id=skill",
+      "targets": [
+        ["id=skill", "id"],
+        ["name=skill", "name"],
+        ["css=.col:nth-child(1) > .row > #skill_container > #skill", "css:finder"],
+        ["xpath=//textarea[@id='skill']", "xpath:attributes"],
+        ["xpath=//div[@id='skill_container']/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Java"
+    }, {
+      "id": "4091f8b6-3f59-40d2-9dfc-825c3cf86c52",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col:nth-child(2) #skill",
+      "targets": [
+        ["css=.col:nth-child(2) #skill", "css:finder"],
+        ["xpath=(//textarea[@id='skill'])[2]", "xpath:attributes"],
+        ["xpath=(//div[@id='skill_container']/textarea)[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "05a31974-6315-4986-9439-62749a8bee94",
+      "comment": "",
+      "command": "type",
+      "target": "css=.col:nth-child(2) #skill",
+      "targets": [
+        ["css=.col:nth-child(2) #skill", "css:finder"],
+        ["xpath=(//textarea[@id='skill'])[2]", "xpath:attributes"],
+        ["xpath=(//div[@id='skill_container']/textarea)[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/textarea", "xpath:position"]
+      ],
+      "value": "OOP"
+    }, {
+      "id": "74525aea-10ea-40a9-a52f-2b4a3c76bcd2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.edit-att-btn",
+      "targets": [
+        ["css=.edit-att-btn", "css:finder"],
+        ["xpath=//input[@value='Sign up']", "xpath:attributes"],
+        ["xpath=//form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "00d57e95-1637-4546-8b76-b5695c781ce6",
+    "name": "Add Job",
+    "commands": [{
+      "id": "8ec468f7-0692-4210-a3b7-df91d81cbd6d",
+      "comment": "",
+      "command": "open",
+      "target": "/dashboard",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "600979f6-e2fb-46f3-81c1-28b8b519ed40",
+      "comment": "",
+      "command": "click",
+      "target": "css=#show-dialog > .mdl-button__ripple-container",
+      "targets": [
+        ["css=#show-dialog > .mdl-button__ripple-container", "css:finder"],
+        ["xpath=//button[@id='show-dialog']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3f1246e9-09e8-4469-85b5-4dec71d7e380",
+      "comment": "",
+      "command": "click",
+      "target": "id=position",
+      "targets": [
+        ["id=position", "id"],
+        ["name=position", "name"],
+        ["css=#position", "css:finder"],
+        ["xpath=//input[@id='position']", "xpath:attributes"],
+        ["xpath=//div[@id='position_container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4f67853b-c064-4f9c-b50a-f62add73c137",
+      "comment": "",
+      "command": "type",
+      "target": "id=position",
+      "targets": [
+        ["id=position", "id"],
+        ["name=position", "name"],
+        ["css=#position", "css:finder"],
+        ["xpath=//input[@id='position']", "xpath:attributes"],
+        ["xpath=//div[@id='position_container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Junior Software Engineer"
+    }, {
+      "id": "5b5f5ca4-9b7a-492c-a2d5-db9d2096613a",
+      "comment": "",
+      "command": "type",
+      "target": "id=companyName",
+      "targets": [
+        ["id=companyName", "id"],
+        ["name=companyName", "name"],
+        ["css=#companyName", "css:finder"],
+        ["xpath=//input[@id='companyName']", "xpath:attributes"],
+        ["xpath=//div[@id='email_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "TXT e-solutions"
+    }, {
+      "id": "4ee239d1-b737-4b7f-9cc8-da84555d2216",
+      "comment": "",
+      "command": "type",
+      "target": "id=location",
+      "targets": [
+        ["id=location", "id"],
+        ["name=location", "name"],
+        ["css=#location", "css:finder"],
+        ["xpath=//input[@id='location']", "xpath:attributes"],
+        ["xpath=//div[@id='location_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "Milano"
+    }, {
+      "id": "2eb9489f-718d-4676-89bd-7208eb7a6837",
+      "comment": "",
+      "command": "type",
+      "target": "id=jobDescription",
+      "targets": [
+        ["id=jobDescription", "id"],
+        ["name=jobDescription", "name"],
+        ["css=#jobDescription", "css:finder"],
+        ["xpath=//textarea[@id='jobDescription']", "xpath:attributes"],
+        ["xpath=//div[@id='jobDescription_container']/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "test"
+    }, {
+      "id": "330fb80e-02fb-48ec-9e83-611d02802b22",
+      "comment": "",
+      "command": "click",
+      "target": "name=save",
+      "targets": [
+        ["name=save", "name"],
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@name='save']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "fa9e93bb-dce8-49e4-80a5-2ddc1de8124d",
+    "name": "Add Job 2",
+    "commands": [{
+      "id": "533d2e67-1205-437a-af5e-bc96c36bf8c6",
+      "comment": "",
+      "command": "open",
+      "target": "/dashboard",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "be0b4c08-020f-4b67-a953-193496afdcd5",
+      "comment": "",
+      "command": "click",
+      "target": "css=#show-dialog > .mdl-button__ripple-container",
+      "targets": [
+        ["css=#show-dialog > .mdl-button__ripple-container", "css:finder"],
+        ["xpath=//button[@id='show-dialog']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c3f06724-82c6-46cc-9f8b-82031b77d2f0",
+      "comment": "",
+      "command": "click",
+      "target": "id=position",
+      "targets": [
+        ["id=position", "id"],
+        ["name=position", "name"],
+        ["css=#position", "css:finder"],
+        ["xpath=//input[@id='position']", "xpath:attributes"],
+        ["xpath=//div[@id='position_container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "163be22f-fc7f-4a73-aa95-d443369b6eb0",
+      "comment": "",
+      "command": "type",
+      "target": "id=position",
+      "targets": [
+        ["id=position", "id"],
+        ["name=position", "name"],
+        ["css=#position", "css:finder"],
+        ["xpath=//input[@id='position']", "xpath:attributes"],
+        ["xpath=//div[@id='position_container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Senior Web Developer"
+    }, {
+      "id": "93fe178b-427f-4b0e-bfab-c0d60bacb1d7",
+      "comment": "",
+      "command": "type",
+      "target": "id=companyName",
+      "targets": [
+        ["id=companyName", "id"],
+        ["name=companyName", "name"],
+        ["css=#companyName", "css:finder"],
+        ["xpath=//input[@id='companyName']", "xpath:attributes"],
+        ["xpath=//div[@id='email_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "IBM"
+    }, {
+      "id": "9a0a2219-2bea-437c-86ea-c055dbd6d6dc",
+      "comment": "",
+      "command": "type",
+      "target": "id=location",
+      "targets": [
+        ["id=location", "id"],
+        ["name=location", "name"],
+        ["css=#location", "css:finder"],
+        ["xpath=//input[@id='location']", "xpath:attributes"],
+        ["xpath=//div[@id='location_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "Roma"
+    }, {
+      "id": "f8582996-7f94-44f0-b160-ff9cf769b886",
+      "comment": "",
+      "command": "type",
+      "target": "id=jobDescription",
+      "targets": [
+        ["id=jobDescription", "id"],
+        ["name=jobDescription", "name"],
+        ["css=#jobDescription", "css:finder"],
+        ["xpath=//textarea[@id='jobDescription']", "xpath:attributes"],
+        ["xpath=//div[@id='jobDescription_container']/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "test"
+    }, {
+      "id": "ab33d24a-40cb-422a-b35a-3b29addd4c41",
+      "comment": "",
+      "command": "click",
+      "target": "name=save",
+      "targets": [
+        ["name=save", "name"],
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@name='save']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "3b6d2755-57ff-4611-9709-a26298310b12",
+    "name": "Add Job 3",
+    "commands": [{
+      "id": "d17e7bbd-79ce-4ca3-9e95-874ab56a02f8",
+      "comment": "",
+      "command": "open",
+      "target": "/dashboard",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b3a83c6c-0380-451d-af49-1d23cc77c5ac",
+      "comment": "",
+      "command": "click",
+      "target": "css=#show-dialog > .mdl-button__ripple-container",
+      "targets": [
+        ["css=#show-dialog > .mdl-button__ripple-container", "css:finder"],
+        ["xpath=//button[@id='show-dialog']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fb8e96e9-0c7b-4d53-a949-341ebf91a681",
+      "comment": "",
+      "command": "click",
+      "target": "id=position",
+      "targets": [
+        ["id=position", "id"],
+        ["name=position", "name"],
+        ["css=#position", "css:finder"],
+        ["xpath=//input[@id='position']", "xpath:attributes"],
+        ["xpath=//div[@id='position_container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "40af9425-6ff0-4338-b663-2098c34698a7",
+      "comment": "",
+      "command": "type",
+      "target": "id=position",
+      "targets": [
+        ["id=position", "id"],
+        ["name=position", "name"],
+        ["css=#position", "css:finder"],
+        ["xpath=//input[@id='position']", "xpath:attributes"],
+        ["xpath=//div[@id='position_container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Junior Data Scientist"
+    }, {
+      "id": "a841105b-b510-4bdb-817c-6dd6dcbe1889",
+      "comment": "",
+      "command": "type",
+      "target": "id=companyName",
+      "targets": [
+        ["id=companyName", "id"],
+        ["name=companyName", "name"],
+        ["css=#companyName", "css:finder"],
+        ["xpath=//input[@id='companyName']", "xpath:attributes"],
+        ["xpath=//div[@id='email_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "Oracle"
+    }, {
+      "id": "a013f0e1-7f96-445a-8681-49ef33701f51",
+      "comment": "",
+      "command": "type",
+      "target": "id=location",
+      "targets": [
+        ["id=location", "id"],
+        ["name=location", "name"],
+        ["css=#location", "css:finder"],
+        ["xpath=//input[@id='location']", "xpath:attributes"],
+        ["xpath=//div[@id='location_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "Milano"
+    }, {
+      "id": "97377a61-9851-42dc-bb0b-0ed76035d7d0",
+      "comment": "",
+      "command": "type",
+      "target": "id=jobDescription",
+      "targets": [
+        ["id=jobDescription", "id"],
+        ["name=jobDescription", "name"],
+        ["css=#jobDescription", "css:finder"],
+        ["xpath=//textarea[@id='jobDescription']", "xpath:attributes"],
+        ["xpath=//div[@id='jobDescription_container']/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "test"
+    }, {
+      "id": "882f5c47-6578-4d67-972d-14da3fa9e766",
+      "comment": "",
+      "command": "click",
+      "target": "name=save",
+      "targets": [
+        ["name=save", "name"],
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@name='save']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "2d0b4c4f-1d89-47d4-9bc0-c166a2247ac3",
+    "name": "Apply",
+    "commands": [{
+      "id": "40176c00-4f59-44dc-9723-98c4aab54e81",
+      "comment": "",
+      "command": "open",
+      "target": "/browse",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5ef77ae3-0152-4730-901c-a3cb1c9bc262",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1068x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "43b2cc44-7c21-4e36-b6bc-6e0a531fe101",
+      "comment": "",
+      "command": "click",
+      "target": "css=tbody > tr:nth-child(1) > .mdl-data-table__cell--non-numeric:nth-child(1)",
+      "targets": [
+        ["css=tbody > tr:nth-child(1) > .mdl-data-table__cell--non-numeric:nth-child(1)", "css:finder"],
+        ["xpath=//td", "xpath:position"],
+        ["xpath=//td[contains(.,'Junior Software Engineer')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9484dec1-5eb9-449b-b7dc-6e6fe54c6441",
+      "comment": "",
+      "command": "click",
+      "target": "name=apply",
+      "targets": [
+        ["name=apply", "name"],
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@name='apply']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "e1738e96-0cd3-411e-a38b-12bb59883e25",
+    "name": "Delete Center",
+    "commands": [{
+      "id": "18b7d114-d504-41a1-9497-946788b0cc9f",
+      "comment": "",
+      "command": "open",
+      "target": "/dashboard",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "803b54d2-5586-4c65-9a84-fc2a9bc186f3",
+      "comment": "",
+      "command": "click",
+      "target": "name=delete",
+      "targets": [
+        ["name=delete", "name"],
+        ["css=.delete-att", "css:finder"],
+        ["xpath=//input[@name='delete']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b8333305-1688-4687-82f1-62d296aa495f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mdl-navigation__link:nth-child(3)",
+      "targets": [
+        ["css=.mdl-navigation__link:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(@href, ' /jobcenter/adecco ')]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
   "suites": [{
     "id": "3f361861-d01b-40c5-98e2-4213e6a280c8",
     "name": "Default Suite",
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": []
+    "tests": ["b7b86f54-8a56-4e89-9877-ea3bf6acf72c", "00d57e95-1637-4546-8b76-b5695c781ce6", "fa9e93bb-dce8-49e4-80a5-2ddc1de8124d", "3b6d2755-57ff-4611-9709-a26298310b12", "4b0e6a0e-ce48-473b-a895-067a6bcdf049"]
   }],
-  "urls": [],
+  "urls": ["http://localhost/"],
   "plugins": []
 }

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, abort, make_response, redirect, url_for
+from flask import Flask, render_template, request, abort, make_response, redirect, url_for, jsonify
 import requests
 import json
 import jwt
@@ -6,7 +6,7 @@ from base64 import b64decode
 
 app = Flask(__name__, static_url_path='')
 
-BASE_URL = "http://gateway:8080"
+BASE_URL = "http://localhost:8080"
 
 
 @app.route('/', methods=['GET'])
@@ -131,12 +131,11 @@ def seeker_detail(s_username):
     if seeker.status_code != 200:
         abort(seeker.status_code)
 
-    # TODO: Controllo
     if request.method == 'POST' and s_username == user['username']:
         r_json = request.form.to_dict(flat=True)
         r_json["type"] = "SEEKER"
-        r_json["skills"] = request.form.getlist("skill")
-        del r_json["skill"]
+        r_json["skills"] = request.form.getlist("skills")
+        #del r_json["skills"]
 
         if r_json["password"] == '':
             del r_json["password"]
@@ -241,6 +240,7 @@ def newJobs():
     if request.method == 'POST':
         r_json = request.form.to_dict(flat=True)
         r_json["username"] = user["username"]
+        r_json["skills"] = request.form.getlist("skills")
         r = requests.post(
             BASE_URL + "/api/centers/" + user["username"] + "/jobs/",
             headers=header,
@@ -293,6 +293,7 @@ def job_detail(j_username, job_id):
         data = request.form.to_dict(flat=True)
         data["id"] = job_id
         data["username"] = user["username"]
+        data["skills"] = request.form.getlist("skills")
 
         r = requests.put(
             BASE_URL + "/api/centers/" + user["username"] + "/jobs/" + job_id,
@@ -300,9 +301,9 @@ def job_detail(j_username, job_id):
             json=data
             )
 
-        print(r)
+        print("****************** RESPONSE: ",r)
 
-        print(data)
+        print("****************** DATA: ", data)
 
 
     job = requests.get(
@@ -384,8 +385,9 @@ def signup_seeker():
     if request.method == 'POST':
         r_json = request.form.to_dict(flat=True)
         r_json["type"] = "SEEKER"
-        r_json["skills"] = request.form.getlist("skill")
-        del r_json["skill"]
+        #return jsonify(request.form.getlist("skills"))
+        r_json["skills"] = request.form.getlist("skills")
+        #del r_json["skill"]
 
         r = requests.post(
             BASE_URL + "/signup",

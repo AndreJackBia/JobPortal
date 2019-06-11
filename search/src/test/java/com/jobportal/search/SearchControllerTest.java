@@ -4,12 +4,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.hamcrest.Matchers;
-import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,8 +39,8 @@ public class SearchControllerTest {
 	
 	@Test
 	public void test5_getJobs_QueryNull_LocationEmpty() throws Exception {
-		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company");
-		JobEntity job1 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Milano", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company");
+		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job1 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Milano", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 
 		List<JobEntity> correctJob = Arrays.asList(job0, job1);
 		
@@ -57,9 +56,9 @@ public class SearchControllerTest {
 	
 	@Test
 	public void test6_getJobs_QueryEmpty_LocationNotEmpty() throws Exception {
-		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company");
-		JobEntity job1 = new JobEntity(0, "Albert2", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company");
-		JobEntity job2 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Pavia", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company");
+		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job1 = new JobEntity(0, "Albert2", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job2 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Pavia", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 
 		List<JobEntity> correctJob = Arrays.asList(job0, job1);
 		
@@ -77,9 +76,9 @@ public class SearchControllerTest {
 	
 	@Test
 	public void test7_getJobs_QueryNotEmpty_LocationEmpty() throws Exception {
-		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company");
-		JobEntity job1 = new JobEntity(0, "Luca2", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company");
-		JobEntity job2 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Pavia", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company");
+		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job1 = new JobEntity(0, "Luca2", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job2 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Pavia", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 
 		List<JobEntity> correctJob = Arrays.asList(job0, job2);
 		
@@ -97,9 +96,9 @@ public class SearchControllerTest {
 	
 	@Test
 	public void test8_getJobs_QueryNotEmpty_LocationNull() throws Exception {
-		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company");
-		JobEntity job1 = new JobEntity(0, "Luca2", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company");
-		JobEntity job2 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Pavia", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company");
+		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job1 = new JobEntity(0, "Luca2", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job2 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Pavia", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 
 		List<JobEntity> correctJob = Arrays.asList(job1);
 		
@@ -115,9 +114,9 @@ public class SearchControllerTest {
 	
 	@Test
 	public void test9_getJobs_QueryNotEmpty_LocationNull() throws Exception {
-		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company");
-		JobEntity job1 = new JobEntity(0, "Luca2", "test position", "test description", "Pavia", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company");
-		JobEntity job2 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Milano", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company");
+		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job1 = new JobEntity(0, "Luca2", "test position", "test description", "Pavia", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job2 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Milano", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 
 		List<JobEntity> correctJob = Arrays.asList(job0, job2);
 		
