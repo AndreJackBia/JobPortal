@@ -1,0 +1,17 @@
+{
+  "id": "11b63284-d3a8-4205-ae80-8bb40e70c847",
+  "version": "2.0",
+  "name": "JobPortal",
+  "url": "",
+  "tests": [],
+  "suites": [{
+    "id": "3f361861-d01b-40c5-98e2-4213e6a280c8",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": [],
+  "plugins": []
+}

@@ -3,15 +3,9 @@ package com.jobportal.jobcenters;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-<<<<<<< HEAD
-
-import java.util.HashSet;
 
 import javax.validation.ConstraintViolationException;
 
-import org.json.JSONException;
-=======
->>>>>>> 8126586f86d7b22fb48566dec1638140526f58c2
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,12 +23,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.util.NestedServletException;
-
-import static org.mockito.BDDMockito.given;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jobportal.jobcenters.JobCenterController;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(JobCenterController.class)
