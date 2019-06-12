@@ -361,6 +361,18 @@
       ],
       "value": "C:\\Users\\thekeymaker\\Downloads\\Curriculum.pdf"
     }, {
+      "id": "a498a19a-58f1-403c-a1dd-17b578ff5784",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(1) .mdl-checkbox__label",
+      "targets": [
+        ["css=tr:nth-child(1) .mdl-checkbox__label", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span", "xpath:idRelative"],
+        ["xpath=//label/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Dev-Ops')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
       "id": "0d8cc1e1-1175-4f68-9972-94fc32341fbb",
       "comment": "",
       "command": "click",
@@ -767,7 +779,7 @@
       "id": "396cc3e2-b390-47ca-8ff3-7d9c86ed368c",
       "comment": "",
       "command": "click",
-      "target": "css=tr:nth-child(2) .mdl-checkbox__label",
+      "target": "css=tr:nth-child(6) .mdl-checkbox__label",
       "targets": [
         ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
         ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
@@ -839,19 +851,7 @@
       "targets": [],
       "value": ""
     }, {
-      "id": "803b54d2-5586-4c65-9a84-fc2a9bc186f3",
-      "comment": "",
-      "command": "click",
-      "target": "name=delete",
-      "targets": [
-        ["name=delete", "name"],
-        ["css=.delete-att", "css:finder"],
-        ["xpath=//input[@name='delete']", "xpath:attributes"],
-        ["xpath=//input[2]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "b8333305-1688-4687-82f1-62d296aa495f",
+      "id": "69cfcaaf-cf86-4a28-939e-fee7de8ea1fd",
       "comment": "",
       "command": "click",
       "target": "css=.mdl-navigation__link:nth-child(3)",
@@ -861,44 +861,161 @@
         ["xpath=//a[3]", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "b83f2da2-eb71-44f5-b6fd-691dde599020",
+      "comment": "",
+      "command": "click",
+      "target": "name=delete",
+      "targets": [],
+      "value": ""
     }]
   }, {
-    "id": "92a0686e-828f-407d-ad9d-cd827f2d62b1",
-    "name": "agnoga",
+    "id": "a4c5513a-8ce6-48bf-87b1-7ee8355d5260",
+    "name": "Add Job Palermo",
     "commands": [{
-      "id": "4fa2aa85-838d-471c-b2bb-10a125982c4f",
+      "id": "80cd1a8d-f81e-4d26-9b54-5b051eddfdeb",
       "comment": "",
       "command": "open",
-      "target": "http://localhost/signup/seeker",
+      "target": "/dashboard",
       "targets": [],
       "value": ""
     }, {
-      "id": "0d86706a-de1a-4f51-a6af-a9f9b04fe639",
+      "id": "036af10a-9551-4628-9458-e403e0397abb",
       "comment": "",
-      "command": "setWindowSize",
-      "target": "1054x808",
-      "targets": [],
+      "command": "click",
+      "target": "css=#show-dialog > .mdl-button__ripple-container",
+      "targets": [
+        ["css=#show-dialog > .mdl-button__ripple-container", "css:finder"],
+        ["xpath=//button[@id='show-dialog']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c9f6f3b9-f088-47bb-b853-c15b78922449",
+      "comment": "",
+      "command": "click",
+      "target": "id=position",
+      "targets": [
+        ["id=position", "id"],
+        ["name=position", "name"],
+        ["css=#position", "css:finder"],
+        ["xpath=//input[@id='position']", "xpath:attributes"],
+        ["xpath=//div[@id='position_container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0b0ebb08-af0f-4f17-90d8-7883912c4d42",
+      "comment": "",
+      "command": "type",
+      "target": "id=position",
+      "targets": [
+        ["id=position", "id"],
+        ["name=position", "name"],
+        ["css=#position", "css:finder"],
+        ["xpath=//input[@id='position']", "xpath:attributes"],
+        ["xpath=//div[@id='position_container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Junior Software Engineer"
+    }, {
+      "id": "79e9b0fa-e84e-4770-acae-8ebdce30322c",
+      "comment": "",
+      "command": "type",
+      "target": "id=companyName",
+      "targets": [
+        ["id=companyName", "id"],
+        ["name=companyName", "name"],
+        ["css=#companyName", "css:finder"],
+        ["xpath=//input[@id='companyName']", "xpath:attributes"],
+        ["xpath=//div[@id='email_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "TXT e-solutions"
+    }, {
+      "id": "cc4a12b1-e611-4db3-af10-0907dcec5414",
+      "comment": "",
+      "command": "type",
+      "target": "id=location",
+      "targets": [
+        ["id=location", "id"],
+        ["name=location", "name"],
+        ["css=#location", "css:finder"],
+        ["xpath=//input[@id='location']", "xpath:attributes"],
+        ["xpath=//div[@id='location_container']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "Palermo"
+    }, {
+      "id": "90d3e163-75e4-43ab-b6f4-70171afea254",
+      "comment": "",
+      "command": "type",
+      "target": "id=jobDescription",
+      "targets": [
+        ["id=jobDescription", "id"],
+        ["name=jobDescription", "name"],
+        ["css=#jobDescription", "css:finder"],
+        ["xpath=//textarea[@id='jobDescription']", "xpath:attributes"],
+        ["xpath=//div[@id='jobDescription_container']/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "test"
+    }, {
+      "id": "e065c19c-7811-4e1b-a438-1e71863704ca",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(2) .mdl-checkbox__label",
+      "targets": [
+        ["css=tr:nth-child(1) .mdl-checkbox__label", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span", "xpath:idRelative"],
+        ["xpath=//label/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Dev-Ops')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7dff16f-9541-48f0-802e-3535878c9be0",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(3) .mdl-checkbox__label",
+      "targets": [
+        ["css=tr:nth-child(1) .mdl-checkbox__label", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span", "xpath:idRelative"],
+        ["xpath=//label/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Dev-Ops')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "83d8647d-4098-4115-ab37-857713ac7585",
+      "comment": "",
+      "command": "click",
+      "target": "name=save",
+      "targets": [
+        ["name=save", "name"],
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@name='save']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
       "value": ""
     }]
   }, {
-    "id": "b037ce41-668a-4f95-9ae4-c11430a2c961",
-    "name": "ajfnl",
+    "id": "d3dfc45e-418d-4d57-92fb-63382801ad31",
+    "name": "galgna",
     "commands": [{
-      "id": "caae1abf-4c0e-49d4-8903-548cf8294bb7",
+      "id": "3362b21c-340c-4139-993a-890b738eaf0e",
       "comment": "",
       "command": "open",
       "target": "/browse",
       "targets": [],
       "value": ""
     }, {
-      "id": "fc3042be-17ce-4f74-a1e8-6cccbe84b2f4",
+      "id": "66dc422f-e75b-4dec-9f59-3d59ea0ba784",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1058x808",
+      "target": "1051x806",
       "targets": [],
       "value": ""
     }, {
-      "id": "b10e3295-5525-4e2e-933b-54ee1ecef443",
+      "id": "16a0bfc8-a66a-4c65-8d9a-9ddfb6c1e275",
       "comment": "",
       "command": "click",
       "target": "linkText=Dashboard",
@@ -912,34 +1029,15 @@
       ],
       "value": ""
     }, {
-      "id": "7702fa42-7db3-4b5f-b61f-ce1f2992008a",
+      "id": "6c6091ee-348d-4e15-933c-b5795a62d396",
       "comment": "",
       "command": "click",
-      "target": "css=#show-dialog > .mdl-button__ripple-container",
+      "target": "css=.mdl-navigation__link:nth-child(3)",
       "targets": [
-        ["css=#show-dialog > .mdl-button__ripple-container", "css:finder"],
-        ["xpath=//button[@id='show-dialog']/span", "xpath:idRelative"],
-        ["xpath=//button/span", "xpath:position"]
+        ["css=.mdl-navigation__link:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(@href, ' /jobcenter/adecco ')]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"]
       ],
-      "value": ""
-    }, {
-      "id": "f6582f38-63ac-4b48-a002-506f790b036b",
-      "comment": "",
-      "command": "click",
-      "target": "css=tr:nth-child(1) .mdl-checkbox__label",
-      "targets": [
-        ["css=tr:nth-child(1) .mdl-checkbox__label", "css:finder"],
-        ["xpath=//table[@id='skills-table']/tr/td/label/span", "xpath:idRelative"],
-        ["xpath=//label/span", "xpath:position"],
-        ["xpath=//span[contains(.,'Dev-Ops')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "2a71744e-53ce-4eca-b68d-f1a799afe36f",
-      "comment": "",
-      "command": "close",
-      "target": "",
-      "targets": [],
       "value": ""
     }]
   }],

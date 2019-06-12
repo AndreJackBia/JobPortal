@@ -1,6 +1,10 @@
 package com.jobportal.advisor;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,16 +23,48 @@ public class AdvisorController {
 
 	@Autowired
 	private SeekerProxy seekerProxy;
-	
+
 	@RequestMapping(value = "api/seekers/{username}/suggestions", method = RequestMethod.GET)
-	public ResponseEntity<List<JobEntity>> getAllJobs(@RequestHeader("X-User-Header") String loggedUser, 
-														@PathVariable String username) {
+	public ResponseEntity<List<JobEntity>> getAllJobs(@RequestHeader("X-User-Header") String loggedUser,
+			@PathVariable String username) {
 		if (!username.equals(loggedUser))
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		SeekerEntity user = seekerProxy.getSeeker(loggedUser, username);
 		if (user == null)
 			return ResponseEntity.notFound().build();
+
+		List<JobEntity> jobs = jobsRepository.findAll();
 		
-		return ResponseEntity.ok(jobsRepository.findAllByLocation(user.getCity()));
+		if (jobs == null)
+			return ResponseEntity.ok().build();
+		
+		List<String> skills = user.getSkills();
+		
+		if (skills == null)
+			return ResponseEntity.ok().build();
+		
+		Map<Long, List<JobEntity>> resultMatched = new HashMap();
+
+		for (JobEntity jobEntity : jobs) {
+			long matches = skills.stream().distinct().filter(jobEntity.getSkills()::contains).count();
+			if (matches > 0) {
+				if (resultMatched.get(Long.valueOf(matches)) == null)
+					resultMatched.put(matches, new ArrayList());
+				if (jobEntity.getLocation().equals(user.getCity()))
+					resultMatched.get(Long.valueOf(matches)).add(0, jobEntity);
+				else
+					resultMatched.get(Long.valueOf(matches)).add(jobEntity);
+			}
+		}
+
+		List<Long> keys = new ArrayList(resultMatched.keySet());
+		Collections.sort(keys);
+		List<JobEntity> result = new ArrayList();
+		for (int i = keys.size() - 1; i >= 0; i--) {
+			result.addAll(resultMatched.get(keys.get(i)));
+		}
+		
+		return ResponseEntity.ok(result);
+		// return ResponseEntity.ok(jobsRepository.findAllByLocation(user.getCity()));
 	}
 }
