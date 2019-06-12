@@ -24,6 +24,16 @@ public class AdvisorController {
 	@Autowired
 	private SeekerProxy seekerProxy;
 
+	
+	/**
+	 * This method is used to show all jobs on personal seeker's dashboard ordered by number of matches between user skills and jobs skills
+	 *
+	 * @param loggedUser
+	 * @param username
+	 * @return seeker
+	 * @return 401 if user is not logged, 404 if user doesn't exist, 200 and
+	 *         seeker's best matches job
+	 */
 	@RequestMapping(value = "api/seekers/{username}/suggestions", method = RequestMethod.GET)
 	public ResponseEntity<List<JobEntity>> getAllJobs(@RequestHeader("X-User-Header") String loggedUser,
 			@PathVariable String username) {

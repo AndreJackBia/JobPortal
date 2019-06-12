@@ -263,18 +263,6 @@ public class JobCentersControllerTest {
 		System.out.println(result.getResponse().getContentAsString());
 	}
 
-	/**
-	 * TEST 17
-	 * 
-	 * unexisting header
-	 * 
-	 */
-
-	@Test(expected = IllegalArgumentException.class)
-	public void test17_deleteJobCenter() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.delete("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-				.header("X-User-Header", null)).andExpect(MockMvcResultMatchers.status().isUnauthorized());
-	}
 
 	/**
 	 * TEST 18
@@ -284,7 +272,7 @@ public class JobCentersControllerTest {
 	 */
 	@Test
 	public void test18_deleteJobCenter() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.delete("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+		mvc.perform(MockMvcRequestBuilders.delete("/api/centers/adecco").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.header("X-User-Header", "")).andExpect(MockMvcResultMatchers.status().isUnauthorized());
 	}
 
