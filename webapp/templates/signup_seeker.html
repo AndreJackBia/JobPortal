@@ -20,8 +20,9 @@
   var i
   var skills = ["Dev-Ops","Java", "C++", "Javascript", "Web", "Back-End"]
   for (i = 0; i < skills.length; i++) {
-    $('#skills-table').append('<tr><td><label class="mdl-checkbox mdl-js-checkbox" for="checkbox-' + skills[i] + '"> <input type="checkbox" name="skills" id="checkbox-' + skills[i] + '" value="' + skills[i] + '" class="mdl-checkbox__input"><span class="mdl-checkbox__label">'+ skills[i] + '</span> </label> </td></tr>')
+    $('#skills-table').append('<tr><td><label class="mdl-checkbox" for="checkbox-' + skills[i] + '"> <input type="checkbox" name="skills" id="checkbox-' + skills[i] + '" value="' + skills[i] + '" class="mdl-checkbox__input"><span class="mdl-checkbox__label">'+ skills[i] + '</span> </label> </td></tr>')
   }
+
   });
 
   function addSkillRow(){

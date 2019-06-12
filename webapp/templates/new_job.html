@@ -4,11 +4,19 @@
 <script>
 
   $( document ).ready(function() {
+
+
     var i
     var skills = ["Dev-Ops","Java", "C++", "Javascript", "Web", "Back-End"]
     for (i = 0; i < skills.length; i++) {
-      $('#skills-table').append('<tr><td><label class="mdl-checkbox mdl-js-checkbox" for="checkbox-' + skills[i] + '"> <input type="checkbox" name="skills" id="checkbox-' + skills[i] + '" value="' + skills[i] + '" class="mdl-checkbox__input"><span class="mdl-checkbox__label">'+ skills[i] + '</span> </label> </td></tr>')
-    }
+      $('#skills-table').append('<tr><td><label class="mdl-checkbox" for="checkbox-' + skills[i] + '"> <input type="checkbox" name="skills" id="checkbox-' + skills[i] + '" value="' + skills[i] + '" class="mdl-checkbox__input"><span class="mdl-checkbox__label">'+ skills[i] + '</span> </label> </td></tr>')
+    }    
+
+  });
+
+  $(window).load(function() {
+    $('.mdl-checkbox__focus-helper').remove();
+    $('.mdl-checkbox__box-outline').remove();
   });
 
   function checkForm() {
@@ -89,7 +97,6 @@
               <div class="section row">
                   <div class="col s12">
                     <h5>Skills</h5>
-
                     <div class="layout-row row skills">
                       <div class="col s12 m10">
                         <div class="row">
@@ -105,8 +112,6 @@
                     </div>
                   </div>
                 </div>
-            </div>
-          </div>
 
           <div id="general_error" class="errors" hidden>
             <small class="error"></small>

@@ -2,7 +2,7 @@
   "id": "11b63284-d3a8-4205-ae80-8bb40e70c847",
   "version": "2.0",
   "name": "JobPortal",
-  "url": "http://localhost/signup/seeker",
+  "url": "http://localhost",
   "tests": [{
     "id": "b7b86f54-8a56-4e89-9877-ea3bf6acf72c",
     "name": "Sign up Center",
@@ -488,25 +488,27 @@
       ],
       "value": "test"
     }, {
-      "id": "bd08a677-635d-4a1b-bb39-f820665c2ad9",
+      "id": "ca3c4c9d-3318-472a-8af1-1080b45927a7",
       "comment": "",
       "command": "click",
-      "target": "css=tr:nth-child(2) .mdl-checkbox__tick-outline",
+      "target": "css=tr:nth-child(2) .mdl-checkbox__label",
       "targets": [
-        ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
-        ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
-        ["xpath=//span[3]/span", "xpath:position"]
+        ["css=tr:nth-child(1) .mdl-checkbox__label", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span", "xpath:idRelative"],
+        ["xpath=//label/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Dev-Ops')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "7dcbdbfd-1d9e-4cf7-99a6-de241ea36180",
+      "id": "432d26dc-590b-45f8-b9b6-3d1c9baa47ec",
       "comment": "",
       "command": "click",
-      "target": "css=tr:nth-child(3) .mdl-checkbox__tick-outline",
+      "target": "css=tr:nth-child(3) .mdl-checkbox__label",
       "targets": [
-        ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
-        ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
-        ["xpath=//span[3]/span", "xpath:position"]
+        ["css=tr:nth-child(1) .mdl-checkbox__label", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span", "xpath:idRelative"],
+        ["xpath=//label/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Dev-Ops')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
@@ -617,7 +619,7 @@
       "id": "301d0ccc-67f4-4e18-a8ca-e0711a6dcd7f",
       "comment": "",
       "command": "click",
-      "target": "css=tr:nth-child(6) .mdl-checkbox__tick-outline",
+      "target": "css=tr:nth-child(6) .mdl-checkbox__label",
       "targets": [
         ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
         ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
@@ -732,7 +734,7 @@
       "id": "8ba9b7b8-c92e-4f25-bd45-9e9e86f40a47",
       "comment": "",
       "command": "click",
-      "target": "css=tr:nth-child(1) .mdl-checkbox__tick-outline",
+      "target": "css=tr:nth-child(1) .mdl-checkbox__label",
       "targets": [
         ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
         ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
@@ -743,7 +745,7 @@
       "id": "a94b41eb-77c1-4a2a-865c-ddaf555389fa",
       "comment": "",
       "command": "click",
-      "target": "css=tr:nth-child(2) .mdl-checkbox__tick-outline",
+      "target": "css=tr:nth-child(2) .mdl-checkbox__label",
       "targets": [
         ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
         ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
@@ -754,7 +756,7 @@
       "id": "781db366-ef8b-4ee6-b7b7-e6790ec81422",
       "comment": "",
       "command": "click",
-      "target": "css=tr:nth-child(3) .mdl-checkbox__tick-outline",
+      "target": "css=tr:nth-child(3) .mdl-checkbox__label",
       "targets": [
         ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
         ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
@@ -765,7 +767,7 @@
       "id": "396cc3e2-b390-47ca-8ff3-7d9c86ed368c",
       "comment": "",
       "command": "click",
-      "target": "css=tr:nth-child(6) .mdl-checkbox__tick-outline",
+      "target": "css=tr:nth-child(2) .mdl-checkbox__label",
       "targets": [
         ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
         ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
@@ -875,6 +877,68 @@
       "comment": "",
       "command": "setWindowSize",
       "target": "1054x808",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "b037ce41-668a-4f95-9ae4-c11430a2c961",
+    "name": "ajfnl",
+    "commands": [{
+      "id": "caae1abf-4c0e-49d4-8903-548cf8294bb7",
+      "comment": "",
+      "command": "open",
+      "target": "/browse",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fc3042be-17ce-4f74-a1e8-6cccbe84b2f4",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1058x808",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b10e3295-5525-4e2e-933b-54ee1ecef443",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Dashboard",
+      "targets": [
+        ["linkText=Dashboard", "linkText"],
+        ["css=.mdl-navigation__link", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/dashboard')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7702fa42-7db3-4b5f-b61f-ce1f2992008a",
+      "comment": "",
+      "command": "click",
+      "target": "css=#show-dialog > .mdl-button__ripple-container",
+      "targets": [
+        ["css=#show-dialog > .mdl-button__ripple-container", "css:finder"],
+        ["xpath=//button[@id='show-dialog']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f6582f38-63ac-4b48-a002-506f790b036b",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(1) .mdl-checkbox__label",
+      "targets": [
+        ["css=tr:nth-child(1) .mdl-checkbox__label", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span", "xpath:idRelative"],
+        ["xpath=//label/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Dev-Ops')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2a71744e-53ce-4eca-b68d-f1a799afe36f",
+      "comment": "",
+      "command": "close",
+      "target": "",
       "targets": [],
       "value": ""
     }]
