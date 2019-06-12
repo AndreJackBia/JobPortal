@@ -2,7 +2,7 @@
   "id": "11b63284-d3a8-4205-ae80-8bb40e70c847",
   "version": "2.0",
   "name": "JobPortal",
-  "url": "http://localhost",
+  "url": "http://localhost/signup/seeker",
   "tests": [{
     "id": "b7b86f54-8a56-4e89-9877-ea3bf6acf72c",
     "name": "Sign up Center",
@@ -361,69 +361,29 @@
       ],
       "value": "C:\\Users\\thekeymaker\\Downloads\\Curriculum.pdf"
     }, {
-      "id": "026f3de7-aa2a-431a-9596-7535244b92e8",
+      "id": "0d8cc1e1-1175-4f68-9972-94fc32341fbb",
       "comment": "",
       "command": "click",
-      "target": "css=.add-skill > .material-icons",
+      "target": "css=tr:nth-child(2) .mdl-checkbox__label",
       "targets": [
-        ["css=.add-skill > .material-icons", "css:finder"],
-        ["xpath=//div[@id='skill_container']/span/i", "xpath:idRelative"],
-        ["xpath=//span/i", "xpath:position"],
-        ["xpath=//i[contains(.,'add_circle')]", "xpath:innerText"]
+        ["css=tr:nth-child(1) .mdl-checkbox__label", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span", "xpath:idRelative"],
+        ["xpath=//label/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Dev-Ops')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "ca32dce7-fb32-4f7d-93f3-af3fb3067cdf",
+      "id": "abaeaceb-a61f-4942-be70-39d05534fb75",
       "comment": "",
       "command": "click",
-      "target": "id=skill",
+      "target": "css=tr:nth-child(3) .mdl-checkbox__label",
       "targets": [
-        ["id=skill", "id"],
-        ["name=skill", "name"],
-        ["css=.col:nth-child(1) > .row > #skill_container > #skill", "css:finder"],
-        ["xpath=//textarea[@id='skill']", "xpath:attributes"],
-        ["xpath=//div[@id='skill_container']/textarea", "xpath:idRelative"],
-        ["xpath=//textarea", "xpath:position"]
+        ["css=tr:nth-child(1) .mdl-checkbox__label", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span", "xpath:idRelative"],
+        ["xpath=//label/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Dev-Ops')]", "xpath:innerText"]
       ],
       "value": ""
-    }, {
-      "id": "c730204a-c1a7-4823-ace1-f263d4be1a21",
-      "comment": "",
-      "command": "type",
-      "target": "id=skill",
-      "targets": [
-        ["id=skill", "id"],
-        ["name=skill", "name"],
-        ["css=.col:nth-child(1) > .row > #skill_container > #skill", "css:finder"],
-        ["xpath=//textarea[@id='skill']", "xpath:attributes"],
-        ["xpath=//div[@id='skill_container']/textarea", "xpath:idRelative"],
-        ["xpath=//textarea", "xpath:position"]
-      ],
-      "value": "Java"
-    }, {
-      "id": "4091f8b6-3f59-40d2-9dfc-825c3cf86c52",
-      "comment": "",
-      "command": "click",
-      "target": "css=.col:nth-child(2) #skill",
-      "targets": [
-        ["css=.col:nth-child(2) #skill", "css:finder"],
-        ["xpath=(//textarea[@id='skill'])[2]", "xpath:attributes"],
-        ["xpath=(//div[@id='skill_container']/textarea)[2]", "xpath:idRelative"],
-        ["xpath=//div[2]/div/div/textarea", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "05a31974-6315-4986-9439-62749a8bee94",
-      "comment": "",
-      "command": "type",
-      "target": "css=.col:nth-child(2) #skill",
-      "targets": [
-        ["css=.col:nth-child(2) #skill", "css:finder"],
-        ["xpath=(//textarea[@id='skill'])[2]", "xpath:attributes"],
-        ["xpath=(//div[@id='skill_container']/textarea)[2]", "xpath:idRelative"],
-        ["xpath=//div[2]/div/div/textarea", "xpath:position"]
-      ],
-      "value": "OOP"
     }, {
       "id": "74525aea-10ea-40a9-a52f-2b4a3c76bcd2",
       "comment": "",
@@ -527,6 +487,28 @@
         ["xpath=//textarea", "xpath:position"]
       ],
       "value": "test"
+    }, {
+      "id": "bd08a677-635d-4a1b-bb39-f820665c2ad9",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(2) .mdl-checkbox__tick-outline",
+      "targets": [
+        ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
+        ["xpath=//span[3]/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7dcbdbfd-1d9e-4cf7-99a6-de241ea36180",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(3) .mdl-checkbox__tick-outline",
+      "targets": [
+        ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
+        ["xpath=//span[3]/span", "xpath:position"]
+      ],
+      "value": ""
     }, {
       "id": "330fb80e-02fb-48ec-9e83-611d02802b22",
       "comment": "",
@@ -632,6 +614,17 @@
       ],
       "value": "test"
     }, {
+      "id": "301d0ccc-67f4-4e18-a8ca-e0711a6dcd7f",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(6) .mdl-checkbox__tick-outline",
+      "targets": [
+        ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
+        ["xpath=//span[3]/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
       "id": "ab33d24a-40cb-422a-b35a-3b29addd4c41",
       "comment": "",
       "command": "click",
@@ -736,6 +729,50 @@
       ],
       "value": "test"
     }, {
+      "id": "8ba9b7b8-c92e-4f25-bd45-9e9e86f40a47",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(1) .mdl-checkbox__tick-outline",
+      "targets": [
+        ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
+        ["xpath=//span[3]/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a94b41eb-77c1-4a2a-865c-ddaf555389fa",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(2) .mdl-checkbox__tick-outline",
+      "targets": [
+        ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
+        ["xpath=//span[3]/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "781db366-ef8b-4ee6-b7b7-e6790ec81422",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(3) .mdl-checkbox__tick-outline",
+      "targets": [
+        ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
+        ["xpath=//span[3]/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "396cc3e2-b390-47ca-8ff3-7d9c86ed368c",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(6) .mdl-checkbox__tick-outline",
+      "targets": [
+        ["css=tr:nth-child(1) .mdl-checkbox__tick-outline", "css:finder"],
+        ["xpath=//table[@id='skills-table']/tr/td/label/span[3]/span", "xpath:idRelative"],
+        ["xpath=//span[3]/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
       "id": "882f5c47-6578-4d67-972d-14da3fa9e766",
       "comment": "",
       "command": "click",
@@ -823,6 +860,24 @@
       ],
       "value": ""
     }]
+  }, {
+    "id": "92a0686e-828f-407d-ad9d-cd827f2d62b1",
+    "name": "agnoga",
+    "commands": [{
+      "id": "4fa2aa85-838d-471c-b2bb-10a125982c4f",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/signup/seeker",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0d86706a-de1a-4f51-a6af-a9f9b04fe639",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1054x808",
+      "targets": [],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "3f361861-d01b-40c5-98e2-4213e6a280c8",
@@ -832,6 +887,6 @@
     "timeout": 300,
     "tests": ["b7b86f54-8a56-4e89-9877-ea3bf6acf72c", "00d57e95-1637-4546-8b76-b5695c781ce6", "fa9e93bb-dce8-49e4-80a5-2ddc1de8124d", "3b6d2755-57ff-4611-9709-a26298310b12", "4b0e6a0e-ce48-473b-a895-067a6bcdf049"]
   }],
-  "urls": ["http://localhost/"],
+  "urls": ["http://localhost/", "http://localhost/dashboard", "http://localhost/signup/seeker"],
   "plugins": []
 }
