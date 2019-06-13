@@ -109,8 +109,8 @@ public class NotificationControllerTest {
 	public void test28_sendNotification_DestValid_SubNotEmpty_BodyEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
 				.put("destination", "l.vito@hotmail.com")
-				.put("body", "")
-				.put("subject", "sub");
+				.put("subject", "sub")
+				.put("body", "");
 		
 		mvc.perform(MockMvcRequestBuilders.post("/api/send-notification")
 				.contentType(MediaType.APPLICATION_JSON)
