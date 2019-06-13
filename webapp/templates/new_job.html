@@ -14,11 +14,6 @@
 
   });
 
-  $(window).load(function() {
-    $('.mdl-checkbox__focus-helper').remove();
-    $('.mdl-checkbox__box-outline').remove();
-  });
-
   function checkForm() {
     var errors_text = "";
     $('div.required > input').each(function (){
@@ -44,86 +39,87 @@
 
 {% include 'sidebar_nav.html' %}
 <div class="mdl-grid">
-  <div class="mdl-layout-spacer"></div>
-  <div class="card mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--10-col">
-    <div class="card-content">
-      <form class="sign-up-form" method="post">
+    <div class="mdl-layout-spacer"></div>
+    <div class="card mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--10-col">
         <div class="card-content">
-          <span class="card-title grey-text text-darken-2">
-            Job Details
-          </span>
-          <div class="section row">
-            <div class="col s12">
+            <form class="sign-up-form" method="post">
+                <div class="card-content">
+                    <span class="card-title grey-text text-darken-2">
+                      Job Details
+                    </span>
+                    <div class="section row">
+                        <div class="col s12">
 
-              <div class="layout-row row">
-                <div class="col s12 m12">
-                  <div class="row">
-                    <div class="input-field col s12 required" id="position_container">
-                      <input id="position" name="position" value="{{job.position}}" type="text">
-                      <label class="active" for="position">Position</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                            <div class="layout-row row">
+                                <div class="col s12 m12">
+                                    <div class="row">
+                                        <div class="input-field col s12 required" id="position_container">
+                                            <input id="position" name="position" value="{{job.position}}" type="text">
+                                            <label class="active" for="position">Position</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-              <div class="layout-row row">
-                <div class="col s12 m6">
-                  <div class="row">
-                    <div class="input-field col s12 required" id="email_container">
-                      <input id="companyName" name="companyName" value="{{job.companyName}}" type="text">
-                      <label class="active" for="companyName">Company Name</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="col s12 m6">
-                  <div class="row">
-                    <div class="input-field col s12 required" id="location_container">
-                      <input id="location" name="location" value="{{job.location}}" type="text">
-                      <label class="active" for="location">Location</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="layout-row row">
-                <div class="col s12 m12">
-                    <div class="row">
-                      <div class="input-field col s12 skill_container required"  id="jobDescription_container">
-                        <textarea class="materialize-textarea" cols="40" id="jobDescription" name="jobDescription" rows="10" style="height: 44px;"></textarea>
-                        <label class="active" for="jobDescription">Job Description</label>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-              <div class="section row">
-                  <div class="col s12">
-                    <h5>Skills</h5>
-                    <div class="layout-row row skills">
-                      <div class="col s12 m10">
-                        <div class="row">
-                          <div style="height:150px;overflow-y:scroll;overflow-x:hidden" class="input-field col s12 skill_container"  id="skill_container">
-                            <table id="skills-table">
-                            </table>
-                            <!-- <textarea class="materialize-textarea" cols="40" id="skill" name="skill" rows="10" style="height: 44px;"></textarea>
+                            <div class="layout-row row">
+                                <div class="col s12 m6">
+                                    <div class="row">
+                                        <div class="input-field col s12 required" id="email_container">
+                                            <input id="companyName" name="companyName" value="{{job.companyName}}" type="text">
+                                            <label class="active" for="companyName">Company Name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col s12 m6">
+                                    <div class="row">
+                                        <div class="input-field col s12 required" id="location_container">
+                                            <input id="location" name="location" value="{{job.location}}" type="text">
+                                            <label class="active" for="location">Location</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layout-row row">
+                                <div class="col s12 m12">
+                                    <div class="row">
+                                        <div class="input-field col s12 skill_container required" id="jobDescription_container">
+                                            <textarea class="materialize-textarea" cols="40" id="jobDescription" name="jobDescription" rows="10" style="height: 44px;"></textarea>
+                                            <label class="active" for="jobDescription">Job Description</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section row">
+                                <div class="col s12">
+                                    <h5>Skills</h5>
+                                    <div class="layout-row row skills">
+                                        <div class="col s12 m10">
+                                            <div class="row">
+                                                <div style="height:150px;overflow-y:scroll;overflow-x:hidden" class="input-field col s12 skill_container" id="skill_container">
+                                                    <table id="skills-table">
+                                                    </table>
+                                                    <!-- <textarea class="materialize-textarea" cols="40" id="skill" name="skill" rows="10" style="height: 44px;"></textarea>
                             <span class="add-skill"><i style="cursor: pointer;" class="material-icons prefix">add_circle</i></span>
                             <label class="active" for="skill"></label> -->
-                          </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
+                    <div id="general_error" class="errors" hidden>
+                        <small class="error"></small>
+                    </div>
                 </div>
-
-          <div id="general_error" class="errors" hidden>
-            <small class="error"></small>
-          </div>
+                <div class="card-action left-align" style="/*display: flex;width: 100%;flex-wrap: wrap;*/">
+                    <input type="button" class="btn edit-att-btn" name=save value="Save" onclick="checkForm()">
+                </div>
+            </form>
         </div>
-        <div class="card-action left-align" style="/*display: flex;width: 100%;flex-wrap: wrap;*/">
-          <input type="button" class="btn edit-att-btn" name=save value="Save" onclick="checkForm()">
-        </div>
-      </form>
     </div>
-  </div>
-<div class="mdl-layout-spacer"></div>
+    <div class="mdl-layout-spacer"></div>
 </div>
 
 {% include 'footer.html' %}
