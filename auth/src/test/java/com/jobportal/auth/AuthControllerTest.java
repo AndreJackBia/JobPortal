@@ -132,7 +132,82 @@ public class AuthControllerTest {
 	}
 	
 	@Test
-	public void test41_whenNonExistingUsername_thenExceptionShouldBeThrown() {
+	public void test41_whenNullPassword_thenExceptionShouldBeThrown() {
+		LoginUser loginUser = new LoginUser();
+		loginUser.setUsername("Andrea");
+		loginUser.setPassword(null);
+	
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonLoginUser;
+		try {
+			jsonLoginUser = mapper.writeValueAsString(loginUser);
+	
+			try {
+				mvc.perform(MockMvcRequestBuilders.post("/token/generate-token")
+						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+						.content(jsonLoginUser))
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.forwardedUrl(null));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void test42_whenEmptyPassword_thenExceptionShouldBeThrown() {
+		LoginUser loginUser = new LoginUser();
+		loginUser.setUsername(null);
+		loginUser.setPassword("");
+	
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonLoginUser;
+		try {
+			jsonLoginUser = mapper.writeValueAsString(loginUser);
+	
+			try {
+				mvc.perform(MockMvcRequestBuilders.post("/token/generate-token")
+						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+						.content(jsonLoginUser))
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(MockMvcResultMatchers.forwardedUrl(null));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void test43_whenValid_thenOk() {
+		LoginUser loginUser = new LoginUser();
+		loginUser.setUsername("Andrea");
+		loginUser.setPassword("costa");
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonLoginUser;
+		try {
+			jsonLoginUser = mapper.writeValueAsString(loginUser);
+
+			try {
+				mvc.perform(MockMvcRequestBuilders.post("/token/generate-token")
+						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+						.content(jsonLoginUser))
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(jsonPath("$.result.username", is(account.getUsername())));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void test44_whenNonExistingUsername_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername("Batman");
 		loginUser.setPassword("costa");
@@ -157,57 +232,7 @@ public class AuthControllerTest {
 	}
 	
 	@Test
-	public void test50_whenNullPassword_thenExceptionShouldBeThrown() {
-		LoginUser loginUser = new LoginUser();
-		loginUser.setUsername("Andrea");
-		loginUser.setPassword(null);
-
-		ObjectMapper mapper = new ObjectMapper();
-		String jsonLoginUser;
-		try {
-			jsonLoginUser = mapper.writeValueAsString(loginUser);
-
-			try {
-				mvc.perform(MockMvcRequestBuilders.post("/token/generate-token")
-						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-						.content(jsonLoginUser))
-						.andExpect(MockMvcResultMatchers.status().isOk())
-						.andExpect(MockMvcResultMatchers.forwardedUrl(null));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Test
-	public void test51_whenEmptyPassword_thenExceptionShouldBeThrown() {
-		LoginUser loginUser = new LoginUser();
-		loginUser.setUsername(null);
-		loginUser.setPassword("");
-
-		ObjectMapper mapper = new ObjectMapper();
-		String jsonLoginUser;
-		try {
-			jsonLoginUser = mapper.writeValueAsString(loginUser);
-
-			try {
-				mvc.perform(MockMvcRequestBuilders.post("/token/generate-token")
-						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-						.content(jsonLoginUser))
-						.andExpect(MockMvcResultMatchers.status().isOk())
-						.andExpect(MockMvcResultMatchers.forwardedUrl(null));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Test
-	public void test52_whenInvalidPassword_thenExceptionShouldBeThrown() {
+	public void test45_whenInvalidPassword_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername("Andrea");
 		loginUser.setPassword("wrongPassword");
@@ -232,7 +257,7 @@ public class AuthControllerTest {
 	}
 	
 	@Test
-	public void test53_whenValid_thenOk() {
+	public void test46_whenValid_thenOk() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername("Andrea");
 		loginUser.setPassword("costa");
