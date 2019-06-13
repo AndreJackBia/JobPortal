@@ -6,6 +6,7 @@ import static org.mockito.BDDMockito.given;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.validation.ConstraintViolationException;
@@ -81,6 +82,9 @@ public class UserServiceTest {
 		accountSeeker.setEmail("a.biaggi1@campus.unimib.it");
 		accountSeeker.setRole(Role.SEEKER);
 		
+		Calendar cal = Calendar.getInstance();
+		cal.set(1995, 10, 27);
+		
 		seeker = new UserSeeker();
 		seeker.setUsername("andrejackbia");
 		seeker.setPassword("costa");
@@ -88,7 +92,7 @@ public class UserServiceTest {
 		seeker.setFirstName("andrea");
 		seeker.setLastName("biaggi");
 		seeker.setCity("Milano");
-		seeker.setBirth(new Date());
+		seeker.setBirth(cal.getTime());
 		seeker.setSkills(Arrays.asList("Java", "OOP", "SQL"));
 		
 		accountCenter = new Account();
@@ -701,7 +705,28 @@ public class UserServiceTest {
 		assertEquals(null, us.getBirth());
 	}
 	
-	//TODO: TEST 71 DA FARE
+	/**
+	 * TEST 71
+	 * 
+	 * Sign up with bad format date
+	 */
+	@Test(expected = ConstraintViolationException.class)
+	public void test71_saveUserSeeker() throws Exception {
+		
+		Account sa = accountSeeker;
+		
+		given(userRepository.existsByUsername("andrejackbia")).willReturn(false);	
+		given(seekerProxy.createSeeker(any(SeekerEntity.class))).willThrow(ConstraintViolationException.class);
+		given(userRepository.save(sa)).willReturn(sa);
+		
+		UserSeeker us = seeker;
+		us.setBirth(new Date());
+		
+		Account sus = userService.save(us).getBody();
+		
+		assertEquals(sus.getUsername(), us.getUsername());
+		assertEquals(new Date(), us.getBirth());
+	}
 	
 	/**
 	 * TEST 72

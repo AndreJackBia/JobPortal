@@ -191,7 +191,7 @@ def jobcenter_detail(j_username):
     # TODO: Controllo
     if request.method == 'POST' and j_username == user['username']:
         r_json = request.form.to_dict(flat=True)
-        r_json["role"] = "JOB_CENTER"
+        r_json["type"] = "JOB_CENTER"
 
         if r_json["password"] == '':
             del r_json["password"]
