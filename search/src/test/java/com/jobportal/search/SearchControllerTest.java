@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
+
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,22 +40,21 @@ public class SearchControllerTest {
 		MockitoAnnotations.initMocks(this);
 	}
 	
-	//TODO TEST 3 DA RIFARE
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void test3_getJobs_QueryNull_LocationNonEmpty() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Mater", "test position", "test description", "Pavia", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 		JobEntity job1 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Milano", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 
 		List<JobEntity> correctJob = Arrays.asList(job1);
 		
-		given(jobsRepository.findJobByQuery("", "Milano")).willReturn(correctJob);
+		given(jobsRepository.findJobByQuery(null, "Milano")).willThrow(IllegalArgumentException.class);
 		
 		mvc.perform(MockMvcRequestBuilders.get("/api/jobs/search")
 				.contentType(MediaType.APPLICATION_JSON)
+				.param("q", null)
 				.param("location", "Milano"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(jsonPath("$[0].username", is(job1.getUsername())))
-				.andExpect(jsonPath("$", Matchers.hasSize(1)));
+				.andExpect(MockMvcResultMatchers.forwardedUrl(null));
 	}
 	
 	@Test
@@ -97,28 +98,55 @@ public class SearchControllerTest {
 				.andExpect(jsonPath("$", Matchers.hasSize(1)));
 	}
 	
-	//TODO TEST 6 DA RIVEDERE	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void test6_getJobs_QueryNotEmpty_LocationNull() throws Exception {
-		JobEntity job0 = new JobEntity(0, "Giovanni", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
-		JobEntity job1 = new JobEntity(1, "Luca", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
-		JobEntity job2 = new JobEntity(2, "Alberto", "test2 position", "test2 description", "Pavia", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job0 = new JobEntity(0, "Mater", "test position", "test description", "Pavia", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job1 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Milano", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 
-		List<JobEntity> correctJob = Arrays.asList(job0);
+		List<JobEntity> correctJob = Arrays.asList(job1);
 		
-		given(jobsRepository.findJobByQuery("Albert", "")).willReturn(correctJob);		
+		given(jobsRepository.findJobByQuery("query", null)).willThrow(IllegalArgumentException.class);
 		
 		mvc.perform(MockMvcRequestBuilders.get("/api/jobs/search")
 				.contentType(MediaType.APPLICATION_JSON)
-				.param("q", "Luca"))
+				.param("q", "query")
+				.param("location", null))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(jsonPath("$[0].username", is(job0.getUsername())))
-				.andExpect(jsonPath("$", Matchers.hasSize(1)));
+				.andExpect(MockMvcResultMatchers.forwardedUrl(null));
 	}
 	
-	//TODO TEST 7 DA FARE
+	@Test
+	public void test7_getJobs_QueryNotEmpty_LocationNotEmpty_NoResults() throws Exception {
+		JobEntity job0 = new JobEntity(0, "Mater", "test position", "test description", "Pavia", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job1 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Milano", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		
+		given(jobsRepository.findJobByQuery("query", "Palermo")).willReturn(new ArrayList());
+		
+		mvc.perform(MockMvcRequestBuilders.get("/api/jobs/search")
+				.contentType(MediaType.APPLICATION_JSON)
+				.param("q", "query")
+				.param("location", "Palermo"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(jsonPath("$", Matchers.hasSize(0)));
+	}
 	
-	//TODO TEST 8 DA FARE
+	@Test
+	public void test8_getJobs_QueryNotEmpty_LocationNotEmpty_OneResult() throws Exception {
+		JobEntity job0 = new JobEntity(0, "Mater", "test position", "test description", "Pavia", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job1 = new JobEntity(1, "Albert", "test2 position", "test2 description", "Milano", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+
+		List<JobEntity> correctJob = Arrays.asList(job1);
+		
+		given(jobsRepository.findJobByQuery("", "Milano")).willReturn(correctJob);
+		
+		mvc.perform(MockMvcRequestBuilders.get("/api/jobs/search")
+				.contentType(MediaType.APPLICATION_JSON)
+				.param("q", "")
+				.param("location", "Milano"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(jsonPath("$", Matchers.hasSize(1)))
+				.andExpect(jsonPath("$[0].location", is(job1.getLocation())));
+	}
 	
 	@Test
 	public void test9_getJobs_QueryNotEmpty_LocationNotEmpty_MoreThanOne() throws Exception {
