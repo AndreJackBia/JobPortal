@@ -204,6 +204,10 @@ def jobcenter_detail(j_username):
         print(r)
 
 
+    jobcenter = requests.get(
+        BASE_URL + "/api/centers/" + j_username,
+        headers=header,
+        ) 
     jobcenter = jobcenter.json()
 
     jobs = requests.get(
