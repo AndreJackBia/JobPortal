@@ -82,7 +82,7 @@ public class AuthControllerTest {
 	}
 
 	@Test
-	public void test47_whenInvalidUsername_thenExceptionShouldBeThrown() {
+	public void test39_whenInvalidUsername_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername(null);
 		loginUser.setPassword("costa");
@@ -107,7 +107,7 @@ public class AuthControllerTest {
 	}
 	
 	@Test
-	public void test48_whenEmptyUsername_thenExceptionShouldBeThrown() {
+	public void test40_whenEmptyUsername_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername("");
 		loginUser.setPassword("costa");
@@ -132,7 +132,7 @@ public class AuthControllerTest {
 	}
 	
 	@Test
-	public void test49_whenNonExistingUsername_thenExceptionShouldBeThrown() {
+	public void test41_whenNonExistingUsername_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername("Batman");
 		loginUser.setPassword("costa");

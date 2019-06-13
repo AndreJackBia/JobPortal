@@ -41,6 +41,15 @@ public class ApplicationsController {
 	@Value("${pass}")
 	private String pass;
 
+	/**
+	 * This method is used to get all applications of a specific center
+	 *
+	 * @param loggedUser
+	 * @param username
+	 * @return List<ApplicationsEntity>
+	 * @return 401 if user is not logged, 401 if user is not a Center, 200 and center's applications
+	 *         
+	 */
 	@RequestMapping(value = "/api/centers/{username}/applications/", method = RequestMethod.GET)
 	public ResponseEntity<List<ApplicationsEntity>> getCentersApplications(
 			@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username) {
@@ -55,7 +64,17 @@ public class ApplicationsController {
 
 		return ResponseEntity.ok().body(applicationsRepository.findAllByCenterUsername(username));
 	}
-
+	
+	/**
+	 * This method is used to get all applications of a specific center and a specific job
+	 *
+	 * @param loggedUser
+	 * @param username
+	 * @param jobId
+	 * @return List<ApplicationsEntity>
+	 * @return 401 if user is not logged, 401 if user is not a Center, 200 and center's applications of a specific job
+	 *         
+	 */
 	@RequestMapping(value = "/api/centers/{username}/jobs/{jobId}/applications", method = RequestMethod.GET)
 	public ResponseEntity<List<ApplicationsEntity>> getCentersApplications(
 			@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username,
@@ -73,6 +92,15 @@ public class ApplicationsController {
 		return ResponseEntity.ok().body(applicationsRepository.findAllByJobId(jobId));
 	}
 
+	/**
+	 * This method is used to get all applications of a specific seeker
+	 *
+	 * @param loggedUser
+	 * @param username
+	 * @return List<ApplicationsEntity>
+	 * @return 401 if user is not logged, 401 if user is not a Seeker, 200 and Seeker's applications
+	 *         
+	 */
 	@RequestMapping(value = "/api/seekers/{username}/applications/", method = RequestMethod.GET)
 	public ResponseEntity<List<ApplicationsEntity>> getApplications(@RequestHeader("X-User-Header") String loggedUser,
 			@PathVariable String username) {
@@ -88,7 +116,18 @@ public class ApplicationsController {
 
 		return ResponseEntity.ok().body(applicationsRepository.findAllByUsername(username));
 	}
-
+	
+	/**
+	 * This method is used to create an application
+	 *
+	 * @param loggedUser
+	 * @param role
+	 * @param username
+	 * @param application
+	 * @return ApplicationsEntity
+	 * @return 401 if user is not logged, 401 if user is not a Seeker, 404 if job doesn't exist, 200 and Seeker's applications
+	 *         
+	 */
 	@RequestMapping(value = "/api/seekers/{username}/applications/", method = RequestMethod.POST)
 	public ResponseEntity<ApplicationsEntity> createApplication(@RequestHeader("X-User-Header") String loggedUser,
 			@RequestHeader("X-User-Role-Header") String role, @PathVariable String username,
@@ -119,6 +158,16 @@ public class ApplicationsController {
 		return ResponseEntity.created(new URI("/api/seekers/" + username + "/applications/" + a.getId())).body(a);
 	}
 
+	
+	/**
+	 * This method is used to get a specific application
+	 * 
+	 * @param loggedUser
+	 * @param username
+	 * @return ApplicationsEntity
+	 * @return 401 if user is not logged, 404 if application or user don't exist, 200 and application
+	 *         
+	 */
 	@RequestMapping(value = "/api/seekers/{username}/applications/{applicationId}", method = RequestMethod.GET)
 	public ResponseEntity<ApplicationsEntity> getApplication(@RequestHeader("X-User-Header") String loggedUser,
 			@PathVariable String username, @PathVariable long applicationId) {
@@ -139,6 +188,15 @@ public class ApplicationsController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
+	/**
+	 * This method is used to delete all applications by username
+	 * 
+	 * @param loggedUser
+	 * @param username
+	 * @return ResponseEntity
+	 * @return 401 if user is not logged, 404 if application or user don't exist, 200 and application
+	 *         
+	 */
 	@RequestMapping(value = "/api/seekers/{username}/applications", method = RequestMethod.DELETE)
 	@Transactional
 	public ResponseEntity deleteAllApplicationsByUsername(@RequestHeader("X-User-Header") String loggedUser,
@@ -150,6 +208,16 @@ public class ApplicationsController {
 		return ResponseEntity.ok().build();
 	}
 
+	/**
+	 * This method is used to delete a specific application by id
+	 * 
+	 * @param loggedUser
+	 * @param username
+	 * @param jobId
+	 * @return ResponseEntity
+	 * @return 401 if user is not logged, 404 if application doesn't exist and 200 if everything is OK
+	 *         
+	 */
 	@RequestMapping(value = "/api/centers/{username}/jobs/{jobId}/applications", method = RequestMethod.DELETE)
 	@Transactional
 	public ResponseEntity deleteAllApplicationsByJobId(@RequestHeader("X-User-Header") String loggedUser,
@@ -160,7 +228,17 @@ public class ApplicationsController {
 		applicationsRepository.deleteAllByJobId(jobId);
 		return ResponseEntity.ok().build();
 	}
-
+	
+	/**
+	 * This method is used to delete a specific application by id
+	 * 
+	 * @param loggedUser
+	 * @param username
+	 * @param applicationId
+	 * @return ApplicationsEntity
+	 * @return 401 if user is not logged or user isn't subscribed, 404 if application doesn't exist and 200 if everything is OK
+	 *         
+	 */
 	@RequestMapping(value = "/api/seekers/{username}/applications/{applicationId}", method = RequestMethod.DELETE)
 	public ResponseEntity<ApplicationsEntity> deleteApplication(@RequestHeader("X-User-Header") String loggedUser,
 			@PathVariable String username, @PathVariable long applicationId) {
@@ -181,6 +259,18 @@ public class ApplicationsController {
 		return ResponseEntity.ok().build();
 	}
 
+	/**
+	 * This method is used to update a application by id
+	 * 
+	 * @param loggedUser
+	 * @param role
+	 * @param username
+	 * @param applicationId
+	 * @param application
+	 * @return ApplicationsEntity
+	 * @return 401 if user is not logged or user isn't a seeker, 404 if application doesn't exist and 200 if everything is OK
+	 *         
+	 */
 	@RequestMapping(value = "/api/seekers/{username}/applications/{applicationId}", method = RequestMethod.PUT)
 	public ResponseEntity<ApplicationsEntity> updateApplication(@RequestHeader("X-User-Header") String loggedUser,
 			@RequestHeader("X-User-Role-Header") String role, @PathVariable String username,
