@@ -297,35 +297,4 @@ public class AuthControllerTest {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * TEST 46
-	 * 
-	 * Sign in as valid User
-	 * 
-	 */
-	@Test
-	public void test46_whenValid_thenOk() {
-		LoginUser loginUser = new LoginUser();
-		loginUser.setUsername("Andrea");
-		loginUser.setPassword("costa");
-
-		ObjectMapper mapper = new ObjectMapper();
-		String jsonLoginUser;
-		try {
-			jsonLoginUser = mapper.writeValueAsString(loginUser);
-
-			try {
-				mvc.perform(MockMvcRequestBuilders.post("/token/generate-token")
-						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-						.content(jsonLoginUser))
-						.andExpect(MockMvcResultMatchers.status().isOk())
-						.andExpect(jsonPath("$.result.username", is(account.getUsername())));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-	}
 }
