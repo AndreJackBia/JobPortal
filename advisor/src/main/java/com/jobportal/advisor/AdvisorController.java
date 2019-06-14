@@ -30,7 +30,6 @@ public class AdvisorController {
 	 *
 	 * @param loggedUser
 	 * @param username
-	 * @return seeker
 	 * @return 401 if user is not logged, 404 if user doesn't exist, 200 and
 	 *         seeker's best matches job
 	 */

@@ -31,13 +31,11 @@ public class SeekerController {
 	private String pass;
 
 	/**
-	 * This method is used to get personal information of the registered seeker
+	 * This method is used to create a new seeker
 	 *
-	 * @param loggedUser
-	 * @param username
-	 * @return seeker
-	 * @return 401 if user is not logged, 404 if user doesn't exist, 200 and
-	 *         seeker's data otherwise
+	 * @param seekerEntity
+	 * @return 201 if successful, 500 otherwise
+	 * @throws URISyntaxException
 	 */
 	@RequestMapping(value = "/api/seekers", method = RequestMethod.POST)
 	public ResponseEntity<SeekerEntity> createInstance(@RequestBody SeekerEntity seekerEntity)
@@ -51,7 +49,6 @@ public class SeekerController {
 	 *
 	 * @param loggedUser
 	 * @param username
-	 * @return seeker
 	 * @return 401 if user is not logged, 404 if user doesn't exist, 200 and
 	 *         seeker's data otherwise
 	 */
@@ -71,7 +68,6 @@ public class SeekerController {
 	 *
 	 * @param loggedUser
 	 * @param username
-	 * @return seeker
 	 * @return 401 if user is not logged, 404 if user doesn't exist, 200 otherwise
 	 */
 	@RequestMapping(value = "/api/seekers/{username}", method = RequestMethod.PUT)

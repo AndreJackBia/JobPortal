@@ -22,9 +22,7 @@ import javax.annotation.Resource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    //@Resource(name = "userService")
 	@Autowired
-	//@Qualifier("userService")
     private UserDetailsService userDetailsService;
 
     @Autowired
@@ -47,6 +45,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new JwtAuthenticationFilter();
     }
 
+    /**
+     * Configure which paths via requests can be accessed and the conditions/permissions needed.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()

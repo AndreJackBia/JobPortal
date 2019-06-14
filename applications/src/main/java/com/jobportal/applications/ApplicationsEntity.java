@@ -19,6 +19,7 @@ public class ApplicationsEntity {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 	
+	/** Seeker who applies for the Job. */
 	@NotNull
 	@NotEmpty
 	private String username;
@@ -30,6 +31,7 @@ public class ApplicationsEntity {
 	@NotNull
 	private long jobId;
 	
+	/** JobCenter publisher of the Job. */
 	@NotNull
 	@NotEmpty
 	private String centerUsername;

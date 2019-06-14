@@ -81,6 +81,12 @@ public class AuthControllerTest {
 	    }
 	}
 
+	/**
+	 * TEST 39
+	 * 
+	 * Sign in with username null
+	 * 
+	 */
 	@Test
 	public void test39_whenInvalidUsername_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
@@ -106,6 +112,12 @@ public class AuthControllerTest {
 		}
 	}
 	
+	/**
+	 * TEST 40
+	 * 
+	 * Sign in with username empty
+	 * 
+	 */
 	@Test
 	public void test40_whenEmptyUsername_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
@@ -131,6 +143,12 @@ public class AuthControllerTest {
 		}
 	}
 	
+	/**
+	 * TEST 41
+	 * 
+	 * Sign in with password null
+	 * 
+	 */
 	@Test
 	public void test41_whenNullPassword_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
@@ -156,6 +174,12 @@ public class AuthControllerTest {
 		}
 	}
 
+	/**
+	 * TEST 42
+	 * 
+	 * Sign in with password empty
+	 * 
+	 */
 	@Test
 	public void test42_whenEmptyPassword_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
@@ -181,6 +205,12 @@ public class AuthControllerTest {
 		}
 	}
 
+	/**
+	 * TEST 43
+	 * 
+	 * Sign in with valid username and password
+	 * 
+	 */
 	@Test
 	public void test43_whenValid_thenOk() {
 		LoginUser loginUser = new LoginUser();
@@ -206,6 +236,12 @@ public class AuthControllerTest {
 		}
 	}
 	
+	/**
+	 * TEST 44
+	 * 
+	 * Sign in as a non existing user
+	 * 
+	 */
 	@Test
 	public void test44_whenNonExistingUsername_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
@@ -231,6 +267,12 @@ public class AuthControllerTest {
 		}
 	}
 	
+	/**
+	 * TEST 45
+	 * 
+	 * Sign in with wrong password
+	 * 
+	 */
 	@Test
 	public void test45_whenInvalidPassword_thenExceptionShouldBeThrown() {
 		LoginUser loginUser = new LoginUser();
@@ -256,6 +298,12 @@ public class AuthControllerTest {
 		}
 	}
 	
+	/**
+	 * TEST 46
+	 * 
+	 * Sign in as valid User
+	 * 
+	 */
 	@Test
 	public void test46_whenValid_thenOk() {
 		LoginUser loginUser = new LoginUser();

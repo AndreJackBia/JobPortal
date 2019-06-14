@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Repository
 @FeignClient(name="jobcenters")
 @RibbonClient(name="jobcenters")
-public interface CenterEntityProxy {
+public interface JobCenterProxy {
 
 	@RequestMapping(value = "/api/centers", method = RequestMethod.POST)
 	public ResponseEntity createCenter(@RequestBody JobCenterEntity jobCenterEntity);

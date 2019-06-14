@@ -151,8 +151,8 @@ public class SearchControllerTest {
 	@Test
 	public void test9_getJobs_QueryNotEmpty_LocationNotEmpty_MoreThanOne() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Lorenzo", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
-		JobEntity job1 = new JobEntity(0, "Luca2", "test2 position", "test description", "Pavia", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
-		JobEntity job2 = new JobEntity(1, "Andrea", "test position", "test2 description", "Milano", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job1 = new JobEntity(1, "Luca2", "test2 position", "test description", "Pavia", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
+		JobEntity job2 = new JobEntity(2, "Andrea", "test position", "test2 description", "Milano", new Date(2018, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
 
 		List<JobEntity> correctJob = Arrays.asList(job0, job2);
 		

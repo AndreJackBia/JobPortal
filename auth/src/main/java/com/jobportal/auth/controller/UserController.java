@@ -31,7 +31,7 @@ public class UserController {
 
     @GetMapping("/users")
     public ApiResponse<List<Account>> listUser(){
-        return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched successfully.",userService.findAll());
+        return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched successfully.", userService.findAll());
     }
 
     @GetMapping("/users/{username}")

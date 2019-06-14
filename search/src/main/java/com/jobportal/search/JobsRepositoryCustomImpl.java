@@ -11,6 +11,12 @@ public class JobsRepositoryCustomImpl implements JobsRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * This methods implements a custom query for the research of jobs following Spring rules.
+     * @param: query
+     * @param: location
+     * @return: list of JobEntities that satisfy the research criterion
+     */
     public List<JobEntity> findJobByQuery(String q, String location) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<JobEntity> query = cb.createQuery(JobEntity.class);

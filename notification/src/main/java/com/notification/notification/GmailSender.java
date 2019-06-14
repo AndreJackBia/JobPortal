@@ -44,19 +44,6 @@ public class GmailSender {
     private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_SEND);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
     
-//	public void send(String to, String subject, String body)
-//	throws MessagingException {
-//	MimeMessage message = javaMailSender.createMimeMessage();
-//	MimeMessageHelper helper;
-//	// SSL Certificate.
-//	helper = new MimeMessageHelper(message, true);
-//	// Multipart messages.
-//	helper.setSubject(subject);
-//	helper.setTo(to);
-//	helper.setText(body, true);
-//	javaMailSender.send(message);
-//}
-
 public static MimeMessage createEmail(String to, String from, String subject, String bodyText)
         throws MessagingException {
     Properties props = new Properties();

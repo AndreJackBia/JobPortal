@@ -46,7 +46,6 @@ public class ApplicationsController {
 	 *
 	 * @param loggedUser
 	 * @param username
-	 * @return List<ApplicationsEntity>
 	 * @return 401 if user is not logged, 401 if user is not a Center, 200 and center's applications
 	 *         
 	 */
@@ -71,7 +70,6 @@ public class ApplicationsController {
 	 * @param loggedUser
 	 * @param username
 	 * @param jobId
-	 * @return List<ApplicationsEntity>
 	 * @return 401 if user is not logged, 401 if user is not a Center, 200 and center's applications of a specific job
 	 *         
 	 */
@@ -97,7 +95,6 @@ public class ApplicationsController {
 	 *
 	 * @param loggedUser
 	 * @param username
-	 * @return List<ApplicationsEntity>
 	 * @return 401 if user is not logged, 401 if user is not a Seeker, 200 and Seeker's applications
 	 *         
 	 */
@@ -124,7 +121,6 @@ public class ApplicationsController {
 	 * @param role
 	 * @param username
 	 * @param application
-	 * @return ApplicationsEntity
 	 * @return 401 if user is not logged, 401 if user is not a Seeker, 404 if job doesn't exist, 200 and Seeker's applications
 	 *         
 	 */
@@ -164,7 +160,7 @@ public class ApplicationsController {
 	 * 
 	 * @param loggedUser
 	 * @param username
-	 * @return ApplicationsEntity
+	 * @param applicationId
 	 * @return 401 if user is not logged, 404 if application or user don't exist, 200 and application
 	 *         
 	 */
@@ -193,8 +189,7 @@ public class ApplicationsController {
 	 * 
 	 * @param loggedUser
 	 * @param username
-	 * @return ResponseEntity
-	 * @return 401 if user is not logged, 404 if application or user don't exist, 200 and application
+	 * @return 401 if user is not logged, 404 if application or user don't exist, 200
 	 *         
 	 */
 	@RequestMapping(value = "/api/seekers/{username}/applications", method = RequestMethod.DELETE)
@@ -214,7 +209,6 @@ public class ApplicationsController {
 	 * @param loggedUser
 	 * @param username
 	 * @param jobId
-	 * @return ResponseEntity
 	 * @return 401 if user is not logged, 404 if application doesn't exist and 200 if everything is OK
 	 *         
 	 */
@@ -235,7 +229,6 @@ public class ApplicationsController {
 	 * @param loggedUser
 	 * @param username
 	 * @param applicationId
-	 * @return ApplicationsEntity
 	 * @return 401 if user is not logged or user isn't subscribed, 404 if application doesn't exist and 200 if everything is OK
 	 *         
 	 */
@@ -260,14 +253,13 @@ public class ApplicationsController {
 	}
 
 	/**
-	 * This method is used to update a application by id
+	 * This method is used to update an application by id
 	 * 
 	 * @param loggedUser
 	 * @param role
 	 * @param username
 	 * @param applicationId
 	 * @param application
-	 * @return ApplicationsEntity
 	 * @return 401 if user is not logged or user isn't a seeker, 404 if application doesn't exist and 200 if everything is OK
 	 *         
 	 */

@@ -28,11 +28,11 @@ import com.jobportal.auth.model.Account;
 import com.jobportal.auth.model.Account.Role;
 import com.jobportal.auth.model.UserCenter;
 import com.jobportal.auth.model.UserSeeker;
-import com.jobportal.auth.proxy.CenterEntityProxy;
+import com.jobportal.auth.proxy.JobCenterProxy;
 import com.jobportal.auth.proxy.JobCenterEntity;
-import com.jobportal.auth.proxy.NotificationEntityProxy;
+import com.jobportal.auth.proxy.NotificationProxy;
 import com.jobportal.auth.proxy.SeekerEntity;
-import com.jobportal.auth.proxy.SeekerEntityProxy;
+import com.jobportal.auth.proxy.SeekerProxy;
 import com.jobportal.auth.service.UserService;
 import com.jobportal.auth.service.impl.UserServiceImpl;
 
@@ -55,13 +55,13 @@ public class UserServiceTest {
 	private UserRepo userRepository;
 
 	@MockBean
-	CenterEntityProxy centerProxy;
+	JobCenterProxy centerProxy;
 
 	@MockBean
-	SeekerEntityProxy seekerProxy;
+	SeekerProxy seekerProxy;
 
 	@MockBean
-	NotificationEntityProxy	notificationProxy;
+	NotificationProxy	notificationProxy;
 
 	@MockBean
 	BCryptPasswordEncoder bcryptEncoder;
@@ -113,14 +113,6 @@ public class UserServiceTest {
 		given(bcryptEncoder.encode(accountCenter.getPassword())).willReturn(accountCenter.getPassword());
 		given(userRepository.findByUsername(null)).willThrow(new BadCredentialsException("Bad Credentials!"));
 	}
-
-	/*@Test(expected = BadCredentialsException.class)
-	public void whenInvalidUsername_thenExceptionShouldBeThrown() {
-		String username = null;
-		Account account = userService.findOne(username);
-
-		//assertThat(account.getUsername(), equalToIgnoringCase(username));
-	}*/
 	
 	/**
 	 * TEST 47

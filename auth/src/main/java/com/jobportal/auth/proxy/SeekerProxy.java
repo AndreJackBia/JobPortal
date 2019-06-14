@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Repository
 @FeignClient(name = "seekers")
 @RibbonClient(name = "seekers")
-public interface SeekerEntityProxy {
+public interface SeekerProxy {
 
 	@RequestMapping(value = "/api/seekers", method = RequestMethod.POST)
 	public ResponseEntity createSeeker(SeekerEntity seekerEntity);

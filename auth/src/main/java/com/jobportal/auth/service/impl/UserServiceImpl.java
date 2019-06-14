@@ -22,22 +22,22 @@ import com.jobportal.auth.model.Account.Role;
 import com.jobportal.auth.model.UserCenter;
 import com.jobportal.auth.model.UserGeneral;
 import com.jobportal.auth.model.UserSeeker;
-import com.jobportal.auth.proxy.CenterEntityProxy;
+import com.jobportal.auth.proxy.JobCenterProxy;
 import com.jobportal.auth.proxy.JobCenterEntity;
 import com.jobportal.auth.proxy.NotificationEntity;
-import com.jobportal.auth.proxy.NotificationEntityProxy;
+import com.jobportal.auth.proxy.NotificationProxy;
 import com.jobportal.auth.proxy.SeekerEntity;
-import com.jobportal.auth.proxy.SeekerEntityProxy;
+import com.jobportal.auth.proxy.SeekerProxy;
 import com.jobportal.auth.service.UserService;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
 
 	@Autowired
-	private CenterEntityProxy centerEntityProxy;
+	private JobCenterProxy centerProxy;
 
 	@Autowired
-	private SeekerEntityProxy seekerEntityProxy;
+	private SeekerProxy seekerProxy;
 
 	@Autowired
 	private UserRepo userRepo;
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	private BCryptPasswordEncoder bcryptEncoder;
 
 	@Autowired
-	private NotificationEntityProxy notificationEntityProxy;
+	private NotificationProxy notificationProxy;
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Account user = userRepo.findByUsername(username);
@@ -72,9 +72,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		Account user = userRepo.findByUsername(username);
 		userRepo.delete(user);
 		if (Account.Role.SEEKER.equals(user.getRole()))
-			seekerEntityProxy.deleteSeeker(username, user.getUsername());
+			seekerProxy.deleteSeeker(username, user.getUsername());
 		else if (Account.Role.JOB_CENTER.equals(user.getRole()))
-			centerEntityProxy.deleteCenter(username, user.getUsername());
+			centerProxy.deleteCenter(username, user.getUsername());
 		return ResponseEntity.ok().build();
 	}
 
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 			if (user.getRole() != Role.SEEKER)
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 			UserSeeker newUs = (UserSeeker) newUser;
-			seekerEntityProxy.changeSeeker(loggedUser, username,
+			seekerProxy.changeSeeker(loggedUser, username,
 					new SeekerEntity(newUs.getUsername(), newUs.getFirstName(), newUs.getLastName(), newUs.getEmail(),
 							newUs.getCity(), newUs.getBirth(), newUs.getSkills()));
 		} else if (newUser instanceof UserCenter) {
@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 			if (user.getRole() != Role.JOB_CENTER)
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 			UserCenter newUc = (UserCenter) newUser;
-			centerEntityProxy.changeCenter(loggedUser, username,
+			centerProxy.changeCenter(loggedUser, username,
 					new JobCenterEntity(newUc.getCenterName(), newUc.getUsername(), newUc.getEmail()));
 
 		}
@@ -137,11 +137,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		else if (user instanceof UserCenter)
 			newUser.setRole(Role.JOB_CENTER);
 		newUser.setEmail(user.getEmail());
-		System.out.println("prima " + newUser);
+		
 		if (!userRepo.existsByUsername(user.getUsername())) {
 			dispatchUser(user);
 			Account newUserSave = userRepo.save(newUser);
-			System.out.println("dopo " + newUserSave);
 			return ResponseEntity.ok().body(newUserSave);
 		} else {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -153,12 +152,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 			UserSeeker us = (UserSeeker) user;
 			SeekerEntity newSeeker = new SeekerEntity(us.getUsername(), us.getFirstName(), us.getLastName(),
 					us.getEmail(), us.getCity(), us.getBirth(), us.getSkills());
-			seekerEntityProxy.createSeeker(newSeeker);
+			seekerProxy.createSeeker(newSeeker);
 			sendEmail(new NotificationEntity(us.getEmail(), "Benvenuto nel portale di lavoro più famoso al mondo!",
 					"Benvenuto caro Seeker " + us.getFirstName(), null));
 		} else if (user instanceof UserCenter) {
 			UserCenter uc = (UserCenter) user;
-			centerEntityProxy.createCenter(new JobCenterEntity(uc.getCenterName(), uc.getUsername(), uc.getEmail()));
+			centerProxy.createCenter(new JobCenterEntity(uc.getCenterName(), uc.getUsername(), uc.getEmail()));
 			sendEmail(new NotificationEntity(uc.getEmail(), "Benvenuto nel portale di lavoro più famoso al mondo!",
 					"Benvenuto caro Center " + uc.getCenterName(), null));
 		}
@@ -168,7 +167,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	}
 
 	public void sendEmail(NotificationEntity notificationEntity) {
-		notificationEntityProxy.sendNotification(notificationEntity);
+		notificationProxy.sendNotification(notificationEntity);
 	}
 
 }
