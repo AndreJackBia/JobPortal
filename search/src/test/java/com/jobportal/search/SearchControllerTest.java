@@ -40,6 +40,13 @@ public class SearchControllerTest {
 		MockitoAnnotations.initMocks(this);
 	}
 	
+	
+	/**
+	 * TEST 3
+	 * 
+	 * Get job with query null and location empty
+	 * 
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void test3_getJobs_QueryNull_LocationNonEmpty() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Mater", "test position", "test description", "Pavia", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
@@ -57,6 +64,12 @@ public class SearchControllerTest {
 				.andExpect(MockMvcResultMatchers.forwardedUrl(null));
 	}
 	
+	/**
+	 * TEST 4
+	 * 
+	 * Get job with query empty and location not empty
+	 * 
+	 */
 	@Test
 	public void test4_getJobs_QueryEmpty_LocationNotEmpty() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Albert1", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
@@ -77,6 +90,12 @@ public class SearchControllerTest {
 
 	}
 	
+	/**
+	 * TEST 5
+	 * 
+	 * Get job with query not empty and location empty
+	 * 
+	 */
 	@Test
 	public void test5_getJobs_QueryNotEmpty_LocationEmpty() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Giovanni", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
@@ -98,6 +117,12 @@ public class SearchControllerTest {
 				.andExpect(jsonPath("$", Matchers.hasSize(1)));
 	}
 	
+	/**
+	 * TEST 6
+	 * 
+	 * Get job with query not empty and location null
+	 * 
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void test6_getJobs_QueryNotEmpty_LocationNull() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Mater", "test position", "test description", "Pavia", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
@@ -115,6 +140,12 @@ public class SearchControllerTest {
 				.andExpect(MockMvcResultMatchers.forwardedUrl(null));
 	}
 	
+	/**
+	 * TEST 7
+	 * 
+	 * No valid match for jobs with query not empty and location not empty
+	 * 
+	 */
 	@Test
 	public void test7_getJobs_QueryNotEmpty_LocationNotEmpty_NoResults() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Mater", "test position", "test description", "Pavia", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
@@ -130,6 +161,12 @@ public class SearchControllerTest {
 				.andExpect(jsonPath("$", Matchers.hasSize(0)));
 	}
 	
+	/**
+	 * TEST 8
+	 * 
+	 * Get job with query not empty and location not empty
+	 * 
+	 */
 	@Test
 	public void test8_getJobs_QueryNotEmpty_LocationNotEmpty_OneResult() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Mater", "test position", "test description", "Pavia", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());
@@ -148,6 +185,12 @@ public class SearchControllerTest {
 				.andExpect(jsonPath("$[0].location", is(job1.getLocation())));
 	}
 	
+	/**
+	 * TEST 9
+	 * 
+	 * Get more than one jobs with query not empty and location not empty
+	 * 
+	 */
 	@Test
 	public void test9_getJobs_QueryNotEmpty_LocationNotEmpty_MoreThanOne() throws Exception {
 		JobEntity job0 = new JobEntity(0, "Lorenzo", "test position", "test description", "Milano", new Date(2019, 5, 26, 0, 0, 0), "Stregatto company", new ArrayList<String>());

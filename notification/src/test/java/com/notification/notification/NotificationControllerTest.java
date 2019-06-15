@@ -30,6 +30,13 @@ public class NotificationControllerTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
+	
+	/**
+	 * TEST 22
+	 * 
+	 * Send notification with destination null, subject not empty and body not empty
+	 * 
+	 */
 	@Test
 	public void test22_sendNotification_DestNull_SubNotEmpty_BodyNotEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
@@ -42,6 +49,13 @@ public class NotificationControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isPartialContent());
 	}
 	
+	
+	/**
+	 * TEST 23
+	 * 
+	 * Send notification with destination empty, subject not empty and body not empty
+	 * 
+	 */
 	@Test
 	public void test23_sendNotification_DestEmpty_SubNotEmpty_BodyNotEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
@@ -55,6 +69,12 @@ public class NotificationControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isPartialContent());
 	}
 	
+	/**
+	 * TEST 24
+	 * 
+	 * Send notification with destination not valid, subject not Empty and body not empty
+	 * 
+	 */
 	@Test
 	public void test24_sendNotification_DestNotValid_SubNotEmpty_BodyNotEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
@@ -68,6 +88,12 @@ public class NotificationControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isPartialContent());
 	}
 	
+	/**
+	 * TEST 25
+	 * 
+	 * Send notification with destination valid, subject null and body not empty
+	 * 
+	 */
 	@Test
 	public void test25_sendNotification_DestValid_SubNull_BodyNotEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
@@ -80,6 +106,12 @@ public class NotificationControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isPartialContent());
 	}
 	
+	/**
+	 * TEST 26
+	 * 
+	 * Send notification with destination valid, subject empty and body not empty
+	 * 
+	 */
 	@Test
 	public void test26_sendNotification_DestValid_SubEmpty_BodyNotEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
@@ -93,6 +125,12 @@ public class NotificationControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isPartialContent());
 	}
 	
+	/**
+	 * TEST 27
+	 * 
+	 * Send notification with destination valid, subject not empty and body null
+	 * 
+	 */
 	@Test
 	public void test27_sendNotification_DestValid_SubNotEmpty_BodyNull() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
@@ -105,6 +143,12 @@ public class NotificationControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isPartialContent());
 	}
 	
+	/**
+	 * TEST 28
+	 * 
+	 * Send notification with destination valid, subject not empty and body empty
+	 * 
+	 */
 	@Test
 	public void test28_sendNotification_DestValid_SubNotEmpty_BodyEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
@@ -118,6 +162,12 @@ public class NotificationControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isPartialContent());
 	}
 	
+	/**
+	 * TEST 29
+	 * 
+	 * Send notification with destination valid, subject not empty and body not empty
+	 * 
+	 */
 	@Test
 	public void test29_sendNotification_DestValid_SubNotEmpty_BodyNotEmpty() throws Exception {
 		JSONObject notificationEntity = new JSONObject()
