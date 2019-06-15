@@ -8,7 +8,7 @@ ADD pom.xml /usr/src/app
 RUN mvn verify clean --fail-never
 
 ADD . /usr/src/app
-RUN mvn install -DskipTests
+RUN mvn install
 
 FROM openjdk:8-jre-alpine
 COPY --from=build /usr/src/app/target/seekers-0.0.1-SNAPSHOT.jar /app/app.jar
