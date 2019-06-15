@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-public class ApplicationsEntity {
+public class ApplicationEntity {
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -37,10 +37,10 @@ public class ApplicationsEntity {
 	private String centerUsername;
 	
 	
-	public ApplicationsEntity() {
+	public ApplicationEntity() {
 		
 	}
-	public ApplicationsEntity(long id, String username, Date dateCreation, long jobId, String centerUsername) {
+	public ApplicationEntity(long id, String username, Date dateCreation, long jobId, String centerUsername) {
 		super();
 		this.id = id;
 		this.username = username;

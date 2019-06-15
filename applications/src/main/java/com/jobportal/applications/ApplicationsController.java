@@ -50,7 +50,7 @@ public class ApplicationsController {
 	 *         
 	 */
 	@RequestMapping(value = "/api/centers/{username}/applications/", method = RequestMethod.GET)
-	public ResponseEntity<List<ApplicationsEntity>> getCentersApplications(
+	public ResponseEntity<List<ApplicationEntity>> getCentersApplications(
 			@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username) {
 		if (!username.equals(loggedUser)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -74,7 +74,7 @@ public class ApplicationsController {
 	 *         
 	 */
 	@RequestMapping(value = "/api/centers/{username}/jobs/{jobId}/applications", method = RequestMethod.GET)
-	public ResponseEntity<List<ApplicationsEntity>> getCentersApplications(
+	public ResponseEntity<List<ApplicationEntity>> getCentersApplications(
 			@RequestHeader("X-User-Header") String loggedUser, @PathVariable String username,
 			@PathVariable long jobId) {
 		if (!username.equals(loggedUser)) {
@@ -99,7 +99,7 @@ public class ApplicationsController {
 	 *         
 	 */
 	@RequestMapping(value = "/api/seekers/{username}/applications/", method = RequestMethod.GET)
-	public ResponseEntity<List<ApplicationsEntity>> getApplications(@RequestHeader("X-User-Header") String loggedUser,
+	public ResponseEntity<List<ApplicationEntity>> getApplications(@RequestHeader("X-User-Header") String loggedUser,
 			@PathVariable String username) {
 		if (!username.equals(loggedUser)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -125,9 +125,9 @@ public class ApplicationsController {
 	 *         
 	 */
 	@RequestMapping(value = "/api/seekers/{username}/applications/", method = RequestMethod.POST)
-	public ResponseEntity<ApplicationsEntity> createApplication(@RequestHeader("X-User-Header") String loggedUser,
+	public ResponseEntity<ApplicationEntity> createApplication(@RequestHeader("X-User-Header") String loggedUser,
 			@RequestHeader("X-User-Role-Header") String role, @PathVariable String username,
-			@RequestBody ApplicationsEntity application) throws URISyntaxException {
+			@RequestBody ApplicationEntity application) throws URISyntaxException {
 		if (!username.equals(loggedUser)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
@@ -140,18 +140,23 @@ public class ApplicationsController {
 		} catch (FeignException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
-		application.setDateCreation(new Date());
-		application.setUsername(username);
-		application.setJobId(application.getJobId());
-		application.setCenterUsername(relatedJob.getUsername());
-		ApplicationsEntity a = applicationsRepository.save(application);
-		ResponseEntity<JobCenterEntity> response = jobCenterProxy.getJobCenter(pass, relatedJob.getUsername());
-		String receiverEmail = "";
-		if (response.getStatusCodeValue() == 200)
-			receiverEmail = response.getBody().getEmail();
-		notificationProxy.sendNotification(new NotificationEntity(receiverEmail, "Seeker applied to your job ",
-				"Seeker " + username + " Applied to your job " + relatedJob.getJobDescription(), username));
-		return ResponseEntity.created(new URI("/api/seekers/" + username + "/applications/" + a.getId())).body(a);
+		if((applicationsRepository.findByUsernameAndJobId(application.getUsername(), application.getJobId())) == null) {
+			application.setDateCreation(new Date());
+			application.setUsername(username);
+			application.setJobId(application.getJobId());
+			application.setCenterUsername(relatedJob.getUsername());
+			ApplicationEntity a = applicationsRepository.save(application);
+			ResponseEntity<JobCenterEntity> response = jobCenterProxy.getJobCenter(pass, relatedJob.getUsername());
+			String receiverEmail = "";
+			if (response.getStatusCodeValue() == 200)
+				receiverEmail = response.getBody().getEmail();
+			notificationProxy.sendNotification(new NotificationEntity(receiverEmail, "Seeker applied to your job ",
+					"Seeker " + username + " Applied to your job " + relatedJob.getJobDescription(), username));
+			return ResponseEntity.created(new URI("/api/seekers/" + username + "/applications/" + a.getId())).body(a);
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
 	}
 
 	
@@ -165,18 +170,18 @@ public class ApplicationsController {
 	 *         
 	 */
 	@RequestMapping(value = "/api/seekers/{username}/applications/{applicationId}", method = RequestMethod.GET)
-	public ResponseEntity<ApplicationsEntity> getApplication(@RequestHeader("X-User-Header") String loggedUser,
+	public ResponseEntity<ApplicationEntity> getApplication(@RequestHeader("X-User-Header") String loggedUser,
 			@PathVariable String username, @PathVariable long applicationId) {
 		if (!username.equals(loggedUser)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
-		Optional<ApplicationsEntity> applicationOpt = applicationsRepository.findById(applicationId);
+		Optional<ApplicationEntity> applicationOpt = applicationsRepository.findById(applicationId);
 		if (!applicationOpt.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 
-		ApplicationsEntity application = applicationOpt.get();
+		ApplicationEntity application = applicationOpt.get();
 		if (username.equals(application.getUsername())) {
 			return ResponseEntity.ok(application);
 		}
@@ -233,18 +238,18 @@ public class ApplicationsController {
 	 *         
 	 */
 	@RequestMapping(value = "/api/seekers/{username}/applications/{applicationId}", method = RequestMethod.DELETE)
-	public ResponseEntity<ApplicationsEntity> deleteApplication(@RequestHeader("X-User-Header") String loggedUser,
+	public ResponseEntity<ApplicationEntity> deleteApplication(@RequestHeader("X-User-Header") String loggedUser,
 			@PathVariable String username, @PathVariable long applicationId) {
 		if (!username.equals(loggedUser)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
-		Optional<ApplicationsEntity> applicationOpt = applicationsRepository.findById(applicationId);
+		Optional<ApplicationEntity> applicationOpt = applicationsRepository.findById(applicationId);
 		if (!applicationOpt.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 
-		ApplicationsEntity application = applicationOpt.get();
+		ApplicationEntity application = applicationOpt.get();
 		if (!username.equals(application.getUsername())) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
@@ -264,9 +269,9 @@ public class ApplicationsController {
 	 *         
 	 */
 	@RequestMapping(value = "/api/seekers/{username}/applications/{applicationId}", method = RequestMethod.PUT)
-	public ResponseEntity<ApplicationsEntity> updateApplication(@RequestHeader("X-User-Header") String loggedUser,
+	public ResponseEntity<ApplicationEntity> updateApplication(@RequestHeader("X-User-Header") String loggedUser,
 			@RequestHeader("X-User-Role-Header") String role, @PathVariable String username,
-			@PathVariable long applicationId, @RequestBody ApplicationsEntity application) {
+			@PathVariable long applicationId, @RequestBody ApplicationEntity application) {
 		if (!username.equals(loggedUser)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}

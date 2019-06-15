@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ApplicationsRepository  extends JpaRepository<ApplicationsEntity, Long> {
+public interface ApplicationsRepository  extends JpaRepository<ApplicationEntity, Long> {
 	
-	public List<ApplicationsEntity> findAllByUsername(String username);
-	public List<ApplicationsEntity> findAllByCenterUsername(String username);
-	public List<ApplicationsEntity> findAllByJobId(long jobId);
+	public List<ApplicationEntity> findAllByUsername(String username);
+	public ApplicationEntity findByUsernameAndJobId(String username, long jobId);
+	public List<ApplicationEntity> findAllByCenterUsername(String username);
+	public List<ApplicationEntity> findAllByJobId(long jobId);
 	public void deleteAllByJobId(long jobId);
 	public void deleteAllByUsername(String username);
 
