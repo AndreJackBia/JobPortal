@@ -93,7 +93,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	public ResponseEntity update(String loggedUser, UserGeneral newUser) {
 		String username = newUser.getUsername();
 		Account user = findByUsername(username);
-		user.setUsername(newUser.getUsername());
+		if(!loggedUser.equals(newUser.getUsername())) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
 		if (newUser.getPassword() != null) {
 			user.setPassword(bcryptEncoder.encode(newUser.getPassword()));
 		}

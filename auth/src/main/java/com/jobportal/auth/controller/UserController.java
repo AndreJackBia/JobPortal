@@ -41,14 +41,13 @@ public class UserController {
 
     @PutMapping("/users/{username}")
     public ResponseEntity update(@RequestHeader("X-User-Header") String loggedUser, @RequestBody UserGeneral newUser, @PathVariable String username) {
-    	userService.update(loggedUser,newUser);
-    	return ResponseEntity.ok().build();
+    	System.out.println(newUser.getUsername());
+    	return userService.update(loggedUser,newUser);
     }
 
     @DeleteMapping("/users/{username}")
     public ResponseEntity delete(@PathVariable String username) {
-        userService.delete(username);
-        return ResponseEntity.ok().build();
+        return userService.delete(username);
     }
 
     @RequestMapping(value="/signup", method = RequestMethod.POST)

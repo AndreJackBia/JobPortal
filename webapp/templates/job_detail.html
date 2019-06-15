@@ -10,9 +10,9 @@
     console.log(checkedSkills)
     for (i = 0; i < skills.length; i++) {
       if (checkedSkills.includes(skills[i]))
-        $('#skills-table').append('<tr><td><label class="mdl-checkbox" for="checkbox-' + skills[i] + '"> <input type="checkbox" name="skills" id="checkbox-' + skills[i] + '" value="' + skills[i] + '" class="mdl-checkbox__input" checked><span class="mdl-checkbox__label">'+ skills[i] + '</span> </label> </td></tr>')
+        $('#skills-table').append('<tr><td><label class="mdl-checkbox" for="checkbox-' + skills[i] + '"> <input type="checkbox" name="skills" id="checkbox-' + skills[i] + '" value="' + skills[i] + '" class="mdl-checkbox__input" checked {% if user.username != job.username %} disabled="true" {% endif %}><span class="mdl-checkbox__label" >'+ skills[i] + '</span> </label> </td></tr>')
       else
-        $('#skills-table').append('<tr><td><label class="mdl-checkbox" for="checkbox-' + skills[i] + '"> <input type="checkbox" name="skills" id="checkbox-' + skills[i] + '" value="' + skills[i] + '" class="mdl-checkbox__input"><span class="mdl-checkbox__label">'+ skills[i] + '</span> </label> </td></tr>')
+        $('#skills-table').append('<tr><td><label class="mdl-checkbox" for="checkbox-' + skills[i] + '"> <input type="checkbox" name="skills" id="checkbox-' + skills[i] + '" value="' + skills[i] + '" class="mdl-checkbox__input" {% if user.username != job.username %} disabled="true" {% endif %}><span class="mdl-checkbox__label">'+ skills[i] + '</span> </label> </td></tr>')
     }
   });
 
