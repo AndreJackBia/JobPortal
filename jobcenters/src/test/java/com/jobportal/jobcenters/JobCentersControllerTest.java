@@ -259,13 +259,12 @@ public class JobCentersControllerTest {
 				.perform(MockMvcRequestBuilders.post("/api/centers").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 						.content(jsonObject.toString()))
 				.andExpect(MockMvcResultMatchers.status().is(201)).andDo(MockMvcResultHandlers.print()).andReturn();
-		System.out.println(result.getResponse().getContentAsString());
 	}
 
 	/**
 	 * TEST 19
 	 * 
-	 * existing
+	 * Delete existing job center with same username and loggeduser
 	 * 
 	 */
 	@Test
@@ -281,7 +280,7 @@ public class JobCentersControllerTest {
 	/**
 	 * TEST 20
 	 * 
-	 * existing
+	 *  Delete existing job center with different username and loggeduser
 	 * 
 	 */
 	@Test
@@ -297,10 +296,9 @@ public class JobCentersControllerTest {
 	/**
 	 * TEST 21
 	 * 
-	 * existing
+	 *  Try to delete non existing job center with same username and loggeduser
 	 * 
 	 */
-
 	@Test
 	public void test21_deleteJobCenter() throws Exception {
 		given(jobCenterRepository.findByUsername("gg")).willReturn(null);
@@ -309,6 +307,12 @@ public class JobCentersControllerTest {
 				.header("X-User-Header", "gg")).andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
+	/**
+	 * TEST 30
+	 * 
+	 *  Update job center with different path variable username and loggeduser
+	 * 
+	 */
 	@Test
 	public void test30_updateJobCenter() throws Exception {
 		JSONObject jsonObject = new JSONObject().put("username", "loluca").put("name", "luca")
@@ -321,6 +325,12 @@ public class JobCentersControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isUnauthorized());
 	}
 
+	/**
+	 * TEST 31
+	 * 
+	 *  Update job center with same path variable username and loggeduser and differente object field username
+	 * 
+	 */
 	@Test
 	public void test31_updateJobCenter() throws Exception {
 		JSONObject jsonObject = new JSONObject().put("username", "different").put("name", "gigroup")
@@ -335,6 +345,12 @@ public class JobCentersControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isBadRequest());
 	}
 
+	/**
+	 * TEST 32
+	 * 
+	 *  Update job center with same path variable username and loggeduser and null object field name
+	 * 
+	 */
 	@Test
 	public void test32_updateJobCenter() throws Exception {
 		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", null).put("email", "gg@gmail.com")
@@ -349,6 +365,12 @@ public class JobCentersControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isPartialContent());
 	}
 
+	/**
+	 * TEST 33
+	 * 
+	 *  Update job center with same path variable username and loggeduser and empty object field name
+	 * 
+	 */
 	@Test(expected = NestedServletException.class)
 	public void test33_updateJobCenter() throws Exception {
 		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "").put("email", "gg@gmail.com")
@@ -364,6 +386,12 @@ public class JobCentersControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isPartialContent());
 	}
 
+	/**
+	 * TEST 34
+	 * 
+	 *  Update job center with same path variable username and loggeduser and null object field email
+	 * 
+	 */
 	@Test
 	public void test34_updateJobCenter() throws Exception {
 		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "gigroup").put("email", null)
@@ -378,6 +406,12 @@ public class JobCentersControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isPartialContent());
 	}
 
+	/**
+	 * TEST 35
+	 * 
+	 *  Update job center with same path variable username and loggeduser and empty object field email
+	 * 
+	 */
 	@Test(expected = NestedServletException.class)
 	public void test35_updateJobCenter() throws Exception {
 		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "Gigroup").put("email", "").put("id",
@@ -393,6 +427,12 @@ public class JobCentersControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isPartialContent());
 	}
 
+	/**
+	 * TEST 36
+	 * 
+	 *  Update job center with same path variable username and loggeduser and not valid object field email
+	 * 
+	 */
 	@Test(expected = NestedServletException.class)
 	public void test36_updateJobCenter() throws Exception {
 		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "Gigroup").put("email", "aaa")
@@ -408,6 +448,12 @@ public class JobCentersControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isPartialContent());
 	}
 
+	/**
+	 * TEST 37
+	 * 
+	 * Try to Update a non existing job center with valid fields
+	 * 
+	 */
 	@Test
 	public void test37_updateJobCenter() throws Exception {
 		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "Gigroup")
@@ -420,6 +466,12 @@ public class JobCentersControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
+	/**
+	 * TEST 38
+	 * 
+	 * Update a non existing job center with valid fields
+	 * 
+	 */
 	@Test
 	public void test38_updateJobCenter() throws Exception {
 		JSONObject jsonObject = new JSONObject().put("username", "gg").put("name", "Gigroup")
