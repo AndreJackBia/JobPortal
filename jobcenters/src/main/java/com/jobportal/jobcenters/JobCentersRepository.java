@@ -2,7 +2,7 @@ package com.jobportal.jobcenters;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface JobCenterRepository extends JpaRepository<JobCenterEntity, Long>  {
+public interface JobCentersRepository extends JpaRepository<JobCenterEntity, Long>  {
 	
 	JobCenterEntity findByName(String name);
 	boolean existsByName(String name);

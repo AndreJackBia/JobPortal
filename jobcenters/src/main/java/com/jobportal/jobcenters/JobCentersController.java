@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class JobCenterController {
+public class JobCentersController {
 
 	@Autowired
-	private JobCenterRepository jobCenterRepository;
+	private JobCentersRepository jobCenterRepository;
 	
 	@Autowired
 	private JobsProxy jobsProxy;
