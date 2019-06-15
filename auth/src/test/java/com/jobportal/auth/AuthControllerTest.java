@@ -76,8 +76,8 @@ public class AuthControllerTest {
 	private class WrongUsernamePasswordAuthenticationTokenMatcher implements ArgumentMatcher<UsernamePasswordAuthenticationToken> {	 
 	    @Override
 	    public boolean matches(UsernamePasswordAuthenticationToken right) {
-	        return !(right.getPrincipal().equals("Andrea")
-	        		&& right.getCredentials().equals("costa"));
+	        return !(("Andrea").equals(right.getPrincipal())
+	        		&& ("costa").equals(right.getCredentials()));
 	    }
 	}
 

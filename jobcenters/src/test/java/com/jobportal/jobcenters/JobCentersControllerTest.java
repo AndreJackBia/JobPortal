@@ -28,7 +28,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.util.NestedServletException;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(JobCenterController.class)
+@WebMvcTest(JobCentersController.class)
 @EnableAutoConfiguration
 public class JobCentersControllerTest {
 
@@ -36,7 +36,7 @@ public class JobCentersControllerTest {
 	private MockMvc mvc;
 
 	@MockBean
-	JobCenterRepository jobCenterRepository;
+	JobCentersRepository jobCenterRepository;
 
 	@MockBean
 	JobsProxy jobsProxy;
