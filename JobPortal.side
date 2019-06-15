@@ -132,6 +132,17 @@
         ["xpath=//div[2]/input", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "85c5f101-98dd-4f6e-8fa6-ef59ac7f4640",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mdl-navigation__link:nth-child(1)",
+      "targets": [
+        ["css=.mdl-navigation__link:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(@href, '/logout')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"]
+      ],
+      "value": ""
     }]
   }, {
     "id": "4b0e6a0e-ce48-473b-a895-067a6bcdf049",
@@ -359,7 +370,7 @@
         ["xpath=//div[@id='id_image_container']/div/input", "xpath:idRelative"],
         ["xpath=//div[3]/div/div/div/div/div/div/input", "xpath:position"]
       ],
-      "value": "C:\\Users\\thekeymaker\\Downloads\\Curriculum.pdf"
+      "value": "INSERIRE URL PDF VALIDO (CV)"
     }, {
       "id": "a498a19a-58f1-403c-a1dd-17b578ff5784",
       "comment": "",
@@ -405,6 +416,17 @@
         ["css=.edit-att-btn", "css:finder"],
         ["xpath=//input[@value='Sign up']", "xpath:attributes"],
         ["xpath=//form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7c0e1cbb-13b7-4307-8abf-26c915ee5e87",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mdl-navigation__link:nth-child(1)",
+      "targets": [
+        ["css=.mdl-navigation__link:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(@href, '/logout')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"]
       ],
       "value": ""
     }]
@@ -841,35 +863,6 @@
       "value": ""
     }]
   }, {
-    "id": "e1738e96-0cd3-411e-a38b-12bb59883e25",
-    "name": "Delete Center",
-    "commands": [{
-      "id": "18b7d114-d504-41a1-9497-946788b0cc9f",
-      "comment": "",
-      "command": "open",
-      "target": "/dashboard",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "69cfcaaf-cf86-4a28-939e-fee7de8ea1fd",
-      "comment": "",
-      "command": "click",
-      "target": "css=.mdl-navigation__link:nth-child(3)",
-      "targets": [
-        ["css=.mdl-navigation__link:nth-child(3)", "css:finder"],
-        ["xpath=//a[contains(@href, ' /jobcenter/adecco ')]", "xpath:href"],
-        ["xpath=//a[3]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "b83f2da2-eb71-44f5-b6fd-691dde599020",
-      "comment": "",
-      "command": "click",
-      "target": "name=delete",
-      "targets": [],
-      "value": ""
-    }]
-  }, {
     "id": "a4c5513a-8ce6-48bf-87b1-7ee8355d5260",
     "name": "Add Job Palermo",
     "commands": [{
@@ -998,24 +991,24 @@
       "value": ""
     }]
   }, {
-    "id": "d3dfc45e-418d-4d57-92fb-63382801ad31",
-    "name": "galgna",
+    "id": "d553f10a-0d1c-478f-927f-e1dc18156501",
+    "name": "Logout",
     "commands": [{
-      "id": "3362b21c-340c-4139-993a-890b738eaf0e",
+      "id": "9daec5fc-d025-43b8-b4a2-c624da33be39",
       "comment": "",
       "command": "open",
       "target": "/browse",
       "targets": [],
       "value": ""
     }, {
-      "id": "66dc422f-e75b-4dec-9f59-3d59ea0ba784",
+      "id": "d1160d6b-e0e1-4061-b3d6-f270f9005b0d",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1051x806",
+      "target": "1433x884",
       "targets": [],
       "value": ""
     }, {
-      "id": "16a0bfc8-a66a-4c65-8d9a-9ddfb6c1e275",
+      "id": "34ff5c12-66df-4920-ae55-422e32286e66",
       "comment": "",
       "command": "click",
       "target": "linkText=Dashboard",
@@ -1029,7 +1022,194 @@
       ],
       "value": ""
     }, {
-      "id": "6c6091ee-348d-4e15-933c-b5795a62d396",
+      "id": "fc2b7efb-0685-468e-af43-47f1301d2c68",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mdl-navigation__link:nth-child(4)",
+      "targets": [
+        ["css=.mdl-navigation__link:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(@href, '/logout')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "43fcde5f-07ae-4cd3-8f25-03d412040c2f",
+      "comment": "",
+      "command": "click",
+      "target": "css=p",
+      "targets": [
+        ["css=p", "css:finder"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'Click here to return to the home page.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "81262807-5df4-40f0-b475-4bbc1dc5b81d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=here",
+      "targets": [
+        ["linkText=here", "linkText"],
+        ["css=a", "css:finder"],
+        ["xpath=//a[contains(text(),'here')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'here')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "950baef4-c119-4fee-828b-957bc527afe8",
+    "name": "Logout2",
+    "commands": [{
+      "id": "1edef1f3-3477-487c-856d-c33deeca78b2",
+      "comment": "",
+      "command": "open",
+      "target": "/browse",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7f11d73f-7588-4a87-af84-c85b26877b80",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1433x884",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a7c9fc44-2e57-4287-b05a-e637c72505bd",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Dashboard",
+      "targets": [
+        ["linkText=Dashboard", "linkText"],
+        ["css=.mdl-navigation__link", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/dashboard')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f6d414f0-4892-47e7-aec4-0b4fe8d0ae33",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mdl-navigation__link:nth-child(5)",
+      "targets": [
+        ["css=.mdl-navigation__link:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(@href, '/logout')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b2117a5b-7fd5-4fe7-b7c9-7359fa3c69e1",
+      "comment": "",
+      "command": "click",
+      "target": "css=p",
+      "targets": [
+        ["css=p", "css:finder"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'Click here to return to the home page.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a7861d42-fb0e-4977-a893-2b339996dffd",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=here",
+      "targets": [
+        ["linkText=here", "linkText"],
+        ["css=a", "css:finder"],
+        ["xpath=//a[contains(text(),'here')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'here')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "61782f03-7bb4-4b67-a904-b210d0e11a2f",
+    "name": "Delete center",
+    "commands": [{
+      "id": "1d882806-b2e1-42c0-bd94-cff876a76605",
+      "comment": "",
+      "command": "open",
+      "target": "/browse",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "23786d32-485d-440d-b09b-b8710ea7e71a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1433x884",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fffb3f49-a410-4ce4-84a3-4bec4c8c96fc",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.mdl-navigation__link", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/dashboard')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3aebf5c5-edc7-48c3-af34-9a9ffe41164e",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=login",
+      "targets": [
+        ["linkText=login", "linkText"],
+        ["css=h2 > a", "css:finder"],
+        ["xpath=//a[contains(text(),'login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/login')]", "xpath:href"],
+        ["xpath=//h2/a", "xpath:position"],
+        ["xpath=//a[contains(.,'login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "730f17d2-01c8-41f4-9a08-509361d2b5b6",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_username",
+      "targets": [
+        ["id=id_username", "id"],
+        ["name=username", "name"],
+        ["css=#id_username", "css:finder"],
+        ["xpath=//input[@id='id_username']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "adecco"
+    }, {
+      "id": "aace4972-0ca1-4991-9dcb-24411ee2eae1",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_password",
+      "targets": [
+        ["id=id_password", "id"],
+        ["name=password", "name"],
+        ["css=#id_password", "css:finder"],
+        ["xpath=//input[@id='id_password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "adecco1994"
+    }, {
+      "id": "36675b12-3802-449e-b4c6-8b0036014f5f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Login']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "aef5485b-a883-4264-8a2c-a3344a5d1ce1",
       "comment": "",
       "command": "click",
       "target": "css=.mdl-navigation__link:nth-child(3)",
@@ -1039,15 +1219,27 @@
         ["xpath=//a[3]", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "2f0956bc-5d97-47bf-9f4e-7491f83a6337",
+      "comment": "",
+      "command": "click",
+      "target": "name=delete",
+      "targets": [
+        ["name=delete", "name"],
+        ["css=.delete-att", "css:finder"],
+        ["xpath=//input[@name='delete']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
     }]
   }],
   "suites": [{
-    "id": "3f361861-d01b-40c5-98e2-4213e6a280c8",
-    "name": "Default Suite",
+    "id": "aeace74e-2fa7-4d34-83db-25cb03fdd919",
+    "name": "Flow Job Portal",
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["b7b86f54-8a56-4e89-9877-ea3bf6acf72c", "00d57e95-1637-4546-8b76-b5695c781ce6", "fa9e93bb-dce8-49e4-80a5-2ddc1de8124d", "3b6d2755-57ff-4611-9709-a26298310b12", "4b0e6a0e-ce48-473b-a895-067a6bcdf049"]
+    "tests": ["b7b86f54-8a56-4e89-9877-ea3bf6acf72c", "a4c5513a-8ce6-48bf-87b1-7ee8355d5260", "3b6d2755-57ff-4611-9709-a26298310b12", "00d57e95-1637-4546-8b76-b5695c781ce6", "d553f10a-0d1c-478f-927f-e1dc18156501", "4b0e6a0e-ce48-473b-a895-067a6bcdf049", "2d0b4c4f-1d89-47d4-9bc0-c166a2247ac3", "950baef4-c119-4fee-828b-957bc527afe8", "61782f03-7bb4-4b67-a904-b210d0e11a2f"]
   }],
   "urls": ["http://localhost/", "http://localhost/dashboard", "http://localhost/signup/seeker"],
   "plugins": []
