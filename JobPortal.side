@@ -331,20 +331,6 @@
       ],
       "value": "1995-10-27"
     }, {
-      "id": "da138fc5-8be4-4af2-911b-26d4d80ee00c",
-      "comment": "",
-      "command": "click",
-      "target": "id=cv",
-      "targets": [
-        ["id=cv", "id"],
-        ["name=cv", "name"],
-        ["css=#cv", "css:finder"],
-        ["xpath=//input[@id='cv']", "xpath:attributes"],
-        ["xpath=//div[@id='id_image_container']/div/input", "xpath:idRelative"],
-        ["xpath=//div[3]/div/div/div/div/div/div/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
       "id": "39f40ac9-f899-482e-acb9-2b879ca31e6d",
       "comment": "",
       "command": "type",
