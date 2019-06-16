@@ -8,7 +8,7 @@ ADD pom.xml /usr/src/app
 RUN mvn verify clean --fail-never
 
 ADD . /usr/src/app
-RUN mvn install
+RUN mvn clean install
 
 FROM openjdk:8-jre-alpine
 COPY --from=build /usr/src/app/target/advisor-0.0.1-SNAPSHOT.jar /app/app.jar
