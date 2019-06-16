@@ -4,8 +4,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.ConstraintViolationException;
 
+import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +25,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -496,6 +499,65 @@ public class JobCentersControllerTest {
 		mvc.perform(MockMvcRequestBuilders.put("/api/centers/gg").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.header("X-User-Header", "gg").content(jsonObject.toString()))
 				.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	/**
+	 * TEST 76
+	 * 
+	 * Get the list of job centers when the list is empty
+	 * 
+	 */
+	@Test
+	public void test76_getJobCenters() throws Exception {
+				
+		
+		given(jobCenterRepository.findAll()).willReturn(new ArrayList());
+		
+		mvc.perform(MockMvcRequestBuilders.get("/api/centers"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(jsonPath("$", Matchers.hasSize(0)));
+	}
+
+	/**
+	 * TEST 77
+	 * 
+	 * Get the list of job centers when the list contains one element
+	 * 
+	 */
+	@Test
+	public void test77_getJobCenters() throws Exception {
+		JobCenterEntity jobCenter1 = new JobCenterEntity(0, "Gigroup", "gg", "gg@gmail.com");
+		
+		List<JobCenterEntity> centers = new ArrayList<JobCenterEntity>();
+		centers.add(jobCenter1);
+		
+		given(jobCenterRepository.findAll()).willReturn(centers);
+		
+		mvc.perform(MockMvcRequestBuilders.get("/api/centers"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(jsonPath("$", Matchers.hasSize(1)));
+	}
+	
+	/**
+	 * TEST 78
+	 * 
+	 * Get the list of job centers when the list contains more than one element
+	 * 
+	 */
+	@Test
+	public void test78_getJobCenters() throws Exception {
+		JobCenterEntity jobCenter1 = new JobCenterEntity(0, "Gigroup", "gg", "gg@gmail.com");
+		JobCenterEntity jobCenter2 = new JobCenterEntity(1, "Adecco", "adecco", "adecco@adecco.it");
+		
+		List<JobCenterEntity> centers = new ArrayList<JobCenterEntity>();
+		centers.add(jobCenter1);
+		centers.add(jobCenter2);
+		
+		given(jobCenterRepository.findAll()).willReturn(centers);
+		
+		mvc.perform(MockMvcRequestBuilders.get("/api/centers"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(jsonPath("$", Matchers.hasSize(2)));
 	}
 
 }
