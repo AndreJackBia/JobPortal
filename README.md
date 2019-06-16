@@ -1,3 +1,7 @@
+# Job Portal
+
+Job Portal is an innovative website to browse job offers, developed with state-of-the-art techonologies.
+
 # Architecture
 ![](docs/architecture.png)
 
