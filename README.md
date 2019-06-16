@@ -21,9 +21,9 @@ docker-compose up
 ```
 
 ### Executing
-As the services come up and running, they register on Eureka Registry. To check if all the services are ready, navigate to this [address](http://localhost:8761).
+As the services come up and start running, they register to Eureka Registry. To check if all the services are ready, navigate to this [address](http://localhost:8761).
 
-When all the services register to Eureka Registry, the application is ready to be used at this [address](http://localhost:80).
+When all the services are registered to Eureka Registry, the application is ready to be used at this [address](http://localhost:80).
 
 ## Built With
 
