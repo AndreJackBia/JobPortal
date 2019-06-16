@@ -21,7 +21,9 @@ docker-compose up
 ```
 
 ### Executing
-In order to test the application you need to use a rest client to manually call the API provided in this version. Further information about the API and the ports can be found in the code.
+As the services come up and running, they register on Eureka Registry. To check if all the services are ready, navigate to this *[address](http://localhost:8761).
+
+When all the services register to Eureka Registry, the application is ready to be used at this *[address](http://localhost:80).
 
 ## Built With
 
