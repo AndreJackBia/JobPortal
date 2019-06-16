@@ -1,19 +1,19 @@
 # Job Portal
 
-Job Portal is an innovative website to browse job offers, developed with state-of-the-art techonologies.
+Job Portal is an innovative website to search and post job offers, developed with state-of-the-art techonologies.
 
 # Architecture
 ![](docs/architecture.png)
 
-API Gateway is the service responsible of dispatching web requests to the correct service, authentication, authorization and filtering.
-Job Centers Service responsible of managing job centers, and exposes CRUD API for jobs centers.  
-Jobs Service is responsible of managing job insertions, and exposes CRUD API for job insertions.  
-Job Seekers Service is responsible of browsing job insertions, and exposes API for job search.  
-Applications Service is the service responsible of managing users' applications to jobs, and exposes CRUD API for managing applications.  
-Notification Service is responsible of notifying users of application confirmation and new job insertions, and exposes API to send emails using Google Mail API.  
-Job Advisor Service is the service responsible of computing skills-based suggestions, and exposes API to provide job suggestions to the seeker.  
-Job Seekers Service is responsible of managing job seekers, and exposes CRUD API for job seekers.  
-Job Search Service is responsible of browsing job offers, and exposes API to search for job.
+API Gateway is the service responsible for dispatching web requests to the correct service and managing authorization and filtering.  
+Authentication service controls the authentication phase of every user.  
+Job Centers service manages and exposes CRUD API for jobs centers.  
+Jobs service manages and exposes CRUD API for job insertions.  
+Applications service manages users' applications to jobs and exposes CRUD API for managing them.  
+Notification service is responsible for notifying users of application confirmations and new job insertions and exposes API to send emails using Google Mail API.  
+Job Advisor service computes skills-based suggestions and exposes API to provide them to the seeker.  
+Job Seekers service manages job seekers and exposes the CRUD API.  
+Job Search service allows browsing job offers and exposes the API to search.  
 
 ## Run
 
