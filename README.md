@@ -1,3 +1,16 @@
+# Architecture
+![](docs/architecture.png)
+
+API Gateway is the service responsible of dispatching web requests to the correct service, authentication, authorization and filtering.
+Job Centers Service responsible of managing job centers, and exposes CRUD API for jobs centers.  
+Jobs Service is responsible of managing job insertions, and exposes CRUD API for job insertions.  
+Job Seekers Service is responsible of browsing job insertions, and exposes API for job search.  
+Applications Service is the service responsible of managing users' applications to jobs, and exposes CRUD API for managing applications.  
+Notification Service is responsible of notifying users of application confirmation and new job insertions, and exposes API to send emails using Google Mail API.  
+Job Advisor Service is the service responsible of computing skills-based suggestions, and exposes API to provide job suggestions to the seeker.  
+Job Seekers Service is responsible of managing job seekers, and exposes CRUD API for job seekers.  
+Job Search Service is responsible of browsing job offers, and exposes API to search for job.
+
 ## Run
 
 ### Prerequisites
