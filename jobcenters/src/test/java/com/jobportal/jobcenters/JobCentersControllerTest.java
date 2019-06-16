@@ -52,7 +52,13 @@ public class JobCentersControllerTest {
 		jobEntity.setUsername("loluca");
 		jobEntity.setEmail("luca@luca.it");
 	}
-
+	
+	/**
+	 * TEST 1
+	 * 
+	 * Get an existing job center
+	 * 
+	 */
 	@Test
 	public void test1_getExistingJobCenterByUsername() throws Exception {
 		JobCenterEntity jobCenter0 = new JobCenterEntity(0, "Adecco", "adec", "adecco.adec@gmail.com");
@@ -64,7 +70,12 @@ public class JobCentersControllerTest {
 				.andExpect(jsonPath("username", is(jobCenter0.getUsername())));
 
 	}
-
+	/**
+	 * TEST 2
+	 * 
+	 * Get job center that doesn't exist
+	 * 
+	 */
 	@Test
 	public void test2_getNotExistingJobCenterByUsername() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/api/centers/adec").contentType(MediaType.APPLICATION_JSON))
